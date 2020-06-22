@@ -1,4 +1,10 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/login_script/app.js": "/js/login_script/app.js",
+    "/css/login_style/app.css": "/css/login_style/app.css",
+    "/css/master/app.css": "/css/master/app.css",
+    "/css/master/datatable.css": "/css/master/datatable.css",
+    "/js/master/app.js": "/js/master/app.js",
+    "/js/master/datatable.js": "/js/master/datatable.js",
+    "/js/login_script/custom.js": "/js/login_script/custom.js",
+    "/css/master/custom.css": "/css/master/custom.css"
 }

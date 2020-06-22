@@ -1,0 +1,1 @@
+<?php /**PATH C:\xampp\htdocs\Sisy\resources\views/welcome.blade.php ENDPATH**/ ?>

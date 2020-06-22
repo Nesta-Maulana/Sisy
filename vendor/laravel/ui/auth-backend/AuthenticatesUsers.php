@@ -3,9 +3,13 @@
 namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Hash;
+
+use App\Models\Master\Departement;
+use App\Models\Master\User;
+use Session;
 
 trait AuthenticatesUsers
 {
@@ -14,12 +18,12 @@ trait AuthenticatesUsers
     /**
      * Show the application's login form.
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
     public function showLoginForm()
     {
-        // return 'kesini';
-        return view('auth.login');
+        $departements   = Departement::all();
+        return view('auth.login',compact('departements',$departements));
     }
 
     /**
@@ -32,20 +36,54 @@ trait AuthenticatesUsers
      */
     public function login(Request $request)
     {
-        $this->validateLogin($request);
-
-        // If the class is using the ThrottlesLogins trait, we can automatically throttle
-        // the login attempts for this application. We'll key this by the username and
-        // the IP address of the client making these requests into this application.
-        if (method_exists($this, 'hasTooManyLoginAttempts') &&
-            $this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
-
-            return $this->sendLockoutResponse($request);
+        /*pengecekan apakah username terdaftar atau tidak*/
+        $user_account      = User::where('username',$request->username)->first();
+        if (!is_null($user_account)) 
+        {
+            /* pengecekan password */
+            if (Hash::check($request->password, $user_account->password)) 
+            {
+                /* pengecekan apakah akun tersebut sudah terverifikasi via email atau belum*/
+                if ($user_account->verified) 
+                {
+                    /* pengecekan apakah akun tsb sudah di verifikasi oleh admin atau belum*/
+                    if ($user_account->verified_by_admin) 
+                    {
+                        /* pengecekan status akun */
+                        if ($user_account->is_active) 
+                        {
+                            /* apabila semua parameter login terlewati akan masuk ke pengecekan lainnya*/
+                            if ($this->attemptLogin($request))
+                            {
+                                return $this->sendLoginResponse($request);
+                            }
+                        }
+                        else
+                        {
+                            return redirect(route('login'))->with('error','Akun anda telah nonaktif. Harap hubungi administrator untuk mengaktifkan kembali akun anda');
+                        }
+                    } 
+                    else 
+                    {
+                        return redirect(route('login'))->with('error','Akun belum diverifikasi oleh administrator. Harap hubungi administrator aplikasi terkait atau hubungi ext. 57156');
+                    }
+                    
+                }
+                else
+                {
+                    return redirect(route('login'))->with('error','Akun belum terverifikasi. Harap verifikasi akun anda dengan mengklik tautan pada email yang kami kirim ke email anda saat proses registrasi.');
+                }
+                
+            } 
+            else 
+            {
+                return redirect(route('login'))->with('error','Password yang anda masukan salah, harap masukan kembali password anda');
+            }
+            
         }
-
-        if ($this->attemptLogin($request)) {
-            return $this->sendLoginResponse($request);
+        else
+        {
+            return redirect(route('login'))->with('error','Username yang anda cari tidak terdaftar, harap masukan kembali username aktif atau akses form registrasi untuk mendaftarkan username anda.');
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -105,18 +143,50 @@ trait AuthenticatesUsers
     protected function sendLoginResponse(Request $request)
     {
         $request->session()->regenerate();
-
         $this->clearLoginAttempts($request);
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
-            return $response;
+        $username               = $request->username;
+        $password               = $request->password;
+
+        $data                   = Auth::user();
+        // return $data;
+        $to                     = \Carbon\Carbon::now('Asia/Jakarta');
+        $from                   = $data->last_update_password;
+        $diff_in_days           = $to->diffInDays($from);
+        
+        if($password === 'sentulappuser')
+        {
+            return redirect(route('users.change-password',['user_id'=>$this->enkripsi($username)]))->with('info', 'Selamat datang di Sentul Integrated System. Demi keamanan akun anda, harap ganti password anda untuk pertama kalinya.');
+        }
+        else if($diff_in_days >= 90)
+        {
+            return redirect(route('users.change-password',['user_id'=>$this->enkripsi($username)]))->with('info', 'Password anda sudah lebih dari 90 hari, harap ganti password !');
+        }
+        else
+        {
+            return $this->authenticated($request, $this->guard()->user())
+                    ?: redirect()->intended($this->redirectPath());   
         }
 
-        return $request->wantsJson()
-                    ? new Response('', 204)
-                    : redirect()->intended($this->redirectPath());
     }
-
+    public function enkripsi($string)
+    {
+        $output = false;
+        $encrypt_method = "AES-256-CBC";
+        $secret_key = 'sentul-apps';
+        $secret_iv = 'sentul-apps';
+     
+        // hash
+        $key = hash('sha256', $secret_key);
+         
+        // iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+        $iv = substr(hash('sha256', $secret_iv), 0, 16);
+     
+        $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+        $output = base64_encode($output);
+     
+        return $output;
+    }
     /**
      * The user has been authenticated.
      *
@@ -151,7 +221,7 @@ trait AuthenticatesUsers
      */
     public function username()
     {
-        return 'email';
+        return 'username';
     }
 
     /**
@@ -168,13 +238,7 @@ trait AuthenticatesUsers
 
         $request->session()->regenerateToken();
 
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new Response('', 204)
-            : redirect('/');
+        return $this->loggedOut($request) ?: redirect('/');
     }
 
     /**
