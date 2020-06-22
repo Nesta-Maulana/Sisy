@@ -234,3 +234,31 @@
     @include('rollie.rpd_filling.pop-up.analisa-sampel-pi')
     @include('rollie.rpd_filling.pop-up.analisa-sampel-at-event')
 @endsection
+@section('extract-plugin-footer')
+    <script src="{{ asset('datetime-picker/js/jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('datetime-picker/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('datetime-picker/css/bootstrap-datetimepicker.min.css') }}">
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script>
+        $('.timepickernya').datetimepicker({
+            format: 'HH:mm:ss',
+            locale:'en',
+            date: new Date()
+        }); 
+        $('.datepickernya').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en',
+            date: new Date()
+        }); 
+
+        $('.datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en'
+        }); 
+        $('.datetimepickernya').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+        }); 
+    </script> 
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
+@endsection

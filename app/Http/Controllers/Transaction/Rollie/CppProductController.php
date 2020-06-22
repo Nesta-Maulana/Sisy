@@ -660,7 +660,7 @@ class CppProductController extends ResourceController
     }
     public function hapusPalet(Request $request)
     {
-        $cekAkses       = $this->CheckAksesHapus(\Request::getRequestUri(),'rollie.process_data.rpds');
+        $cekAkses       = $this->CheckAksesHapus(\Request::getRequestUri(),'rollie.process_data.cpps');
         if ($cekAkses['success'] == true)
         {
             $palet      = Palet::find($this->decrypt($request->palet_id));

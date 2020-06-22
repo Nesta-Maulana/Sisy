@@ -16,6 +16,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo e(mix('css/master/app.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(mix('css/master/custom.css')); ?>">
+    
+    
     <?php echo $__env->yieldContent('extract-plugin-head'); ?>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
@@ -279,10 +281,18 @@
     </script>
     <link rel="stylesheet" href="<?php echo e(mix('css/master/datatable.css')); ?>">
     <script src="<?php echo e(mix('js/master/datatable.js')); ?>"></script>
-
+    <style>
+        .hidden
+        {
+            display: none
+        }
+    </style>
     <?php switch($application_name):
         case ('Master Apps'): ?>
             <script src="<?php echo e(asset('js/master_app/master_app.js')); ?>"></script>
+        <?php break; ?>
+        <?php case ('Rollie'): ?>
+            <script src="<?php echo e(asset('js/rollie_app/rollie.js')); ?>"></script>
         <?php break; ?>
     <?php endswitch; ?>
     <?php echo $__env->yieldContent('extract-plugin-footer'); ?>

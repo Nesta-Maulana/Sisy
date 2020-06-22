@@ -74,7 +74,7 @@
                             <input type="text" name="hasil_overlap" inputmode="decimal" pattern="[0-9]*" id="hasil_overlap" class="form-control" maxlength="4" max="5" min="3" autocomplete="off" onfocusout="cekOverlap()" required>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
-                            <small class="form-text text-muted" >Batas Min. 3.5 Batas Max. 4.5</small>
+                            <small class="form-text text-muted" id="batas_overlap_text">*</small>
                         </div>
                     </div>
                     <div class="row mt-2">

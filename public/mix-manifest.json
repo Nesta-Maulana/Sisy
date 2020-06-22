@@ -4,7 +4,7 @@
     "/css/master/app.css": "/css/master/app.css",
     "/css/master/datatable.css": "/css/master/datatable.css",
     "/js/master/app.js": "/js/master/app.js",
-    "/js/master/datatable.js": "/js/master/datatable.js",
     "/js/login_script/custom.js": "/js/login_script/custom.js",
+    "/js/master/datatable.js": "/js/master/datatable.js",
     "/css/master/custom.css": "/css/master/custom.css"
 }

@@ -115,3 +115,10 @@
     @include('rollie.production_schedules.pop-up.upload-mtol')
     @include('rollie.production_schedules.pop-up.update-data-wo')
 @endsection
+@section('extract-plugin-footer')
+    <script>
+        $( document ).ready(function() {
+            loadButton();
+        });
+    </script>
+@endsection

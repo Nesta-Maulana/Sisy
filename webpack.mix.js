@@ -29,10 +29,16 @@ mix.js('resources/js/app.js', 'public/js/master/app.js')
 .js('resources/js/general_script/custom.js','public/js/master/app.js')
 .sass('resources/sass/app.scss', 'public/css/master');
 
-mix.js('resources/js/datatable.js', 'public/js/master/datatable.js')
-.js('resources/js/datatable_script/modules.js','public/js/master/datatable.js')
+mix.scripts([
+    'node_modules/datatables.net/js/jquery.dataTables.min.js',
+    'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
+    'node_modules/datatables.net-buttons/js/dataTables.buttons.min.js',
+    'node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js',
+    'node_modules/datatables.net-buttons/js/buttons.html5.min.js',
+    'node_modules/datatables.net-buttons/js/buttons.colVis.min.js',
+    'resources/js/datatable_script/modules.js'
+], 'public/js/master/datatable.js')
 .sass('resources/sass/datatable.scss','public/css/master/datatable.css');
-
 
 /*mix.scripts(['node_modules/admin-lte/plugins/jquery/jquery.min.js','resources/js/general_script/custom.js'],'public/js/master/custom.js');*/
 mix.styles(['resources/sass/general_style/custom.css'],'public/css/master/custom.css');

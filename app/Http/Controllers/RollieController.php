@@ -453,9 +453,10 @@ class RollieController extends ResourceController
 			return redirect()->back()->with('error',$cekAkses['message']);
 		}	
 	}
+
 	public function showCppProductDashboard()
 	{
-		$cekAkses 	= $this->checkAksesLihat(\Request::getRequestUri(),'rollie.process_data.rpds');
+		$cekAkses 	= $this->checkAksesLihat(\Request::getRequestUri(),'rollie.process_data.cpps');
 		if ($cekAkses['success'] == true)
 		{
 			$senin          = date("Y-m-d", strtotime('monday this week'));
@@ -473,7 +474,7 @@ class RollieController extends ResourceController
 	}
 	public function showCppProductForm($cpp_head_id)
 	{
-		$cekAkses 	= $this->checkAksesLihat(\Request::getRequestUri(),'rollie.process_data.rpds');
+		$cekAkses 	= $this->checkAksesLihat(\Request::getRequestUri(),'rollie.process_data.cpps');
 		if ($cekAkses['success'] == true)
 		{
 			$cppHead 			= CppHead::find($this->decrypt($cpp_head_id));
@@ -498,7 +499,7 @@ class RollieController extends ResourceController
 				$params 	= $this->encrypt('fiskokimias_qc_penyelia');
 			break;
 		}
-		$cekAkses  	= $this->checkAksesLihat(\Request::getRequestUri(),'rollie.analysis_data.'.$url[2]);
+		$cekAkses  	= $this->checkAksesLihat(\Request::getRequestUri(),'rollie.analysis_data.'.$this->decrypt($params));
 		if ($cekAkses['success']) 
 		{
 			$cppHeads 			= CppHead::whereNull('analisa_kimia_id')->where('cpp_status','1')->get();

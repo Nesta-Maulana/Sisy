@@ -31,7 +31,7 @@
                     <div class="col-lg-6">
                         <div class="form d-flex align-items-center">
                             <div class="content">
-                                <form method="POST" class="form-validate mb-4 animate__bounceInDown animate__animated" action="http://127.0.0.1:8000/login" id="login-page">
+                                <form method="POST" class="form-validate mb-4 animate__bounceInDown animate__animated" action="/login" id="login-page">
                                     <?php echo e(csrf_field()); ?>
 
                                         <div class="form-group">

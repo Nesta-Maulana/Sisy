@@ -154,21 +154,18 @@ var production_schedules_table = $('#production-schedules-table').DataTable({
     paging:true,
     "scrollX": true,
     aaSorting:[['4','asc']],
-    dom: 'Bfrtip',
+/*     dom: 'Bfrtip',
     columnDefs: [
         {
             targets: 1,
             className: 'noVis'
         }
-    ],
-    buttons: [
-        {
-            text: 'Filter Column',
-            extend: 'colvis',
-            columns: ':not(.noVis)'
-        }
-    ]
+    ], */
+    buttons: [ 'colvis' ] 
 });
+production_schedules_table.buttons().container().appendTo('#example_wrapper .col-md-6:eq(0)');
+
+
 var production_schedules_draft_table = $('#production-schedule-draft-table').DataTable({
     bLengthChange:false,
     bFilter:false,

@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-lg-7 col-md-7 col-sm-7">
                                 <select name="kode_sampel_analisa" id="kode_sampel_analisa" class="select form-control" style="padding: 0 .8rem;" required="true" onchange="checkFillingSampel()">
-                                    <option selected disabled value="">Pilih Kode Sampel</option>
+                                    <option selected disabled value="0">Pilih Kode Sampel</option>
                                 </select>
                             </div>
                         </div>

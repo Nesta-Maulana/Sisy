@@ -16,6 +16,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ mix('css/master/app.css') }}">
     <link rel="stylesheet" href="{{ mix('css/master/custom.css') }}">
+    
+    
     @yield('extract-plugin-head')
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
@@ -275,10 +277,18 @@
     </script>
     <link rel="stylesheet" href="{{ mix('css/master/datatable.css') }}">
     <script src="{{ mix('js/master/datatable.js') }}"></script>
-
+    <style>
+        .hidden
+        {
+            display: none
+        }
+    </style>
     @switch($application_name)
         @case('Master Apps')
             <script src="{{  asset('js/master_app/master_app.js') }}"></script>
+        @break
+        @case('Rollie')
+            <script src="{{  asset('js/rollie_app/rollie.js') }}"></script>
         @break
     @endswitch
     @yield('extract-plugin-footer')

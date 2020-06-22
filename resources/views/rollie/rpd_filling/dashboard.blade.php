@@ -5,7 +5,6 @@
 @section('menu-open-data-proses')
     menu-open
 @endsection
-
 @section('active-rollie-process-data-rpds') 
     active 
 @endsection
@@ -14,7 +13,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header bg-dark">
-                    <h5>List Produk Fillpack</h5>
+                    <b>List Produk Fillpack</b>
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered" id="rpd-filling-dashboard-table" >
@@ -77,7 +76,7 @@
                                     <td style="width:150px;">{{ $wo_number->production_realisation_date}}</td>
                                     <td>{{ $wo_number->formula_revision}}</td>
                                     <td style="width:120px;">{{ $status}}</td>
-                                    <td>
+                                    <td style="width:150px">
                                         <button class="{{$classbtn}}" onclick="{{ $onclick}}">{{ $button }}</button>
                                     </td>
                                 </tr>

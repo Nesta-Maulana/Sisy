@@ -141,15 +141,21 @@
 						<strong>List Draft PPQ {{ $rpdFillingHead->product->product_name }} {{ $rpdFillingHead->woNumbers[0]->production_realisation_date }}</strong>
 					</div>
 					<div class="card-body">	
-						<h1 style="font-size: 60px;" class="d-flex justify-content-center">
-			                <span class="text-danger">Tidak Ada Draft PPQ</span> 
-			            </h1>
-			            <div class="d-flex justify-content-center">
-			                <div class="form-group">
-			                    <button class="btn btn-outline-secondary" onclick="window.location.href='/rollie/rpd-filling/form/list-ppq-pi/{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}'">Go To List Done PPQ PI {{ $rpdFillingHead->product->product_name }}</button>
-			                    <button class="btn btn-outline-primary" onclick="window.location.href='/rollie/rpd-filling/form/{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}'">Back To RPD Filling Product {{ $rpdFillingHead->product->product_name }}</button>
-			                </div>
-			            </div>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<h4 class="text-center text-danger">
+									Tidak Ada Draft PPQ
+								</h4>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center">
+								<div class="form-group">
+									<button class="btn btn-outline-secondary" onclick="window.location.href='/rollie/rpd-filling/form/list-ppq-pi/{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}'">Go To List Done PPQ PI {{ $rpdFillingHead->product->product_name }}</button>
+									<button class="btn btn-outline-primary" onclick="window.location.href='/rollie/rpd-filling/form/{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}'">Back To RPD Filling Product {{ $rpdFillingHead->product->product_name }}</button>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
