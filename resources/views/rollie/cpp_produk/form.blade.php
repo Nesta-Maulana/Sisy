@@ -224,3 +224,31 @@
     <input type="hidden" name="cpp_head_id" id="cpp_head_id" value="{{ app('App\Http\Controllers\ResourceController')->encrypt($cppHead->id) }}">
     @include('rollie.cpp_produk.pop-up.tambah-batch')
 @endsection
+@section('extract-plugin-footer')
+    <script src="{{ asset('datetime-picker/js/jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('datetime-picker/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('datetime-picker/css/bootstrap-datetimepicker.min.css') }}">
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script>
+        $('.timepickernya').datetimepicker({
+            format: 'HH:mm:ss',
+            locale:'en',
+            date: new Date()
+        }); 
+        $('.datepickernya').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en',
+            date: new Date()
+        }); 
+
+        $('.datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en'
+        }); 
+        $('.datetimepickernya').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+        }); 
+    </script> 
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
+@endsection

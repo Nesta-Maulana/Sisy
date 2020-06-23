@@ -227,4 +227,32 @@
     <input type="hidden" name="cpp_head_id" id="cpp_head_id" value="<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($cppHead->id)); ?>">
     <?php echo $__env->make('rollie.cpp_produk.pop-up.tambah-batch', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <?php $__env->stopSection(); ?>
+<?php $__env->startSection('extract-plugin-footer'); ?>
+    <script src="<?php echo e(asset('datetime-picker/js/jquery.min.js')); ?>"></script>
+    <link rel="stylesheet" href="<?php echo e(asset('datetime-picker/css/bootstrap.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(asset('datetime-picker/css/bootstrap-datetimepicker.min.css')); ?>">
+    <script type="text/javascript" src="<?php echo e(asset('datetime-picker/js/moment.min.js')); ?>"></script>
+    <script type="text/javascript" src="<?php echo e(asset('datetime-picker/js/bootstrap-datetimepicker.min.js')); ?>"></script>
+    <script>
+        $('.timepickernya').datetimepicker({
+            format: 'HH:mm:ss',
+            locale:'en',
+            date: new Date()
+        }); 
+        $('.datepickernya').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en',
+            date: new Date()
+        }); 
+
+        $('.datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en'
+        }); 
+        $('.datetimepickernya').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+        }); 
+    </script> 
+    <script type="text/javascript" src="<?php echo e(asset('datetime-picker/js/bootstrap-datetimepicker.min.js')); ?>"></script>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Sisy\resources\views/rollie/cpp_produk/form.blade.php ENDPATH**/ ?>

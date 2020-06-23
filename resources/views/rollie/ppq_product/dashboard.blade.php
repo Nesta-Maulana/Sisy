@@ -40,6 +40,7 @@
                                                 $style  = "background-color:#f19e9e;";
                                                 $status = 'New PPQ';
                                                 $button = 'Proses Follow Up PPQ';
+                                                $icons  = 'fa-pencil-square-o';
                                             @endphp 
                                         @break
                                         @case('1')
@@ -47,7 +48,8 @@
                                                 $style  = "background-color:#d9f19e;";
                                                 $status = 'On Progress PPQ' ;
                                                 $button = 'Form Follow Up PPQ';
-                                            @endphp 
+                                                $icons  = 'fa-pencil-square-o';
+                                            @endphp
                                         @break
                                         @case('2')
                                             @php
@@ -58,12 +60,16 @@
                                                         $style  = "background-color:#d9f19e;";
                                                         $status = 'On Progress PPQ' ;
                                                         $button = 'Form Follow Up PPQ';
+                                                        $icons  = 'fa-pencil-square-o';
+
                                                     }
                                                     else if (!is_null($ppq->followUpPpq->status_case) && $ppq->followUpPpq->status_case =='1')
                                                     {
                                                         $style  = "background-color:#a3f19e;";
                                                         $status = $ppq->followUpPpq->status_produk ;       
                                                         $button = 'Lihat Hasil Follow Up';
+                                                        $icons  = 'fa-eye';
+
                                                     }
                                                 }
                                                 else
@@ -71,6 +77,8 @@
                                                     $style  = "background-color:#a3f19e;";
                                                     $status = $ppq->followUpPpq->status_produk ;
                                                     $button = 'Lihat Hasil Follow Up';
+                                                    $icons  = 'fa-eye';
+
                                                 }
                                                 switch ($status) 
                                                 {
@@ -94,6 +102,8 @@
                                                 $style  = "background-color:#f19e9e;";
                                                 $status = 'On Progress RKJ' ;
                                                 $button = 'Lihat Hasil Follow Up';
+                                                $icons  = 'fa-eye';
+
                                             @endphp 
                                         @break 
                                         @case('4')
@@ -101,12 +111,15 @@
                                                 $style  = "background-color:#d9f19e;";
                                                 $status = 'Done RKJ' ;
                                                 $button = 'Lihat Hasil Follow Up';
+                                                $icons  = 'fa-eye';
                                             @endphp
                                         @break 
                                         @case('5')
                                             @php
                                                 $style  = "background-color:beige;";
                                                 $status = 'Draft PPQ' ;
+                                                $icons  = 'fa-pencil-square-o';
+
                                                 // $button = 'Lihat Hasil Follow Up';
                                             @endphp
                                         @break      
@@ -139,40 +152,78 @@
                                         @break
                                         
                                     @endswitch
-                                    <tr style="{{$style}}" >
-                                        <td>
-                                            <button class="btn btn-primary" onclick="{{ $onclick }}"><i class="fas fa-pencil-square-o"></i></button>
-                                        </td>
-                                        <td > <span style="font-weight: 800;">{{$ppq->nomor_ppq}}</span> </td>
-                                        <input type="hidden" id="follow_up_ppq_id_{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->id) }}" @if (!is_null($ppq->followUpPpq)) value="{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->followUpPpq->id) }}" @endif>
-                                        <td> {{$ppq->palets[0]->palet->cppDetail->woNumber->product->product_name}} </td>
-                                        <td> {{$ppq->production_realisation_date}} </td>
-                                        <td>
-                                            @php
-                                                $palet  = '';
-                                            @endphp
-                                            @foreach ($ppq->palets as $palet_ppq)
+                                    @if ($ppq->kategoriPpq->jenisPpq->jenis_ppq == 'Mikro')
+                                        @if ($ppq->analisaMikroResampling->progress_status == '1' && $ppq->analisaMikroResampling->analisa_mikro_status == '0')
+                                            <tr style="{{$style}}" >
+                                                <td>
+                                                    <button class="btn btn-primary" onclick="{{ $onclick }}">
+                                                        <i class="fas {{ $icons}}"></i>
+                                                    </button>
+                                                </td>
+                                                <td > <span style="font-weight: 800;">{{$ppq->nomor_ppq}}</span> </td>
+                                                <input type="hidden" id="follow_up_ppq_id_{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->id) }}" @if (!is_null($ppq->followUpPpq)) value="{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->followUpPpq->id) }}" @endif>
+                                                <td> {{$ppq->palets[0]->palet->cppDetail->woNumber->product->product_name}} </td>
+                                                <td> {{$ppq->production_realisation_date}} </td>
+                                                <td>
+                                                    @php
+                                                        $palet  = '';
+                                                    @endphp
+                                                    @foreach ($ppq->palets as $palet_ppq)
+                                                        @php
+                                                            $palet  .= $palet_ppq->palet->cppDetail->lot_number.'-'.$palet_ppq->palet->palet.', ';
+                                                        @endphp
+                                                    @endforeach
+                                                    {{ rtrim($palet,', ') }}
+                                                </td>
+                                                <td>
+                                                    {{ $ppq->kategoriPpq->jenisPpq->jenis_ppq }}
+                                                </td>
+                                                <td>
+                                                    {{ $ppq->alasan }}
+                                                </td>
+                                                <td>
+                                                    {{$ppq->jumlah_pack}}
+                                                </td>
+                                                <td>
+                                                    {{ $status }}
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @else
+                                        <tr style="{{$style}}" >
+                                            <td>
+                                                <button class="btn btn-primary" onclick="{{ $onclick }}"><i class="fas {{ $icons }}"></i></button>
+                                            </td>
+                                            <td > <span style="font-weight: 800;">{{$ppq->nomor_ppq}}</span> </td>
+                                            <input type="hidden" id="follow_up_ppq_id_{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->id) }}" @if (!is_null($ppq->followUpPpq)) value="{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->followUpPpq->id) }}" @endif>
+                                            <td> {{$ppq->palets[0]->palet->cppDetail->woNumber->product->product_name}} </td>
+                                            <td> {{$ppq->production_realisation_date}} </td>
+                                            <td>
                                                 @php
-                                                    $palet  .= $palet_ppq->palet->cppDetail->lot_number.'-'.$palet_ppq->palet->palet.', ';
+                                                    $palet  = '';
                                                 @endphp
-                                            @endforeach
-                                            {{ rtrim($palet,', ') }}
-                                        </td>
-                                        <td>
-                                            {{ $ppq->kategoriPpq->jenisPpq->jenis_ppq }}
-                                        </td>
-                                        <td>
-                                            {{ $ppq->alasan }}
-                                        </td>
-                                        <td>
-                                            {{$ppq->jumlah_pack}}
-                                        </td>
-                                        <td>
-                                            {{ $status }}
-                                        </td>
-
-                                        
-                                    </tr>
+                                                @foreach ($ppq->palets as $palet_ppq)
+                                                    @php
+                                                        $palet  .= $palet_ppq->palet->cppDetail->lot_number.'-'.$palet_ppq->palet->palet.', ';
+                                                    @endphp
+                                                @endforeach
+                                                {{ rtrim($palet,', ') }}
+                                            </td>
+                                            <td>
+                                                {{ $ppq->kategoriPpq->jenisPpq->jenis_ppq }}
+                                            </td>
+                                            <td>
+                                                {{ $ppq->alasan }}
+                                            </td>
+                                            <td>
+                                                {{$ppq->jumlah_pack}}
+                                            </td>
+                                            <td>
+                                                {{ $status }}
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    
                                 @endforeach
                             </tbody>
                         </table>

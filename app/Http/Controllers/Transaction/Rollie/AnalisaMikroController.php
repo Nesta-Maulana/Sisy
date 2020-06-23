@@ -338,7 +338,11 @@ class AnalisaMikroController extends ResourceController
                     
                     if ($analisaMikroDetail->mold == 0 && $analisaMikroDetail->yeast == 0)
                     {
-                        $hasil_analisa_mikro['status_akhir']                = '1';    
+                        if ($hasil_analisa_mikro['status_akhir'] !== '0') 
+                        {
+                            $hasil_analisa_mikro['status_akhir']                = '1'; 
+                        }
+                            
                     } 
                     else 
                     {
@@ -411,15 +415,22 @@ class AnalisaMikroController extends ResourceController
                 else if($analisaMikro->cppHead->product->productType->product_type == 'Non Susu')
                 {
                     /* ini hanya suhu 30 saja */
-                    if ($analisaMikro->progress_status == '0') 
+                    if ($url !== 'analisa-mikro-release')
                     {
-                        $hasil_analisa_mikro    = $this->analisaMikroDetail($analisaMikroDetail,$url,$inputan,$product);
-                        
-                        $array_hasil_analisa_mikro[$analisaMikroDetail->id]     = $hasil_analisa_mikro; /* disini akan ditampung seluruh hasil analisa mikro untuk pengecekan selanjutnya ya */
+                        if ($analisaMikro->progress_status == '0') 
+                        {
+                            $hasil_analisa_mikro    = $this->analisaMikroDetail($analisaMikroDetail,$url,$inputan,$product);
+                            $array_hasil_analisa_mikro[$analisaMikroDetail->id]     = $hasil_analisa_mikro; /* disini akan ditampung seluruh hasil analisa mikro untuk pengecekan selanjutnya ya */
+                        }
+                        else
+                        {
+                            return redirect(route('rollie.analysis_data.'.str_replace('-','_',$url)))->with('error','Analisa mikro mikro sudah diinput, harap hubungi QC Release apabila ada kesalahan input hasil pengamatan.');   
+                        }
                     }
                     else
                     {
-                        return redirect(route('rollie.analysis_data.'.str_replace('-','_',$url)))->with('error','Analisa mikro mikro sudah diinput, harap hubungi QC Release apabila ada kesalahan input hasil pengamatan.');
+                        $hasil_analisa_mikro    = $this->analisaMikroDetail($analisaMikroDetail,$url,$inputan,$product);
+                        $array_hasil_analisa_mikro[$analisaMikroDetail->id]     = $hasil_analisa_mikro; /* disini akan ditampung seluruh hasil analisa mikro untuk pengecekan selanjutnya ya */
                     }
                 }   
             }
@@ -452,9 +463,10 @@ class AnalisaMikroController extends ResourceController
                         array_push($detailPpq,$array_for_ppq);
                         array_push($arraystatus,$hasil_analisa_mikro['status_akhir']);
                         $keterangan .= $hasil_analisa_mikro['keterangan_analisa_mikro'].' | ';
+                        $analisaMikro->analisa_mikro_status = '0';
+                        $analisaMikro->save();
                     }
                 }
-                
                 
                 if ($url !== 'analisa-mikro-release') 
                 {
@@ -557,9 +569,6 @@ class AnalisaMikroController extends ResourceController
                                                 {
                                                     $palet  = $cppDetail->palets->where('start','<=',$hasil_analisa_mikro['jam_filling'])->where('end','<=',$hasil_analisa_mikro['jam_filling'])->last();
                                                 }
-                                            }
-                                            if ($palet->id == '8') {
-                                                dd($hasil_analisa_mikro['jam_filling']);
                                             }
                                             if ($palet->analisa_mikro_status !== '0') 
                                             {
@@ -699,7 +708,6 @@ class AnalisaMikroController extends ResourceController
                                     $analisaMikro->save();
                                 }
                                 
-
                             }
                             else if($progress_status_30 == '0' && $progress_status_55 == '0')
                             {
@@ -713,7 +721,160 @@ class AnalisaMikroController extends ResourceController
                     } 
                     else
                     {
-                    
+                        foreach ($array_hasil_analisa_mikro as $hasil_analisa_mikro) 
+                        {
+                            if ($hasil_analisa_mikro['suhu_preinkubasi'] == '30') 
+                            {
+                                $cppDetails     = CppDetail::where('cpp_head_id',$analisaMikro->cppHead->id)->where('filling_machine_id',$hasil_analisa_mikro['filling_machine_id'])->get();
+                                foreach ($cppDetails as $cppDetail) 
+                                {
+                                    $palet  = $cppDetail->palets->where('start','<=',$hasil_analisa_mikro['jam_filling'])->where('end','>=',$hasil_analisa_mikro['jam_filling'])->first();
+                                    if ( is_null($palet) )
+                                    {
+                                        /* ini akan mengambil palet pertama ketika jam filling di rpd filling tidak sesuai dengan yang ada di jam palet */
+                                        $palet  = $cppDetail->palets->where('start','>=',$hasil_analisa_mikro['jam_filling'])->where('end','>=',$hasil_analisa_mikro['jam_filling'])->first();
+                                        if (is_null($palet)) 
+                                        {
+                                            $palet  = $cppDetail->palets->where('start','<=',$hasil_analisa_mikro['jam_filling'])->where('end','<=',$hasil_analisa_mikro['jam_filling'])->last();
+                                        }
+                                    }
+                                    if ($palet->analisa_mikro_status !== '0') 
+                                    {
+                                        $palet->analisa_mikro_status    = $hasil_analisa_mikro['status_akhir'];
+                                    }
+                                    $palet->save();
+                                }
+                            }
+                        }
+                        /* ini untuk update status analisa 30 doang 55 nya masih di pending */
+                        $list_ppq       = array();
+                        foreach ($detailPpq as $ppq) 
+                        {
+                            if ($ppq['suhu_preinkubasi'] == '30') 
+                            {
+                                array_push($list_ppq,$ppq);
+                            }
+                        }
+                        if (count($list_ppq) >  0) 
+                        {
+                            /* jika ada analisa yang 30 yang tidak OK maka dia akan masuk untuk input PPQ */
+                            $nomor_ppq          = $this->getNomorPpq();
+                            $cpp_head_id        = $analisaMikro->cppHead->id;
+                            $kategori_ppq_id    = '24';
+                            $ppq_date           = date('Y-m-d');
+                            $jam_filling_awal   = $list_ppq[0]['jam_filling'];
+                            $jam_filling_akhir  = end($list_ppq)['jam_filling'];
+                            $keterangan_analisa_mikro   = 'Analisa Mikro 30 - ';/* ini untuk alasan  */
+                            $alasan             = ''; /* ini untuk detail titik ketidak sesuaian */
+                            $detail_titik_ppq   = '';
+                            foreach ($list_ppq as $ppq) 
+                            {
+                                if (strpos($detail_titik_ppq,$ppq['jam_filling'].', ') === false) 
+                                {
+                                    $detail_titik_ppq .= $ppq['jam_filling'].', ';
+                                }
+                                if (strpos($ppq['keterangan_analisa_mikro'],'pH') !== false) 
+                                {
+                                    if (strpos($keterangan_analisa_mikro,'pH #OK') === false) 
+                                    {
+                                        $keterangan_analisa_mikro .= 'pH #OK ';
+                                    }
+
+                                    if (strpos($alasan,$ppq['keterangan_analisa_mikro'].' 14&#13;&#10;') === false) 
+                                    {
+                                        $alasan .= $ppq['keterangan_analisa_mikro'].' 14&#13;&#10;';
+                                    }
+                                    
+                                }
+                                if (strpos($ppq['keterangan_analisa_mikro'],'TPC') !== false) 
+                                {
+                                    if (strpos($keterangan_analisa_mikro,'TPC #OK') === false) 
+                                    {
+                                        $keterangan_analisa_mikro .= 'TPC #OK ';
+                                    }
+                                    if (strpos($alasan,$ppq['keterangan_analisa_mikro'].' 14&#13;&#10;') === false) 
+                                    {
+                                        $alasan .= $ppq['keterangan_analisa_mikro'].' 14&#13;&#10;';
+                                    }
+                                    
+                                }
+                                
+                                if (strpos($ppq['keterangan_analisa_mikro'],'Yeast') !== false) 
+                                {
+                                    if (strpos($keterangan_analisa_mikro,'Yeast #OK') === false) 
+                                    {
+                                        $keterangan_analisa_mikro .= 'Yeast #OK ';
+                                    }
+                                    if (strpos($alasan,$ppq['keterangan_analisa_mikro'].' 14&#13;&#10;') === false) 
+                                    {
+                                        $alasan .= $ppq['keterangan_analisa_mikro'].' 14&#13;&#10;';
+                                    }
+                                    
+                                }
+
+                                
+                                if (strpos($ppq['keterangan_analisa_mikro'],'Mold') !== false) 
+                                {
+                                    if (strpos($keterangan_analisa_mikro,'Mold #OK') === false) 
+                                    {
+                                        $keterangan_analisa_mikro .= 'Mold #OK ';
+                                    }
+                                    if (strpos($alasan,$ppq['keterangan_analisa_mikro'].' 14&#13;&#10;') === false) 
+                                    {
+                                        $alasan .= $ppq['keterangan_analisa_mikro'].' 14&#13;&#10;';
+                                    }
+                                }
+                            }
+                            $detail_titik_ppq   = rtrim($detail_titik_ppq,', ');
+                            // dd($list_ppq);
+                            $ppq                = Ppq::create([
+                                'nomor_ppq'         => $nomor_ppq,
+                                'ppq_date'          => $ppq_date,
+                                'kategori_ppq_id'   => $kategori_ppq_id,
+                                'cpp_head_id'       => $cpp_head_id,
+                                'jam_awal_ppq'      => $jam_filling_awal,
+                                'jam_akhir_ppq'     => $jam_filling_akhir,
+                                'alasan'            => $keterangan_analisa_mikro,
+                                'detail_titik_ppq'  => $alasan,
+                                'status_akhir'      => '0'
+                            ]);
+                            $jumlah_pack    = 0;
+                            $palet_ppq      = array();
+                            foreach ($list_ppq as $get_palet) 
+                            {
+                                $cppDetails     = CppDetail::where('cpp_head_id',$cpp_head_id)->where('filling_machine_id',$get_palet['filling_machine_id'])->get();
+                                foreach ($cppDetails as $cppDetail) 
+                                {
+                                    $palet  = $cppDetail->palets->where('start','<=',$get_palet['jam_filling'])->where('end','>=',$get_palet['jam_filling'])->first();
+                                    if ( is_null($palet) )
+                                    {
+                                        /* ini akan mengambil palet pertama ketika jam filling di rpd filling tidak sesuai dengan yang ada di jam palet */
+                                        $palet  = $cppDetail->palets->where('start','>=',$get_palet['jam_filling'])->where('end','>=',$get_palet['jam_filling'])->first();
+                                    }
+                                    $jumlah_pack    = $jumlah_pack+=$palet->jumlah_pack;
+                                    $palet_ppq      = PaletPpq::Create([
+                                        'ppq_id' => $ppq->id,
+                                        'palet_id' => $palet->id
+                                    ]);
+                                    $palet->analisa_mikro_status    = '0';
+                                    $palet->save();
+
+                                }
+                                $mikroDetail            = analisaMikroDetail::find($get_palet['analisa_mikro_detail_id']);
+                                $mikroDetail->ppq_id    = $ppq->id;
+                                $mikroDetail->save();
+                            }
+                            $ppq->jumlah_pack                   = $jumlah_pack;
+                            $ppq->save();
+                            $analisaMikro->progress_status_30   = '2';
+                            $analisaMikro->save();
+                            return redirect(url('/rollie/analisa-mikro-release/form-ppq/'.$this->encrypt($ppq->id).'/'.$this->encrypt('null') ))->with('info','Analisa Mikro 30 #OK, anda akan dialihkan secara otomatis oleh sistem untuk membuat PPQ Guna Kebutuhan Resampling');
+                        } 
+                        else 
+                        {
+                            $analisaMikro->progress_status_30       = '2';
+                            $analisaMikro->save();
+                        }
                     }
                     
                 }

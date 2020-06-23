@@ -84,26 +84,24 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column nav-flat text-sm" data-widget="treeview" role="menu" data-accordion="false">
                         {{-- <li class="nav-header">MENU</li> --}}
-                        @foreach ($menus as $menu)
-                            @foreach ($menu->menuPermissions as $menuPermission)
-                                @if ($menuPermission->user_id == Auth::user()->id && $menuPermission->view == '1')
-                                    @php
-                                        $cekchild1 = app('App\Http\Controllers\MasterAppController')->cekChild(app('App\Http\Controllers\ResourceController')->encrypt($menu->id));
-                                        $route     = str_replace('_', '-',$menu->menu_route);
-                                        $route     = str_replace(' ', '-',$route);
-                                        $route     = str_replace('.', '-',$route);
-
-                                    @endphp
-                                    @if ($cekchild1['jumlahchild'] == 0)
-                                        <li class="nav-item">
-                                            <a href="{{ route($menu->menu_route) }}" class="nav-link @yield('active-'.$route)">
-                                                <i class="fa {{ $menu->menu_icon }} nav-icon"></i> 
-                                                <p>
-                                                    {{ $menu->menu_name }}
-                                                </p>
-                                            </a>
-                                        </li>
-                                    @else
+                       @foreach ($menus as $menu)
+                            @if (!is_null($menu->menuPermissions->where('user_id',Auth::user()->id)->where('view','1')->first()))
+                                @php
+                                    $cekchild1 = app('App\Http\Controllers\MasterAppController')->cekChild(app('App\Http\Controllers\ResourceController')->encrypt($menu->id));
+                                    $route     = str_replace('_', '-',$menu->menu_route);
+                                    $route     = str_replace(' ', '-',$route);
+                                    $route     = str_replace('.', '-',$route);
+                                @endphp
+                                @if ($cekchild1['jumlahchild'] == 0)
+                                    <li class="nav-item">
+                                        <a href="{{ route($menu->menu_route) }}" class="nav-link @yield('active-'.$route)">
+                                            <i class="fa {{ $menu->menu_icon }} nav-icon"></i> 
+                                            <p>
+                                                {{ $menu->menu_name }}
+                                            </p>
+                                        </a>
+                                    </li>
+                                @else
                                     @php
                                         $activemenu     = strtolower($menu->menu_name);
                                         $activemenu     = str_replace(' ', '-',$activemenu);
@@ -118,64 +116,56 @@
                                         </a>
                                         <ul class="nav nav-treeview">
                                             @foreach ($cekchild1['child'] as $child1)
-                                                @foreach ($child1->menuPermissions as $menuPermission1)
-                                                    @if ($menuPermission1->user_id == Auth::user()->id && $menuPermission1->view == '1')
-                                                        @php
-                                                            $cekchild2 = app('App\Http\Controllers\MasterAppController')->cekChild(app('App\Http\Controllers\ResourceController')->encrypt($child1->id));
-                                                            $routechild1     = str_replace(' ', '-',$child1->menu_route);
-                                                            $routechild1     = str_replace('_', '-',$routechild1);
-                                                            $routechild1     = str_replace('.', '-',$routechild1);
-                                                        @endphp
-                                                        @if ($cekchild2['jumlahchild'] == 0)
-                                                            <li class="nav-item">
-                                                                <a href="{{ route($child1->menu_route) }}" class="nav-link @yield('active-' .$routechild1)">
-                                                                    <i class="fa {{ $child1->menu_icon }} nav-icon"></i>
-                                                                    <p>{{ $child1->menu_name }}</p>
-                                                                </a>
-                                                            </li>
-                                                        @else
-                                                            @php
-                                                                $activemenu1     = strtolower($child1->menu_name);
-                                                                $activemenu1     = str_replace(' ', '-',$activemenu1);
-                                                            @endphp
-                                                            <li class="nav-item has-treeview @yield('menu-open-'.$activemenu1)">
-                                                                <a href="#" class="nav-link @yield('active-' .$activemenu1)">
-                                                                    <i class="nav-icon fa {{ $child1->menu_icon }}"></i>
-                                                                    <p>
-                                                                        {{ $child1->menu_name }}
-                                                                        <i class="right fas fa-angle-left"></i>
-                                                                    </p>
-                                                                </a>
-                                                                <ul class="nav nav-treeview">
-                                                                    @foreach ($cekchild2['child'] as $child2)
-                                                                        @php
-                                                                            $routechild2     = str_replace(' ', '-',$child2->menu_route);
-                                                                            $routechild2     = str_replace('_', '-',$routechild2);
-                                                                            $routechild2     = str_replace('.', '-',$routechild2);
-                                                                        @endphp
-                                                                        @foreach ($child2->menuPermissions as $menuPermission2)
-                                                                            @if ($menuPermission2->view == '1')
-                                                                                <li class="nav-item">
-                                                                                    <a href="{{ route($child2->menu_route) }}" class="nav-link @yield('active-' .$routechild2)">
-                                                                                        <i class="fa {{ $child2->menu_icon }} nav-icon"></i>
-                                                                                        <p>{{ $child2->menu_name }}</p>
-                                                                                    </a>
-                                                                                </li>                   
-                                                                            @endif
-                                                                        @endforeach
-                                                                    @endforeach
-                                                                </ul>
-                                                            </li>
-                                                        @endif
-                                                    @endif
-                                                @endforeach
+                                                @php
+                                                    $cekchild2 = app('App\Http\Controllers\MasterAppController')->cekChild(app('App\Http\Controllers\ResourceController')->encrypt($child1->id));
+                                                    $routechild1     = str_replace(' ', '-',$child1->menu_route);
+                                                    $routechild1     = str_replace('_', '-',$routechild1);
+                                                    $routechild1     = str_replace('.', '-',$routechild1);
+                                                @endphp
+                                                @if ($cekchild2['jumlahchild'] == 0)
+                                                    <li class="nav-item">
+                                                        <a href="{{ route($child1->menu_route) }}" class="nav-link @yield('active-' .$routechild1)">
+                                                            <i class="fa {{ $child1->menu_icon }} nav-icon"></i>
+                                                            <p>{{ $child1->menu_name }}</p>
+                                                        </a>
+                                                    </li>
+                                                @else
+                                                    @php
+                                                        $activemenu1     = strtolower($child1->menu_name);
+                                                        $activemenu1     = str_replace(' ', '-',$activemenu1);
+                                                    @endphp
+                                                    <li class="nav-item has-treeview @yield('menu-open-'.$activemenu1)">
+                                                        <a href="#" class="nav-link @yield('active-' .$activemenu1)">
+                                                            <i class="nav-icon fa {{ $child1->menu_icon }}"></i>
+                                                            <p>
+                                                                {{ $child1->menu_name }}
+                                                                <i class="right fas fa-angle-left"></i>
+                                                            </p>
+                                                        </a>
+                                                        <ul class="nav nav-treeview">
+                                                            @foreach ($cekchild2['child'] as $child2)
+                                                                @php
+                                                                    $routechild2     = str_replace(' ', '-',$child2->menu_route);
+                                                                    $routechild2     = str_replace('_', '-',$routechild2);
+                                                                    $routechild2     = str_replace('.', '-',$routechild2);
+                                                                @endphp
+                                                                <li class="nav-item">
+                                                                    <a href="{{ route($child2->menu_route) }}" class="nav-link @yield('active-' .$routechild2)">
+                                                                        <i class="fa {{ $child2->menu_icon }} nav-icon"></i>
+                                                                        <p>{{ $child2->menu_name }}</p>
+                                                                    </a>
+                                                                </li>   
+                                                            @endforeach
+                                                        </ul>
+                                                    </li>
+                                                @endif
+
                                             @endforeach
                                         </ul>
-                                    </li>                      
-                                    @endif
+                                    </li> 
                                 @endif
-                            @endforeach
-                        @endforeach
+                            @endif
+                       @endforeach
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

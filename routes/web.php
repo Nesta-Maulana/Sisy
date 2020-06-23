@@ -258,6 +258,11 @@ Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], f
 	Route::post('/form-follow-up-ppq/update-follow-up-ppq','Transaction\Rollie\FollowUpPpqController@updateFollowUpPpq');	
 	Route::post('/form-follow-up-ppq/proses-ppq-to-rkj','Transaction\Rollie\RkjController@createRkj');
 
+	Route::group(['prefix' => 'report-produk-release'], function () {
+		Route::get('','RollieController@showRprDashboard')->name('rollie.reports.rpr');
+	});
+
+
 	Route::get('/rkj-rnd-produk-nfi', 'RollieController@showRkjDashboard')->name('rollie.rkol.rkj_rnd_produk_nfi');
 	Route::get('/rkj-qa', 'RollieController@showRkjDashboard')->name('rollie.rkol.rkj_qa');
 

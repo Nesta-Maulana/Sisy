@@ -269,7 +269,50 @@ var ppq_produk_dashboard_table =  $('#ppq-produk-dashboard-table').dataTable({
     bLengthChange:false,
     pageLength:25,
     "scrollX": true,
-    // aaSorting:[['4','asc']],
+    aaSorting:[['1','asc']],
+    dom: 'Bfrtip',
+    columnDefs: [
+        {
+            targets: 1,
+            className: 'noVis'
+        }
+    ],
+    buttons: [
+        {
+            text: 'Filter Column',
+            extend: 'colvis',
+            columns: ':not(.noVis)'
+        }
+    ]
+});
+
+var report_release_produk_dashboard =  $('#report-release-produk-dashboard').dataTable({
+    bFilter:false,
+    bInfo:false,
+    bLengthChange:false,
+    pageLength:25,
+    "scrollX":true,
+    initComplete: function () {
+        this.api().columns().every( function () {
+            var column = this;
+            var select = $('<select class="form-control"><option value=""></option></select>')
+                .appendTo( $(column.footer()).empty() )
+                .on( 'change', function () {
+                    var val = $.fn.dataTable.util.escapeRegex(
+                        $(this).val()
+                    );
+
+                    column
+                        .search( val ? '^'+val+'$' : '', true, false )
+                        .draw();
+                } );
+
+            column.data().unique().sort().each( function ( d, j ) {
+                select.append( '<option value="'+d+'">'+d+'</option>' )
+            } );
+        } );
+    },
+    aaSorting:[['1','asc']],
     dom: 'Bfrtip',
     columnDefs: [
         {

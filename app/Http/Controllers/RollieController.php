@@ -635,13 +635,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Awal ";
 			}
 
-			if (strpos($keterangan_awal,'TS DROP '.$ts_awal_avg))
+			if (strpos($keterangan_awal,'TS DROP '.number_format($ts_awal_avg,2,'.',',')))
 			{
 				$keterangan_awal = $keterangan_awal;
 			}
 			else
 			{
-				$keterangan_awal = $keterangan_awal."TS DROP ".$ts_awal_avg;
+				$keterangan_awal = $keterangan_awal."TS DROP ".number_format($ts_awal_avg,2,'.',',');
 			}
 		}
 		if ($ts_tengah_avg < $spek_ts_min ) 
@@ -655,13 +655,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Tengah ";
 			}
 
-			if (strpos($keterangan_tengah,'TS DROP '.$ts_tengah_avg))
+			if (strpos($keterangan_tengah,'TS DROP '.number_format($ts_tengah_avg,2,'.',',')))
 			{
 				$keterangan_tengah = $keterangan_tengah;
 			}
 			else
 			{
-				$keterangan_tengah = $keterangan_tengah."TS DROP ".$ts_tengah_avg;
+				$keterangan_tengah = $keterangan_tengah."TS DROP ".number_format($ts_tengah_avg,2,'.',',');
 			}
 		}
 		if ($ts_akhir_avg < $spek_ts_min ) 
@@ -675,13 +675,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Akhir ";
 			}
 
-			if (strpos($keterangan_akhir,'TS DROP '.$ts_akhir_avg))
+			if (strpos($keterangan_akhir,'TS DROP '.number_format($ts_akhir_avg,2,'.',',')))
 			{
 				$keterangan_akhir = $keterangan_akhir;
 			}
 			else
 			{
-				$keterangan_akhir = $keterangan_akhir."TS DROP ".$ts_akhir_avg;
+				$keterangan_akhir = $keterangan_akhir."TS DROP ".number_format($ts_akhir_avg,2,'.',',');
 			}
 		}
 
@@ -696,13 +696,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Awal ";
 			}
 
-			if (strpos($keterangan_awal,'TS OVER '.$ts_awal_avg))
+			if (strpos($keterangan_awal,'TS OVER '.number_format($ts_awal_avg,2,'.',',')))
 			{
 				$keterangan_awal = $keterangan_awal;
 			}
 			else
 			{
-				$keterangan_awal = $keterangan_awal." TS OVER ".$ts_awal_avg;
+				$keterangan_awal = $keterangan_awal." TS OVER ".number_format($ts_awal_avg,2,'.',',');
 			}
 		}
 		if ($ts_tengah_avg > $spek_ts_max ) 
@@ -716,13 +716,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Tengah ";
 			}
 
-			if (strpos($keterangan_tengah,'TS OVER '.$ts_tengah_avg))
+			if (strpos($keterangan_tengah,'TS OVER '.number_format($ts_tengah_avg,2,'.',',')))
 			{
 				$keterangan_tengah = $keterangan_tengah;
 			}
 			else
 			{
-				$keterangan_tengah = $keterangan_tengah." TS OVER ".$ts_tengah_avg;
+				$keterangan_tengah = $keterangan_tengah." TS OVER ".number_format($ts_tengah_avg,2,'.',',');
 			}
 		}
 		if ($ts_akhir_avg > $spek_ts_max ) 
@@ -736,13 +736,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Akhir ";
 			}
 
-			if (strpos($keterangan_akhir,'TS Akhir '.$ts_akhir_avg))
+			if (strpos($keterangan_akhir,'TS Akhir '.number_format($ts_akhir_avg,2,'.',',')))
 			{
 				$keterangan_akhir = $keterangan_akhir;
 			}
 			else
 			{
-				$keterangan_akhir = $keterangan_akhir." TS Akhir ".$ts_akhir_avg;
+				$keterangan_akhir = $keterangan_akhir." TS Akhir ".number_format($ts_akhir_avg,2,'.',',');
 			}
 		}
 
@@ -757,13 +757,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Awal ";
 			}
 
-			if (strpos($keterangan_awal,'pH DROP '.$ph_awal))
+			if (strpos($keterangan_awal,'pH DROP '.number_format($ph_awal,2,'.',',')))
 			{
 				$keterangan_awal = $keterangan_awal;
 			}
 			else
 			{
-				$keterangan_awal = $keterangan_awal." pH DROP ".$ph_awal;
+				$keterangan_awal = $keterangan_awal." pH DROP ".number_format($ph_awal,2,'.',',');
 			}
 		}
 		if ($ph_tengah < $spek_ph_min ) 
@@ -777,13 +777,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Tengah ";
 			}
 
-			if (strpos($keterangan_tengah,'pH DROP'.$ph_tengah))
+			if (strpos($keterangan_tengah,'pH DROP'.number_format($ph_tengah,2,'.',',')))
 			{
 				$keterangan_tengah = $keterangan_tengah;
 			}
 			else
 			{
-				$keterangan_tengah = $keterangan_tengah." pH DROP ".$ph_tengah;
+				$keterangan_tengah = $keterangan_tengah." pH DROP ".number_format($ph_tengah,2,'.',',');
 			}
 		}
 		if ($ph_akhir < $spek_ph_min ) 
@@ -797,13 +797,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Akhir ";
 			}
 
-			if (strpos($keterangan_akhir,'pH DROP '.$ph_akhir))
+			if (strpos($keterangan_akhir,'pH DROP '.number_format($ph_akhir,2,'.',',')))
 			{
 				$keterangan_akhir = $keterangan_akhir;
 			}
 			else
 			{
-				$keterangan_akhir = $keterangan_akhir." pH DROP ".$ph_akhir;
+				$keterangan_akhir = $keterangan_akhir." pH DROP ".number_format($ph_akhir,2,'.',',');
 			}
 		}
 		
@@ -818,13 +818,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Awal ";
 			}
 
-			if (strpos($keterangan_awal,'pH OVER '.$ph_awal))
+			if (strpos($keterangan_awal,'pH OVER '.number_format($ph_awal,2,'.',',')))
 			{
 				$keterangan_awal = $keterangan_awal;
 			}
 			else
 			{
-				$keterangan_awal = $keterangan_awal." pH OVER ".$ph_awal;
+				$keterangan_awal = $keterangan_awal." pH OVER ".number_format($ph_awal,2,'.',',');
 			}
 		}
 		if ($ph_tengah > $spek_ph_max ) 
@@ -838,13 +838,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Tengah ";
 			}
 
-			if (strpos($keterangan_tengah,'pH OVER '.$ph_tengah))
+			if (strpos($keterangan_tengah,'pH OVER '.number_format($ph_tengah,2,'.',',')))
 			{
 				$keterangan_tengah = $keterangan_tengah;
 			}
 			else
 			{
-				$keterangan_tengah = $keterangan_tengah." pH OVER ".$ph_tengah;
+				$keterangan_tengah = $keterangan_tengah." pH OVER ".number_format($ph_tengah,2,'.',',');
 			}
 		}
 		if ($ph_akhir > $spek_ph_max ) 
@@ -858,13 +858,13 @@ class RollieController extends ResourceController
 				$ambil_palet = $ambil_palet."Akhir ";
 			}
 
-			if (strpos($keterangan_akhir,'pH Over '.$ph_akhir))
+			if (strpos($keterangan_akhir,'pH Over '.number_format($ph_akhir,2,'.',',')))
 			{
 				$keterangan_akhir = $keterangan_akhir;
 			}
 			else
 			{
-				$keterangan_akhir = $keterangan_akhir." pH Over ".$ph_akhir;
+				$keterangan_akhir = $keterangan_akhir." pH Over ".number_format($ph_akhir,2,'.',',');
 			}
 		}
 
@@ -1085,8 +1085,6 @@ class RollieController extends ResourceController
 			break;
 		}
 		$cekAksesLihat	= $this->checkAksesLihat(\Request::getRequestUri(),'rollie.analysis_data.'.str_replace('-','_',$url[2]));
-/* 		$cekAksesTambah	= $this->checkAksesTambah(\Request::getRequestUri(),'rollie.analysis_data.analisa_mikro_produk');
-		$cekAksesUbah	= $this->checkAksesUbah(\Request::getRequestUri(),'rollie.analysis_data.analisa_mikro_produk'); */
 		if ($cekAksesLihat['success'])
 		{
 			$analisaMikro 		= AnalisaMikro::find($this->decrypt($analisa_mikro_id));
@@ -1358,5 +1356,11 @@ class RollieController extends ResourceController
 			$rkj->ppq->production_realisation_date 	= rtrim($productionRealisationDate,', ');
 		}
 		return view('rollie.rkj_product.dashboard',['menus'=>$this->menus,'route'=>$params,'rkjs'=>$rkj_array]);
+	}
+
+	public function showRprDashboard()
+	{
+		$woNumbers 	= WoNumber::whereIn('wo_status',['4','5'])->get();
+		return view('rollie.reports.rpr.dashboard',['menus'=>$this->menus,'woNumbers'=>$woNumbers]);
 	}
 }

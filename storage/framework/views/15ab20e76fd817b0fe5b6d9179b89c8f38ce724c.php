@@ -85,27 +85,25 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column nav-flat text-sm" data-widget="treeview" role="menu" data-accordion="false">
                         
-                        <?php $__currentLoopData = $menus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php $__currentLoopData = $menu->menuPermissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menuPermission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <?php if($menuPermission->user_id == Auth::user()->id && $menuPermission->view == '1'): ?>
-                                    <?php
-                                        $cekchild1 = app('App\Http\Controllers\MasterAppController')->cekChild(app('App\Http\Controllers\ResourceController')->encrypt($menu->id));
-                                        $route     = str_replace('_', '-',$menu->menu_route);
-                                        $route     = str_replace(' ', '-',$route);
-                                        $route     = str_replace('.', '-',$route);
+                       <?php $__currentLoopData = $menus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if(!is_null($menu->menuPermissions->where('user_id',Auth::user()->id)->where('view','1')->first())): ?>
+                                <?php
+                                    $cekchild1 = app('App\Http\Controllers\MasterAppController')->cekChild(app('App\Http\Controllers\ResourceController')->encrypt($menu->id));
+                                    $route     = str_replace('_', '-',$menu->menu_route);
+                                    $route     = str_replace(' ', '-',$route);
+                                    $route     = str_replace('.', '-',$route);
+                                ?>
+                                <?php if($cekchild1['jumlahchild'] == 0): ?>
+                                    <li class="nav-item">
+                                        <a href="<?php echo e(route($menu->menu_route)); ?>" class="nav-link <?php echo $__env->yieldContent('active-'.$route); ?>">
+                                            <i class="fa <?php echo e($menu->menu_icon); ?> nav-icon"></i> 
+                                            <p>
+                                                <?php echo e($menu->menu_name); ?>
 
-                                    ?>
-                                    <?php if($cekchild1['jumlahchild'] == 0): ?>
-                                        <li class="nav-item">
-                                            <a href="<?php echo e(route($menu->menu_route)); ?>" class="nav-link <?php echo $__env->yieldContent('active-'.$route); ?>">
-                                                <i class="fa <?php echo e($menu->menu_icon); ?> nav-icon"></i> 
-                                                <p>
-                                                    <?php echo e($menu->menu_name); ?>
-
-                                                </p>
-                                            </a>
-                                        </li>
-                                    <?php else: ?>
+                                            </p>
+                                        </a>
+                                    </li>
+                                <?php else: ?>
                                     <?php
                                         $activemenu     = strtolower($menu->menu_name);
                                         $activemenu     = str_replace(' ', '-',$activemenu);
@@ -121,65 +119,57 @@
                                         </a>
                                         <ul class="nav nav-treeview">
                                             <?php $__currentLoopData = $cekchild1['child']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $child1): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <?php $__currentLoopData = $child1->menuPermissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menuPermission1): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <?php if($menuPermission1->user_id == Auth::user()->id && $menuPermission1->view == '1'): ?>
-                                                        <?php
-                                                            $cekchild2 = app('App\Http\Controllers\MasterAppController')->cekChild(app('App\Http\Controllers\ResourceController')->encrypt($child1->id));
-                                                            $routechild1     = str_replace(' ', '-',$child1->menu_route);
-                                                            $routechild1     = str_replace('_', '-',$routechild1);
-                                                            $routechild1     = str_replace('.', '-',$routechild1);
-                                                        ?>
-                                                        <?php if($cekchild2['jumlahchild'] == 0): ?>
-                                                            <li class="nav-item">
-                                                                <a href="<?php echo e(route($child1->menu_route)); ?>" class="nav-link <?php echo $__env->yieldContent('active-' .$routechild1); ?>">
-                                                                    <i class="fa <?php echo e($child1->menu_icon); ?> nav-icon"></i>
-                                                                    <p><?php echo e($child1->menu_name); ?></p>
-                                                                </a>
-                                                            </li>
-                                                        <?php else: ?>
-                                                            <?php
-                                                                $activemenu1     = strtolower($child1->menu_name);
-                                                                $activemenu1     = str_replace(' ', '-',$activemenu1);
-                                                            ?>
-                                                            <li class="nav-item has-treeview <?php echo $__env->yieldContent('menu-open-'.$activemenu1); ?>">
-                                                                <a href="#" class="nav-link <?php echo $__env->yieldContent('active-' .$activemenu1); ?>">
-                                                                    <i class="nav-icon fa <?php echo e($child1->menu_icon); ?>"></i>
-                                                                    <p>
-                                                                        <?php echo e($child1->menu_name); ?>
+                                                <?php
+                                                    $cekchild2 = app('App\Http\Controllers\MasterAppController')->cekChild(app('App\Http\Controllers\ResourceController')->encrypt($child1->id));
+                                                    $routechild1     = str_replace(' ', '-',$child1->menu_route);
+                                                    $routechild1     = str_replace('_', '-',$routechild1);
+                                                    $routechild1     = str_replace('.', '-',$routechild1);
+                                                ?>
+                                                <?php if($cekchild2['jumlahchild'] == 0): ?>
+                                                    <li class="nav-item">
+                                                        <a href="<?php echo e(route($child1->menu_route)); ?>" class="nav-link <?php echo $__env->yieldContent('active-' .$routechild1); ?>">
+                                                            <i class="fa <?php echo e($child1->menu_icon); ?> nav-icon"></i>
+                                                            <p><?php echo e($child1->menu_name); ?></p>
+                                                        </a>
+                                                    </li>
+                                                <?php else: ?>
+                                                    <?php
+                                                        $activemenu1     = strtolower($child1->menu_name);
+                                                        $activemenu1     = str_replace(' ', '-',$activemenu1);
+                                                    ?>
+                                                    <li class="nav-item has-treeview <?php echo $__env->yieldContent('menu-open-'.$activemenu1); ?>">
+                                                        <a href="#" class="nav-link <?php echo $__env->yieldContent('active-' .$activemenu1); ?>">
+                                                            <i class="nav-icon fa <?php echo e($child1->menu_icon); ?>"></i>
+                                                            <p>
+                                                                <?php echo e($child1->menu_name); ?>
 
-                                                                        <i class="right fas fa-angle-left"></i>
-                                                                    </p>
-                                                                </a>
-                                                                <ul class="nav nav-treeview">
-                                                                    <?php $__currentLoopData = $cekchild2['child']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $child2): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                        <?php
-                                                                            $routechild2     = str_replace(' ', '-',$child2->menu_route);
-                                                                            $routechild2     = str_replace('_', '-',$routechild2);
-                                                                            $routechild2     = str_replace('.', '-',$routechild2);
-                                                                        ?>
-                                                                        <?php $__currentLoopData = $child2->menuPermissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menuPermission2): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                            <?php if($menuPermission2->view == '1'): ?>
-                                                                                <li class="nav-item">
-                                                                                    <a href="<?php echo e(route($child2->menu_route)); ?>" class="nav-link <?php echo $__env->yieldContent('active-' .$routechild2); ?>">
-                                                                                        <i class="fa <?php echo e($child2->menu_icon); ?> nav-icon"></i>
-                                                                                        <p><?php echo e($child2->menu_name); ?></p>
-                                                                                    </a>
-                                                                                </li>                   
-                                                                            <?php endif; ?>
-                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                                </ul>
-                                                            </li>
-                                                        <?php endif; ?>
-                                                    <?php endif; ?>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                <i class="right fas fa-angle-left"></i>
+                                                            </p>
+                                                        </a>
+                                                        <ul class="nav nav-treeview">
+                                                            <?php $__currentLoopData = $cekchild2['child']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $child2): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <?php
+                                                                    $routechild2     = str_replace(' ', '-',$child2->menu_route);
+                                                                    $routechild2     = str_replace('_', '-',$routechild2);
+                                                                    $routechild2     = str_replace('.', '-',$routechild2);
+                                                                ?>
+                                                                <li class="nav-item">
+                                                                    <a href="<?php echo e(route($child2->menu_route)); ?>" class="nav-link <?php echo $__env->yieldContent('active-' .$routechild2); ?>">
+                                                                        <i class="fa <?php echo e($child2->menu_icon); ?> nav-icon"></i>
+                                                                        <p><?php echo e($child2->menu_name); ?></p>
+                                                                    </a>
+                                                                </li>   
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        </ul>
+                                                    </li>
+                                                <?php endif; ?>
+
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>
-                                    </li>                      
-                                    <?php endif; ?>
+                                    </li> 
                                 <?php endif; ?>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
+                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

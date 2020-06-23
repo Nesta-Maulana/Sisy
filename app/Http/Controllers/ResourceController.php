@@ -394,4 +394,47 @@ class ResourceController extends Controller
         $nomor_ppq      = $nomor_ppq.'/PPQ/'.$bulan[date('m')].'/'.date('Y');
         return $nomor_ppq;
     }
+    public function cekChild($menu_id)
+	{
+		$menu_id 	= $this->decrypt($menu_id);
+		$cekChild 	= Menu::where('parent_id',$menu_id)->where('is_active','1')->orderBy('menu_position','asc')->get();
+		$hitungchild = 0;
+		foreach ($cekChild as $key => $child) 
+		{
+			foreach ($child->menuPermissions as $menuPermission) 
+			{
+				$child->hak_akses 	= $menuPermission;
+				$menuPermission 	= $menuPermission;
+				if ($menuPermission->user_id == Auth::user()->id && $menuPermission->view == '1') 
+				{
+					$hitungchild++;
+				}
+			
+			}
+		}
+		$return 	= array('jumlahchild' => $hitungchild, 'child' => $cekChild);
+		return $return;
+    }
+   /*  public function getMenu($application_name)
+    {
+        $application    = Application::where('application_name',$application_name)->first();
+        $menus          = $application->menus->where('parent_id','0')->where('is_active','1');
+        foreach ($menus as $menu) 
+        {
+            $menuPermission     = $menu->menuPermissions->where('user_id',Auth::user()->id)->where('view','1');
+            if (!is_null($menuPermission)) 
+            {
+                $child1     = $this->cekChild($this->encrypt($menu->id));
+                if ($chil) 
+                {
+                
+                } 
+                
+            } 
+            else
+            {
+                unset($menu);
+            }
+        }
+    } */
 }

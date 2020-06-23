@@ -25,7 +25,7 @@ class AnalisaMikro extends ResourceModel
         return $this->hasMany('App\Models\Transaction\Rollie\AnalisaMikroDetail', 'analisa_mikro_id', 'id');
     }
 
-    public function analisaMikroResampling()
+    public function analisaMikroResamplings()
     {
         return $this->hasMany('App\Models\Transaction\Rollie\AnalisaMikroResampling', 'analisa_mikro_id', 'id');
     }

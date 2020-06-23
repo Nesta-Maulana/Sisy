@@ -54,15 +54,13 @@ class MasterAppController extends ResourceController
 		$hitungchild = 0;
 		foreach ($cekChild as $key => $child) 
 		{
-			foreach ($child->menuPermissions as $menuPermission) 
+			if (!is_null($child->menuPermissions->where('user_id',Auth::user()->id)->where('view','1')->first() )) 
 			{
-				$child->hak_akses 	= $menuPermission;
-				$menuPermission 	= $menuPermission;
-				if ($menuPermission->user_id == Auth::user()->id && $menuPermission->view == '1') 
-				{
-					$hitungchild++;
-				}
-			
+				$hitungchild = $hitungchild+1;
+			} 
+			else
+			{
+				unset($cekChild[$key]);
 			}
 		}
 		$return 	= array('jumlahchild' => $hitungchild, 'child' => $cekChild);

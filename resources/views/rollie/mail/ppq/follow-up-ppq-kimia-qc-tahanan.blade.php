@@ -200,7 +200,7 @@
 				<td>Corrective Action</td>
 				<td>:</td>
 				<td>
-					<table border="1px solid black;" width="100%">
+					<table border="1" width="100%">
 						@foreach ($followUpPpq->correctiveActions as $correctiveAction)
 							<tr>
 								<td>Corrective Action</td>
@@ -320,7 +320,7 @@ Terimakasih
 <br>
 Rollie's Crew
 <br>
-	<img src="{{ asset('general_style/images/logo/logo-rollie.png') }}" class="center">
+	<img src="{{ asset('images/logo/logo-rollie.png') }}" class="center">
 <br>
 <br>
 <p style="color:red;font-size: 12px">*Email ini dikirim secara otomatis, harap tidak membalas email ini. Apabila anda tidak berkaitan dengan email ini maka abaikan atau hubungi administrator aplikasi.</p>

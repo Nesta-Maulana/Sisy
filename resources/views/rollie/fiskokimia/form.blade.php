@@ -129,7 +129,7 @@
                                                     <div class="col-lg-4 col-md-4 col-sm-4">
                                                         <div class="card">
                                                             <div class="card-header text-center bg-secondary">
-                                                                <h5 style="font-weight: 800">TS Awal</h5>
+                                                                <h6>TS Awal</h6>
                                                             </div>
                                                             <div class="card-body">
                                                                 <div class="row">
@@ -479,4 +479,33 @@
            </div>
        </div>
    </div>
+@endsection
+
+@section('extract-plugin-footer')
+    <script src="{{ asset('datetime-picker/js/jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('datetime-picker/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('datetime-picker/css/bootstrap-datetimepicker.min.css') }}">
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script>
+        $('.timepickernya').datetimepicker({
+            format: 'HH:mm:ss',
+            locale:'en',
+            date: new Date()
+        }); 
+        $('.datepickernya').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en',
+            date: new Date()
+        }); 
+
+        $('.datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en'
+        }); 
+        $('.datetimepickernya').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+        }); 
+    </script> 
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
 @endsection

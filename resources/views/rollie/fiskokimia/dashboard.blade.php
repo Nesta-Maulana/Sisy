@@ -13,7 +13,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header bg-dark">
-                    <h5>List Draft Analisa Fisikokimia Produk Jadi</h5>
+                    List Draft Analisa Fisikokimia Produk Jadi
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered" id="fisikokimia-dashboard-table">
@@ -107,7 +107,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mt-3">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header bg-dark">

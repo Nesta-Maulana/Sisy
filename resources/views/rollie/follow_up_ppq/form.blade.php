@@ -111,7 +111,11 @@
                                                     <div class="form-group">
                                                         <div class="row">
                                                             <div class="col-lg-6 col-md-6 col-sm-6">
-                                                                <a href="{{ route('rollie.rkol.ppq_qc_release') }}" class="btn btn-outline-secondary form-control">Kembali Ke Dashboard PPQ</a>
+                                                                @if ($params_induk !== 'null')
+                                                                    <a href="{{ route('rollie.rkol.'.str_replace('-','_',$params_induk)) }}" class="btn btn-outline-secondary form-control">Kembali Ke Dashboard PPQ</a>
+                                                                @else
+                                                                    <a href="{{ route('rollie.rkol.ppq_qc_release') }}" class="btn btn-outline-secondary form-control">Kembali Ke Dashboard PPQ</a>
+                                                                @endif
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-sm-7">
                                                                 
@@ -765,7 +769,8 @@
                                                 <div class="card-header" id="dataTS" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                                     <h5>
                                                         Data TS
-                                                        <span class="pull-right" style="font-size: 30px;transform: rotate(90deg);">&#10145;</span>
+							                            <i class="pull-right fa fa-arrow-down" id="iconnya"></i>
+
                                                     </h5> 
 
                                                 </div>
@@ -860,7 +865,8 @@
                                                 <div class="card-header" id="dataPH" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                                                     <h5>
                                                         Data pH
-                                                        <span class="pull-right" style="font-size: 30px;transform: rotate(90deg);">&#10145;</span>
+							                            <i class="pull-right fa fa-arrow-down" id="iconnya"></i>
+
                                                     </h5> 
                                                 </div>
 
@@ -901,7 +907,8 @@
                                                 <div class="card-header" id="dataSensori" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                                                     <h5>
                                                         Data Sensori
-                                                        <span class="pull-right" style="font-size: 30px;transform: rotate(90deg);">&#10145;</span>
+							                            <i class="pull-right fa fa-arrow-down" id="iconnya"></i>
+
                                                     </h5> 
                                                 </div>
                                                 <div id="collapseThree" class="collapse" aria-labelledby="dataSensori" data-parent="#accordionExample">
@@ -1383,4 +1390,33 @@
         @endswitch
     </div>
 </form>
+@endsection
+
+@section('extract-plugin-footer')
+    <script src="{{ asset('datetime-picker/js/jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('datetime-picker/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('datetime-picker/css/bootstrap-datetimepicker.min.css') }}">
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script>
+        $('.timepickernya').datetimepicker({
+            format: 'HH:mm:ss',
+            locale:'en',
+            date: new Date()
+        }); 
+        $('.datepickernya').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en',
+            date: new Date()
+        }); 
+
+        $('.datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale:'en'
+        }); 
+        $('.datetimepickernya').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm:ss',
+        }); 
+    </script> 
+    <script type="text/javascript" src="{{ asset('datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
 @endsection
