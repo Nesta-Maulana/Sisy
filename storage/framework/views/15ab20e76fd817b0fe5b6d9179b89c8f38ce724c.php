@@ -96,7 +96,7 @@
                                 <?php if($cekchild1['jumlahchild'] == 0): ?>
                                     <li class="nav-item">
                                         <a href="<?php echo e(route($menu->menu_route)); ?>" class="nav-link <?php echo $__env->yieldContent('active-'.$route); ?>">
-                                            <i class="fa <?php echo e($menu->menu_icon); ?> nav-icon"></i> 
+                                            <i class="fas <?php echo e($menu->menu_icon); ?> nav-icon"></i> 
                                             <p>
                                                 <?php echo e($menu->menu_name); ?>
 
@@ -128,7 +128,7 @@
                                                 <?php if($cekchild2['jumlahchild'] == 0): ?>
                                                     <li class="nav-item">
                                                         <a href="<?php echo e(route($child1->menu_route)); ?>" class="nav-link <?php echo $__env->yieldContent('active-' .$routechild1); ?>">
-                                                            <i class="fa <?php echo e($child1->menu_icon); ?> nav-icon"></i>
+                                                            <i class="fas <?php echo e($child1->menu_icon); ?> nav-icon"></i>
                                                             <p><?php echo e($child1->menu_name); ?></p>
                                                         </a>
                                                     </li>
@@ -155,7 +155,7 @@
                                                                 ?>
                                                                 <li class="nav-item">
                                                                     <a href="<?php echo e(route($child2->menu_route)); ?>" class="nav-link <?php echo $__env->yieldContent('active-' .$routechild2); ?>">
-                                                                        <i class="fa <?php echo e($child2->menu_icon); ?> nav-icon"></i>
+                                                                        <i class="fas <?php echo e($child2->menu_icon); ?> nav-icon"></i>
                                                                         <p><?php echo e($child2->menu_name); ?></p>
                                                                     </a>
                                                                 </li>   

@@ -95,7 +95,7 @@
                                 @if ($cekchild1['jumlahchild'] == 0)
                                     <li class="nav-item">
                                         <a href="{{ route($menu->menu_route) }}" class="nav-link @yield('active-'.$route)">
-                                            <i class="fa {{ $menu->menu_icon }} nav-icon"></i> 
+                                            <i class="fas {{ $menu->menu_icon }} nav-icon"></i> 
                                             <p>
                                                 {{ $menu->menu_name }}
                                             </p>
@@ -125,7 +125,7 @@
                                                 @if ($cekchild2['jumlahchild'] == 0)
                                                     <li class="nav-item">
                                                         <a href="{{ route($child1->menu_route) }}" class="nav-link @yield('active-' .$routechild1)">
-                                                            <i class="fa {{ $child1->menu_icon }} nav-icon"></i>
+                                                            <i class="fas {{ $child1->menu_icon }} nav-icon"></i>
                                                             <p>{{ $child1->menu_name }}</p>
                                                         </a>
                                                     </li>
@@ -151,7 +151,7 @@
                                                                 @endphp
                                                                 <li class="nav-item">
                                                                     <a href="{{ route($child2->menu_route) }}" class="nav-link @yield('active-' .$routechild2)">
-                                                                        <i class="fa {{ $child2->menu_icon }} nav-icon"></i>
+                                                                        <i class="fas {{ $child2->menu_icon }} nav-icon"></i>
                                                                         <p>{{ $child2->menu_name }}</p>
                                                                     </a>
                                                                 </li>   
