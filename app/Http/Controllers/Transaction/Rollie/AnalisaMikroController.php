@@ -570,9 +570,9 @@ class AnalisaMikroController extends ResourceController
                                                     $palet  = $cppDetail->palets->where('start','<=',$hasil_analisa_mikro['jam_filling'])->where('end','<=',$hasil_analisa_mikro['jam_filling'])->last();
                                                 }
                                             }
-                                            if ($palet->analisa_mikro_status !== '0') 
+                                            if ($palet->analisa_mikro_30_status !== '0') 
                                             {
-                                                $palet->analisa_mikro_status    = $hasil_analisa_mikro['status_akhir'];
+                                                $palet->analisa_mikro_30_status    = $hasil_analisa_mikro['status_akhir'];
                                             }
                                             $palet->save();
                                         }
@@ -688,7 +688,7 @@ class AnalisaMikroController extends ResourceController
                                                 'ppq_id' => $ppq->id,
                                                 'palet_id' => $palet->id
                                             ]);
-                                            $palet->analisa_mikro_status    = '0';
+                                            $palet->analisa_mikro_30_status    = '0';
                                             $palet->save();
 
                                         }
@@ -738,13 +738,15 @@ class AnalisaMikroController extends ResourceController
                                             $palet  = $cppDetail->palets->where('start','<=',$hasil_analisa_mikro['jam_filling'])->where('end','<=',$hasil_analisa_mikro['jam_filling'])->last();
                                         }
                                     }
-                                    if ($palet->analisa_mikro_status !== '0') 
+                                    if ($palet->analisa_mikro_30_status !== '0') 
                                     {
-                                        $palet->analisa_mikro_status    = $hasil_analisa_mikro['status_akhir'];
+                                        $palet->analisa_mikro_30_status    = $hasil_analisa_mikro['status_akhir'];
                                     }
                                     $palet->save();
                                 }
                             }
+
+                            /* untuk note 55 nya belum ya tolong di remind */
                         }
                         /* ini untuk update status analisa 30 doang 55 nya masih di pending */
                         $list_ppq       = array();
@@ -856,7 +858,7 @@ class AnalisaMikroController extends ResourceController
                                         'ppq_id' => $ppq->id,
                                         'palet_id' => $palet->id
                                     ]);
-                                    $palet->analisa_mikro_status    = '0';
+                                    $palet->analisa_mikro_30_status    = '0';
                                     $palet->save();
 
                                 }

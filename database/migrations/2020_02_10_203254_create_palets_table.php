@@ -21,7 +21,8 @@ class CreatePaletsTable extends Migration
             $table->dateTime('end')->nullable();
             $table->smallInteger('jumlah_box')->nullable();
             $table->smallInteger('jumlah_pack')->nullable();
-            $table->enum('analisa_mikro_status', ['0', '1', '2', '3'])->nullable();
+            $table->enum('analisa_mikro_30_status', ['0', '1', '2', '3'])->nullable();
+            $table->enum('analisa_mikro_55_status', ['0', '1', '2', '3'])->nullable();
             $table->bigInteger('created_by')->comment('connected to user table');
             $table->bigInteger('updated_by')->comment('connected to user table')->nullable();
             $table->bigInteger('deleted_by')->comment('connected to user table')->nullable();

@@ -287,11 +287,27 @@ var ppq_produk_dashboard_table =  $('#ppq-produk-dashboard-table').dataTable({
 });
 
 var report_release_produk_dashboard =  $('#report-release-produk-dashboard').dataTable({
-    bFilter:false,
+    bFilter:true,
     bInfo:false,
     bLengthChange:false,
     pageLength:25,
     "scrollX":true,
+    aaSorting:[['1','asc']],
+    dom: 'Bfrtip',
+    columnDefs: [
+        {
+            targets: 1,
+            className: 'noVis'
+        }
+    ],
+    buttons: [
+        {
+            text: 'Filter Column',
+            extend: 'colvis',
+            columns: ':not(.noVis)'
+        }
+    ],
+    
     initComplete: function () {
         this.api().columns().every( function () {
             var column = this;
@@ -312,19 +328,4 @@ var report_release_produk_dashboard =  $('#report-release-produk-dashboard').dat
             } );
         } );
     },
-    aaSorting:[['1','asc']],
-    dom: 'Bfrtip',
-    columnDefs: [
-        {
-            targets: 1,
-            className: 'noVis'
-        }
-    ],
-    buttons: [
-        {
-            text: 'Filter Column',
-            extend: 'colvis',
-            columns: ':not(.noVis)'
-        }
-    ]
 });

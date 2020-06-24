@@ -51,9 +51,83 @@
                                             <td><?php echo e(substr($woNumber->cppHead->cppDetails[count($woNumber->cppHead->cppDetails)-1]->palets[count($woNumber->cppHead->cppDetails[count($woNumber->cppHead->cppDetails)-1]->palets)-1]->end,0,10)); ?></td>
                                             <td><?php echo e($palet->cppDetail->fillingMachine->filling_machine_code); ?></td>
                                             <td><?php echo e($palet->cppDetail->woNumber->product->subbrand->subbrand_name); ?></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <?php if($palet->analisa_mikro_30_status == '1'): ?>
+                                                <td class="bg-success">
+                                                    OK
+                                                </td>
+                                            <?php elseif($palet->analisa_mikro_30_status == '0'): ?>
+                                                <?php
+                                                    $analisaMikroResampling30    = $palet->cppDetail->cppHead->analisaMikro->analisaMikroResamplings->where('suhu_preinkubasi','30');  
+                                                ?>
+                                                <?php if($analisaMikroResampling30[count($analisaMikroResampling30)-1]->progress_status == '0'): ?>
+                                                    <td class="bg-warning">
+                                                        On Progress Resampling
+                                                    </td>
+                                                <?php else: ?>
+                                                    <?php if($analisaMikroResampling30[count($analisaMikroResampling30)-1]->analisa_mikro_status == '1'): ?>
+                                                        <td class="bg-sucess">
+                                                            Mikro Resampling OK
+                                                        </td>
+                                                    <?php else: ?>
+                                                        <td class="bg-danger">
+                                                            Mikro Resampling #OK
+                                                        </td>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            <?php elseif(is_null($palet->analisa_mikro_30_status)): ?> 
+                                                <td>
+                                                    Analisa Mikro Belum Dilakukan
+                                                </td>
+                                            <?php endif; ?>
+                                            <?php if($palet->analisa_mikro_55_status == '1'): ?>
+                                                <td class="bg-success">
+                                                    OK
+                                                </td>
+                                            <?php elseif($palet->analisa_mikro_55_status == '0'): ?>
+                                                <?php
+                                                    $analisaMikroResampling55    = $palet->cppDetail->cppHead->analisaMikro->analisaMikroResamplings->where('suhu_preinkubasi','55');  
+                                                ?>
+                                                <?php if($analisaMikroResampling55[count($analisaMikroResampling55)-1]->progress_status == '0'): ?>
+                                                    <td class="bg-warning">
+                                                        On Progress Resampling
+                                                    </td>
+                                                <?php else: ?>
+                                                    <?php if($analisaMikroResampling55[count($analisaMikroResampling55)-1]->analisa_mikro_status == '1'): ?>
+                                                        <td class="bg-sucess">
+                                                            Mikro Resampling OK
+                                                        </td>
+                                                    <?php else: ?>
+                                                        <td class="bg-danger">
+                                                            Mikro Resampling #OK
+                                                        </td>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            <?php elseif(is_null($palet->analisa_mikro_55_status)): ?> 
+                                                <td>
+                                                    Analisa Mikro Belum Dilakukan
+                                                </td>
+                                            <?php endif; ?>
+                                            <?php if(is_null($palet->cppDetail->cppHead->analisaKimia)): ?>
+                                                <td>Analisa Kimia Belum Dilakukan</td>
+                                            <?php else: ?>
+                                                <?php if($palet->cppDetail->cppHead->analisaKimia->progress_status == '0'): ?>
+                                                    <td class="bg-warning">
+                                                        On Progress Analisa
+                                                    </td>
+                                                <?php else: ?>
+                                                    <?php if($palet->cppDetail->cppHead->analisaKimia->analisa_kimia_status == '0'): ?>
+                                                        <?php if(): ?>
+                                                            
+                                                        <?php else: ?>
+                                                            
+                                                        <?php endif; ?>
+                                                    <?php else: ?>
+                                                        <td class="bg-sucess">
+                                                            OK
+                                                        </td>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -73,10 +147,10 @@
                                 <th>Tanggal Produksi</th>
                                 <th>Nomor WO</th>
                                 <th>Nomor Lot</th>
-                                <th>Tanggal Selesai Filling</th>
+                                <th >Tanggal Selesai Filling</th>
                                 <th>Mesin Filling</th>
                                 <th>Brand</th>
-                                <th>Mikro 30</th>
+                                <th class="filter-search">Mikro 30</th>
                                 <th>Mikro 55</th>
                                 <th>Kimia</th>
                                 <th>Sortasi</th>

@@ -123,8 +123,9 @@ class PpqController extends ResourceController
                 {
                     $status_akhir = '0';
                 }
+                $cppHead                = CppHead::find($this->decrypt($request->cpp_head_id));
                 $ppq                    = Ppq::create([
-                    'cpp_head_id'       => $this->decrypt($request->cpp_head_id),
+                    'cpp_head_id'       => $cppHead->id,
                     'nomor_ppq'         => $nomor_ppq,
                     'ppq_date'          => $tanggal_ppq,
                     'jam_awal_ppq'      => $jam_awal_ppq,
@@ -135,6 +136,8 @@ class PpqController extends ResourceController
                     'kategori_ppq_id'   => $kategori_ppq,
                     'status_akhir'      => $status_akhir
                 ]);
+                $cppHead->ppq_id        = $ppq->id;
+                $cppHead->save();
                 foreach ($lot_number_id as $lot_number) 
                 {
                     if ($lot_number !== "") 
