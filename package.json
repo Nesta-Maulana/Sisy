@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "admin-lte": "^3.0.5",
-        "animate.css": "^4.1.0"
+        "animate.css": "^4.1.0",
+        "laravel-mix-brotli": "^1.0.0"
     }
 }

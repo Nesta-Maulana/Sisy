@@ -18,4 +18,8 @@ class PaletPpq extends ResourceModel
     {
         return $this->belongsTo('App\Models\Transaction\Rollie\Palet', 'palet_id', 'id');
     }
+    public function ppq()
+    {
+        return $this->belongsTo('App\Models\Transaction\Rollie\Ppq', 'ppq_id', 'id');
+    }
 }

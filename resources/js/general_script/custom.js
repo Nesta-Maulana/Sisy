@@ -9,3 +9,5 @@ $('#icons').select2({
     templateResult: iformat,
     allowHtml: true
 });
+
+$('.select2').select2();

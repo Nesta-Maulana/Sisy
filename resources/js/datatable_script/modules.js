@@ -300,18 +300,11 @@ var report_release_produk_dashboard =  $('#report-release-produk-dashboard').dat
             className: 'noVis'
         }
     ],
-    buttons: [
-        {
-            text: 'Filter Column',
-            extend: 'colvis',
-            columns: ':not(.noVis)'
-        }
-    ],
-    
+    buttons: [ 'copy', 'csv','colvis' ],
     initComplete: function () {
         this.api().columns().every( function () {
             var column = this;
-            var select = $('<select class="form-control"><option value=""></option></select>')
+            var select = $('<select class="form-control select2"><option value=""></option></select>')
                 .appendTo( $(column.footer()).empty() )
                 .on( 'change', function () {
                     var val = $.fn.dataTable.util.escapeRegex(

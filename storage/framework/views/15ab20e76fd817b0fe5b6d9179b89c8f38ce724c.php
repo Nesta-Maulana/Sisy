@@ -16,8 +16,6 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo e(mix('css/master/app.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(mix('css/master/custom.css')); ?>">
-    
-    
     <?php echo $__env->yieldContent('extract-plugin-head'); ?>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">

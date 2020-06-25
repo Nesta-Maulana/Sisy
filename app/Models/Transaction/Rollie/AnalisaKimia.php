@@ -19,7 +19,7 @@ class AnalisaKimia extends ResourceModel
     {
         return $this->belongsTo('App\Models\Transaction\Rollie\CppHead', 'cpp_head_id', 'id');
     }
-    public function cppHead()
+    public function ppq()
     {
         return $this->belongsTo('App\Models\Transaction\Rollie\Ppq', 'ppq_id', 'id');
     }

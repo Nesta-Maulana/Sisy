@@ -21,13 +21,15 @@ mix.autoload({
 
 mix.sass('resources/sass/login_style.scss','public/css/login_style/app.css')
 .js('resources/js/login_script.js','public/js/login_script/app.js')
-.js('resources/js/login_script/front.js','public/js/login_script/app.js');
-mix.scripts(['node_modules/admin-lte/plugins/jquery/jquery.min.js','resources/js/login_script/custom.js'],'public/js/login_script/custom.js');
+.js('resources/js/login_script/front.js','public/js/login_script/app.js')
+.version();
+
+mix.scripts(['node_modules/admin-lte/plugins/jquery/jquery.min.js','resources/js/login_script/custom.js'],'public/js/login_script/custom.js').version();
 
 
 mix.js('resources/js/app.js', 'public/js/master/app.js')
 .js('resources/js/general_script/custom.js','public/js/master/app.js')
-.sass('resources/sass/app.scss', 'public/css/master');
+.sass('resources/sass/app.scss', 'public/css/master').version();
 
 mix.scripts([
     'node_modules/datatables.net/js/jquery.dataTables.min.js',
@@ -38,7 +40,7 @@ mix.scripts([
     'node_modules/datatables.net-buttons/js/buttons.colVis.min.js',
     'resources/js/datatable_script/modules.js'
 ], 'public/js/master/datatable.js')
-.sass('resources/sass/datatable.scss','public/css/master/datatable.css');
+.sass('resources/sass/datatable.scss','public/css/master/datatable.css').version();
 
 /*mix.scripts(['node_modules/admin-lte/plugins/jquery/jquery.min.js','resources/js/general_script/custom.js'],'public/js/master/custom.js');*/
-mix.styles(['resources/sass/general_style/custom.css'],'public/css/master/custom.css');
+mix.styles(['resources/sass/general_style/custom.css'],'public/css/master/custom.css').version();
