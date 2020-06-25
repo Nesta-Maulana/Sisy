@@ -67,6 +67,43 @@
                                             ?>
                                         <?php endif; ?>
                                     <?php break; ?>
+                                    <?php case ('4'): ?>
+                                        <?php if(is_null($wo_number->cppHead)): ?>
+                                            <?php
+                                                $status     = 'On Progress Filling';
+                                                $style      = 'background-color:#a6ffea;';
+                                            ?>
+                                        <?php else: ?>
+                                            <?php
+                                                $status     = 'On Progress Fillpack';
+                                                $style      = 'background-color:#00ffb8;';
+                                            ?>
+                                        <?php endif; ?>
+                                        <?php
+                                            $button     = 'Ke Form RPD Filling';
+                                            $classbtn   = 'btn btn-outline-primary';
+                                            $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
+                                        ?>
+                                        <?php if($wo_number->rpdFillingHead['rpd_status'] == '1'): ?> 
+                                            <?php
+                                                $status     = 'On Progress Packing';
+                                                $style      = 'background-color:#00ff7e;';
+                                                $button     = 'Closed RPD Filling';
+                                                $classbtn   = 'btn btn-outline-secondary';
+                                                $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
+                                            ?>
+                                        <?php endif; ?>
+                                    <?php break; ?>
+
+                                    <?php case ('5'): ?>
+                                        <?php
+                                            $status     = 'Closed Wo';
+                                            $style      = 'background-color:#00ff7e;';
+                                            $button     = 'Closed RPD Filling';
+                                            $classbtn   = 'btn btn-outline-secondary';
+                                            $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
+                                        ?>
+                                    <?php break; ?>
                                 <?php endswitch; ?>
                                 <tr style="<?php echo e($style); ?>">
                                     <td style="width:120px;" onclick="<?php echo e($onclick); ?>">
