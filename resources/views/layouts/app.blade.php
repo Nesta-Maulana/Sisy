@@ -16,8 +16,6 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ mix('css/master/app.css') }}">
     <link rel="stylesheet" href="{{ mix('css/master/custom.css') }}">
-    
-    
     @yield('extract-plugin-head')
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse ">
