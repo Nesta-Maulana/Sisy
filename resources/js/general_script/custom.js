@@ -10,4 +10,11 @@ $('#icons').select2({
     allowHtml: true
 });
 
-$('.select2').select2();
+$('.select2').select2({
+    dropdownAutoWidth : true,
+});
+
+function modals_open(modal_id) 
+{
+    $("#"+modal_id).modal();
+}

@@ -250,16 +250,58 @@ class RPDFillingController extends ResourceController
             {
                 case '0':
                     // jika non event hanya PI aja 
-                    $insertPi       = RpdFillingDetailPi::create([
-                        'rpd_filling_head_id'           => $rpd_filling_head_id,
-                        'wo_number_id'                  => $wo_number_id,
-                        'filling_date'                  => $filling_date,
-                        'filling_time'                  => $filling_time,
-                        'filling_machine_id'            => $filling_machine_id,
-                        'filling_sampel_code_id'        => $filling_sampel_code_id,
-                        'berat_kanan'                   => $berat_kanan,
-                        'berat_kiri'                    => $berat_kiri
-                    ]);
+                    $filling_machine            = FillingMachine::find($filling_machine_id);
+                    $filling_sampel_code        = FillingSampelCode::find($filling_sampel_code_id);
+                    if ($filling_sampel_code->pi < 1 && ($filling_machine->filling_machine_name == 'TBA' || $filling_machine->filling_machine_name == 'A3')) 
+                    {
+                        /*  jika iya maka analisa PInya akan otomatis terisi oleh ssistem by default */
+                        $insertPi                       = RpdFillingDetailPi::create([
+                            'rpd_filling_head_id'       => $rpd_filling_head_id,
+                            'wo_number_id'              => $wo_number_id,
+                            'filling_date'              => $filling_date,
+                            'filling_time'              => $filling_time,
+                            'filling_machine_id'        => $filling_machine_id,
+                            'filling_sampel_code_id'    => $filling_sampel_code_id,
+                            'berat_kanan'               => '000.00',
+                            'berat_kiri'                => '000.00',
+                            'airgap'                    => '-',
+                            'ts_accurate_kanan'         => '-',
+                            'ts_accurate_kiri'          => '-',
+                            'ls_accurate'               => '-',
+                            'sa_accurate'               => '-',
+                            'surface_check'             => '-',
+                            'pinching'                  => '-',
+                            'strip_folding'             => '-',
+                            'konduktivity_kanan'        => '-',
+                            'konduktivity_kiri'         => '-',
+                            'design_kanan'              => '-',
+                            'design_kiri'               => '-',
+                            'dye_test'                  => '-',
+                            'residu_h2o2'               => '-',
+                            'prod_code_and_no_md'       => '-',
+                            'correction'                => '-',
+                            'overlap'                   => '00.00',
+                            'ls_sa_proportion'          => '-',
+                            'volume_kanan'              => '0',
+                            'volume_kiri'               => '0',
+                            'status_akhir'              => 'OK'
+                        ]);
+
+                           
+                    }
+                    else
+                    {
+                        $insertPi       = RpdFillingDetailPi::create([
+                            'rpd_filling_head_id'           => $rpd_filling_head_id,
+                            'wo_number_id'                  => $wo_number_id,
+                            'filling_date'                  => $filling_date,
+                            'filling_time'                  => $filling_time,
+                            'filling_machine_id'            => $filling_machine_id,
+                            'filling_sampel_code_id'        => $filling_sampel_code_id,
+                            'berat_kanan'                   => $berat_kanan,
+                            'berat_kiri'                    => $berat_kiri
+                        ]);
+                    }
                     $cek        = $insertPi->rpdFillingHead->rpdFillingDetailPis->count();
                     if($cek > 2)
                     {
@@ -279,7 +321,7 @@ class RPDFillingController extends ResourceController
                     $filling_sampel_code        = FillingSampelCode::find($filling_sampel_code_id);
                     $filling_machine    = FillingMachine::find($filling_machine_id);
                     /*  disini dilakukan pengecekan apakah sampel tsb adalah sampel F dan diambil dari Mesin filling TBA atau A3 bukan */
-                    if (strpos($filling_sampel_code->filling_sampel_code,'F') !== false && ($filling_machine->filling_machine_name == 'TBA' || $filling_machine->filling_machine_name == 'A3') && $filling_sampel_code->filling_sampel_code !== 'F(D)' && $filling_sampel_code->filling_sampel_code !== 'F(B)') 
+                    if ($filling_sampel_code->pi && ($filling_machine->filling_machine_name == 'TBA' || $filling_machine->filling_machine_name == 'A3') ) 
                     {
                         /*  jika iya maka analisa PInya akan otomatis terisi oleh ssistem by default */
                         $insertPi                       = RpdFillingDetailPi::create([

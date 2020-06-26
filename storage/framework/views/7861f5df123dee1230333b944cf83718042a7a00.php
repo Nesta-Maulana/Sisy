@@ -16,7 +16,7 @@
                     <b>List Produk Fillpack</b>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered" id="rpd-filling-dashboard-table" >
+                    <table class="table table-bordered" id="rpd-filling-dashboard-table" style="min-width: 100%" >
                         <thead>
                             <tr class="text-center">
                                 <th scope="col" >Nomor Wo</th>

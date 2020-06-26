@@ -19,7 +19,7 @@
                             <button class="btn btn-info" data-toggle="modal" data-target="#editMtolModal" style="background-color: #00b8ff"><i class="fas fa-plus"></i>Upload Mtol</button>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <div class="form-group pull-right">
+                            <div class="form-group float-right">
                                 <a onclick="backToSchedulePage()" class="btn btn-outline-secondary"> <i class="fa fa-arrow-left"></i> Back To Schedule Page</a>
                                 <button type="submit" class="btn btn-primary" onclick="$('#approve-jadwal').submit()" id="button-finalize"><i class="fa fa-check"></i> &nbsp;Finalize Schedules</button>
                                 
@@ -54,7 +54,7 @@
                                                 <td style="display: none"><?php echo e($draft_schedule->production_plan_date); ?></td>
                                                 <td ><?php echo e($draft_schedule->production_plan_date); ?></td>
                                                 <td>
-                                                    <a data-toggle="modal" data-target="#prosesWoModal" onclick="setUpdateDataWo('draft','<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($draft_schedule->id)); ?>')" class="text-primary"><i class="fa fa-pencil"></i></a> &nbsp;|&nbsp; 
+                                                    <a data-toggle="modal" data-target="#prosesWoModal" onclick="setUpdateDataWo('draft','<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($draft_schedule->id)); ?>')" class="text-primary"><i class="fas fa-edit"></i></a> &nbsp;|&nbsp; 
                                                     <a class="text-danger" onclick="deleteWo('<?php echo e($draft_schedule->wo_number); ?>','<?php echo e($draft_schedule->product->product_name); ?>','<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($draft_schedule->id)); ?>')"><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
