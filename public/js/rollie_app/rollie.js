@@ -282,8 +282,8 @@ function backToSchedulePage()
 {
     var rowCount    = $('.tambah-jadwal').length;
     var checkActive = $('#production-schedule-draft-table tbody tr').hasClass("show");
-    console.log(rowCount);
-    console.log(checkActive);
+    // console.log(rowCount);
+    // console.log(checkActive);
     if (rowCount > 1 && (checkActive !== false)) 
     {
         Swal.fire({
@@ -446,6 +446,7 @@ window.location.href = id.value;
             }
         });
     }
+
 /* end pop up tambah batch */
 /* start pop up tambah sampel*/
    /* ini untuk mengambil kode analisa berdasarkan mesin filling yang dipilih*/
@@ -491,9 +492,9 @@ window.location.href = id.value;
                 dataType: 'JSON',
                 success : function(data) 
                 {
-                    if (data.filling_sampel_code.indexOf('F') > -1 && event_sampel == '1' && (mesin_filling == 'MjE0SUJ1N0VKR3hPbTZJU1p2alBJUT09' || mesin_filling == 'TTcrSFIrTm9OL3A4SzJDKzBNN3lCQT09') && data.filling_sampel_code !== 'F(B)' && data.filling_sampel_code !== 'F(D)' ) 
+                    if (data.pi < 1 /* && event_sampel == '1' */ && (mesin_filling == 'MjE0SUJ1N0VKR3hPbTZJU1p2alBJUT09' || mesin_filling == 'TTcrSFIrTm9OL3A4SzJDKzBNN3lCQT09')) 
                     {
-                        /*apabila kode sampel yang diambil adalah sampel F dan mesin fillinya adalah TBA dan A3 maka berat kanan dan berat kiri tidak dianalisa dan didefatult 000.00*/
+                        /* apabila yang ditambahkan tidak mengambil PI berarti analisa akan otomatis terisi oleh sistem. Ini mengacu ke tabel Filling Sampel Code column PI */
                         $('#berat_kanan_sampel').val('000.00');
                         $('#berat_kiri_sampel').val('000.00');
                         $('#berat_kanan_div').hide();
@@ -501,6 +502,7 @@ window.location.href = id.value;
                     }
                     else
                     {
+                        // console.log('ada apa');
                         $('#berat_kanan_sampel').val('');
                         $('#berat_kiri_sampel').val('');
                         $('#berat_kanan_div').show();
@@ -513,6 +515,7 @@ window.location.href = id.value;
     }
     function hapusDataPopupTambahSampel()
     {
+        
         $('#nomor_wo_sampel option').prop('selected', function() {
             return this.defaultSelected;
         });
@@ -532,6 +535,7 @@ window.location.href = id.value;
         $('#berat_kanan_sampel').val('');
         $('#berat_kiri_sampel').val('');
         $('#save_to_draft_pi').attr('disabled',false);
+        
 
     }
     function tambahSampelAnalisa(nomorwo,mesinfilling,tanggalfilling,jamfilling,kodeanalisa,keteranganevent,beratkanan,beratkiri,id_user,id_rpd_head) 
@@ -644,7 +648,7 @@ function refreshTablePi()
                         {    
                             isitable    += '<div class="col-lg-6 col-md-12 col-sm-12">';
                             isitable    += '<div class="form-group">';
-                            isitable    += '<button data-toggle="modal" class="btn btn-info form-control"  data-target="#analisaSampleAtEvent" onclick="analisa_sampel_at_event(\''+data.rpdFillingDetailPi_nya[i].kode_sampel+'\',\''+data.rpdFillingDetailPi_nya[i].event+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling+'\',\''+data.rpdFillingDetailPi_nya[i].tanggal_filling+'\',\''+data.rpdFillingDetailPi_nya[i].jam_filling+'\',\''+data.rpdFillingDetailPi_nya[i].detail_id_enkripsi+'\',\''+data.rpdFillingDetailPi_nya[i].wo_id+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling_id+'\')"> <i class="fas fa-file-signature"></i> </button>';
+                            isitable    += '<button class="btn btn-info form-control"  onclick="analisa_sampel_at_event(\''+data.rpdFillingDetailPi_nya[i].kode_sampel+'\',\''+data.rpdFillingDetailPi_nya[i].event+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling+'\',\''+data.rpdFillingDetailPi_nya[i].tanggal_filling+'\',\''+data.rpdFillingDetailPi_nya[i].jam_filling+'\',\''+data.rpdFillingDetailPi_nya[i].detail_id_enkripsi+'\',\''+data.rpdFillingDetailPi_nya[i].wo_id+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling_id+'\');getPopUp("analisaSampleAtEvent")"> <i class="fas fa-file-signature"></i> </button>';
                             isitable    += '</div>';
                             isitable    += '</div>';
 
@@ -668,7 +672,7 @@ function refreshTablePi()
                         {
                             isitable    += '<div class="col-lg-6 col-md-12 col-sm-12">';
                             isitable    += '<div class="form-group">';
-                            isitable    += '<button data-toggle="modal" data-target="#analisaPiSampelModal" class="btn btn-primary form-control" onclick="analisa_sampel_pi(\''+data.rpdFillingDetailPi_nya[i].kode_sampel+'\',\''+data.rpdFillingDetailPi_nya[i].event+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling+'\',\''+data.rpdFillingDetailPi_nya[i].tanggal_filling+'\',\''+data.rpdFillingDetailPi_nya[i].jam_filling+'\',\''+data.rpdFillingDetailPi_nya[i].detail_id_enkripsi+'\',\''+data.rpdFillingDetailPi_nya[i].nama_produk+'\',\''+data.rpdFillingDetailPi_nya[i].wo_id+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling_id+'\')"> <i class="fas fa-file-signature"></i> </button>';
+                            isitable    += '<button class="btn btn-primary form-control" onclick="analisa_sampel_pi(\''+data.rpdFillingDetailPi_nya[i].kode_sampel+'\',\''+data.rpdFillingDetailPi_nya[i].event+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling+'\',\''+data.rpdFillingDetailPi_nya[i].tanggal_filling+'\',\''+data.rpdFillingDetailPi_nya[i].jam_filling+'\',\''+data.rpdFillingDetailPi_nya[i].detail_id_enkripsi+'\',\''+data.rpdFillingDetailPi_nya[i].nama_produk+'\',\''+data.rpdFillingDetailPi_nya[i].wo_id+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling_id+'\');getPopUp("analisaPiSampelModal")"> <i class="fas fa-file-signature"></i> </button>';
                             isitable    += '</div>';
                             isitable    += '</div>';
                         }
@@ -1479,7 +1483,6 @@ function analisa_sampel_pi(kode_sampel,event_sampel,mesin_filling,tanggal_fillin
             kode_sampel_baru    = kode_sampel.split('(');
             kode_sampel         = kode_sampel_baru[0];
         }
-        console.log(kode_sampel);
         switch(kode_sampel)
         {
             case 'B':
@@ -3518,7 +3521,7 @@ function closeCppProduct()
                         {
                             due_date_corrective_action.push(this.value);
                         });
-                        console.log(due_date_corrective_action);
+                        // console.log(due_date_corrective_action);
 
                         var  status_corrective_action          = [];
                         $('select[name^="status_corrective_action"]').each(function()
@@ -3744,7 +3747,7 @@ function closeCppProduct()
                 {
                     due_date_corrective_action.push(this.value);
                 });
-                console.log(due_date_corrective_action);
+                // console.log(due_date_corrective_action);
 
                 var  status_corrective_action          = [];
                 $('select[name^="status_corrective_action"]').each(function()

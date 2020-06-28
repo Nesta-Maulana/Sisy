@@ -39,7 +39,7 @@
                             <div class="col-md-12 col-lg-12 col-sm-12">
                                 <div class="row form-group left">
                                     <label class="col-md-3 col-lg-3 col-sm-3">Nama Produk</label>
-                                    <input type="text" value="{{ $rpdFillingHead->woNumbers[0]->product->product_name }}" class="form-control col-md-6 col-sm-6 col-lg-6" readonly>
+                                    <input type="text" value="{{ $rpdFillingHead->woNumbers[0]->product->product_name }}" class="form-control col-md-6 col-sm-6 col-lg-6" id="nama_produk" readonly >
                                 </div>
                                 <div class="row form-group left">
                                     <label class="col-md-3 col-lg-3 col-sm-3">Tanggal Produksi</label>
@@ -56,17 +56,17 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <button onclick="window.location.href='draft-ppq-filling/{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}'" class="btn btn-outline-secondary form-control">
-                                    Lihat Draft PPQ
+                                    <i class="fas fa-eye"></i> Draft PPQ
                                 </button>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4">
                                 <button data-toggle="modal" data-target="#tambahBatchFillingModal" class="btn btn-outline-primary  form-control">
-                                    Tambah Batch / Wo
+                                    <i class="fas fa-plus"></i> Batch / Wo
                                 </button>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4">
-                                <a data-toggle="modal" data-target="#tambahPiSampelModal" onclick="hapusDataPopupTambahSampel()" class="btn btn-primary text-white form-control">
-                                    Tambah Sample
+                                <a id="tambahsampelbutton" {{-- data-toggle="modal" data-target="#tambahPiSampelModal" --}}  onclick="hapusDataPopupTambahSampel();getPopUp('tambahPiSampelModal')" class="btn btn-primary text-white form-control">
+                                    <i class="fas fa-plus"></i> Sample
                                 </a>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                                                     <th scope="col" >Mesin Filling</th>
                                                     <th scope="col" style="display: none;">Tanggal Filling</th>
                                                     <th scope="col" >Jam Filling</th>
-                                                    <th scope="col" >Jenis Sample</th>
+                                                    <th scope="col" >Sample</th>
                                                     @if (Session::get('ubah') == 'show' || Session::get('hapus') == 'show')
                                                         <th scope="col" >Aksi</th>
                                                     @endif
@@ -107,7 +107,7 @@
                                                                 @if (Session::get('ubah') == 'show')
                                                                 <div class="col-lg-6 col-md-12 col-sm-12">
                                                                     <div class="form-group">
-                                                                        <button data-toggle="modal" data-target="#analisaPiSampelModal" class="btn btn-primary form-control " onclick="analisa_sampel_pi('{{ $detail_pi->fillingSampelCode->filling_sampel_code }}','{{ ucwords($detail_pi->fillingSampelCode->filling_sampel_event) }}','{{ $detail_pi->fillingMachine->filling_machine_code }}','{{ $detail_pi->filling_date }}','{{ $detail_pi->filling_time }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_pi->id) }}','{{ $detail_pi->woNumber->product->product_name }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_pi->woNumber->id) }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_pi->fillingMachine->id) }}')">
+                                                                        <button {{-- data-toggle="modal" data-target="#analisaPiSampelModal" --}} class="btn btn-primary form-control " onclick="analisa_sampel_pi('{{ $detail_pi->fillingSampelCode->filling_sampel_code }}','{{ ucwords($detail_pi->fillingSampelCode->filling_sampel_event) }}','{{ $detail_pi->fillingMachine->filling_machine_code }}','{{ $detail_pi->filling_date }}','{{ $detail_pi->filling_time }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_pi->id) }}','{{ $detail_pi->woNumber->product->product_name }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_pi->woNumber->id) }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_pi->fillingMachine->id) }}');getPopUp('analisaPiSampelModal')">
                                                                             <i class="fas fa-file-signature"></i>
                                                                         </button>
                                                                     </div>
@@ -140,7 +140,7 @@
                                                                 @if (Session::get('ubah') == 'show')
                                                                 <div class="col-lg-6 col-md-12 col-sm-12">
                                                                     <div class="form-group">
-                                                                        <button data-toggle="modal" data-target="#analisaSampleAtEvent" class="btn btn-info form-control" onclick="analisa_sampel_at_event('{{ $detail_at_event->fillingSampelCode->filling_sampel_code }}','{{ ucwords($detail_at_event->fillingSampelCode->filling_sampel_event) }}','{{ $detail_pi->fillingMachine->filling_machine_code }}','{{ $detail_at_event->filling_date }}','{{ $detail_at_event->filling_time }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_at_event->id) }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_at_event->woNumber->id) }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_at_event->fillingMachine->id) }}','{{$detail_at_event->woNumber->product->product_name}}')">
+                                                                        <button {{-- data-toggle="modal" data-target="#analisaSampleAtEvent" --}} class="btn btn-info form-control" onclick="analisa_sampel_at_event('{{ $detail_at_event->fillingSampelCode->filling_sampel_code }}','{{ ucwords($detail_at_event->fillingSampelCode->filling_sampel_event) }}','{{ $detail_pi->fillingMachine->filling_machine_code }}','{{ $detail_at_event->filling_date }}','{{ $detail_at_event->filling_time }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_at_event->id) }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_at_event->woNumber->id) }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($detail_at_event->fillingMachine->id) }}','{{$detail_at_event->woNumber->product->product_name}}');getPopUp('analisaSampleAtEvent')">
                                                                             <i class="fas fa-file-signature"></i>
                                                                         </button>
                                                                     </div>
@@ -165,7 +165,7 @@
                                             <div class="col-lg-8 col-md-8 col-sm-8"></div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
                                                 <div class="form-group">
-                                                    <button class="btn btn-primary form-control" onclick="closeRpdFilling('{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}')">Close RPD Filling</button>
+                                                    <button class="btn btn-primary form-control" onclick="closeRpdFilling('{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}')"><i class="fas fa-spell-check"></i> Close RPD</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -261,4 +261,16 @@
         }); 
     </script> 
     <script type="text/javascript" src="{{ asset('datetime-picker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('js/rollie_app/jquery-3.3.1.min.js') }}"></script> --}}
+    <script type="text/javascript" src="{{ asset('js/rollie_app/bootstrap.min.js') }}"></script>
+    <script>
+        function getPopUp(modal_id) 
+        {
+            $('#nama_produk').focus();
+            setTimeout(function(){ 
+                $('#'+modal_id).modal('show');
+            },500);
+        }
+    </script>
+
 @endsection

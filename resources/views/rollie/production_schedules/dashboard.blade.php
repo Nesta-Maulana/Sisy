@@ -15,7 +15,7 @@
                            Jadwal Produksi Aktif
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 {{Session::get('tambah')}}">
-                            <div class="form-group pull-right">
+                            <div class="form-group float-right">
                                 <a class="btn btn-primary" href='jadwal-produksi/tambah-jadwal'><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Tambah Jadwal Produksi</a>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                         <table class="table table-bordered" id="production-schedules-table" >
                             <thead>
                                 <tr class="text-center">
-                                    <th style="" class="@if (Session::get('hapus') == 'show' || Session::get('ubah') == 'show')
+                                    <th style="width:40px" class="@if (Session::get('hapus') == 'show' || Session::get('ubah') == 'show')
                                         show
                                     @else
                                         hidden
@@ -105,10 +105,8 @@
                                         @if ($status == 'Canceled')
                                             
                                         @else
-                                            
                                             @if (Session::get('ubah') == 'show')
-                                                <a class="text-primary" onclick="setUpdateDataWo('realisation','{{ app('App\Http\Controllers\ResourceController')->encrypt($schedule->id) }}')" data-toggle="modal" data-target="#prosesWoModal"> <i class="fa fa-pencil"></i></a>
-                                                &nbsp;<a class="text-danger" onclick="deleteWo('{{ $schedule->wo_number }}','{{ $schedule->product->product_name}}','{{ app('App\Http\Controllers\ResourceController')->encrypt($schedule->id) }}')"> <i class="fa fa-trash"></i></a>
+                                                <a class="text-primary" onclick="setUpdateDataWo('realisation','{{ app('App\Http\Controllers\ResourceController')->encrypt($schedule->id) }}')" data-toggle="modal" data-target="#prosesWoModal"> <i class="fa fa-edit"></i></a>&nbsp;|&nbsp;<a class="text-danger" onclick="deleteWo('{{ $schedule->wo_number }}','{{ $schedule->product->product_name}}','{{ app('App\Http\Controllers\ResourceController')->encrypt($schedule->id) }}')"> <i class="fa fa-trash"></i></a>
                                             @endif
                                         @endif
                                     </td>
