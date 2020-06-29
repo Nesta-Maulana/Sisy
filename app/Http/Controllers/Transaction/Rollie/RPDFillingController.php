@@ -664,7 +664,7 @@ class RPDFillingController extends ResourceController
                     $volume_kanan       >= 198 && 
                     $volume_kiri        >= 198 && 
                     (
-                        $overlap >= 3.5 || 
+                        $overlap >= 3.5 && 
                         $overlap <= 4.5
                     )
                 ) 
@@ -700,6 +700,7 @@ class RPDFillingController extends ResourceController
         $rpd_filling_detail_pi->volume_kiri           = $volume_kiri;
         $rpd_filling_detail_pi->status_akhir          = $status_akhir;
         $rpd_filling_detail_pi->save();
+        // dd($status_akhir_validasi);
         if ($status_akhir_validasi == 'OK' && $status_akhir == 'OK') 
         {
             /* apabila status akhirnya OK maka dia akan mengecek dulu apakah dia analisa sampel pertama atau bukan */

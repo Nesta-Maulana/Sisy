@@ -190,7 +190,7 @@ class MasterAppController extends ResourceController
 		if ($cekAkses['success']) 
 		{
 			$flowmeterWorkcenters 	= FlowmeterWorkcenter::all();
-			$flowmeterCategories 	= FlowmeterCategory::all();
+			$flowmeterCategories 	= FlowmeterCategory::where('is_active','1')->get();
 			return view('master_app.manage_flowmeter_workcenter.dashboard',['menus'=>$this->menus,'flowmeterWorkcenters'=>$flowmeterWorkcenters,'flowmeterCategories'=>$flowmeterCategories]);
 		} 
 		else 
@@ -218,8 +218,9 @@ class MasterAppController extends ResourceController
 		$cekAkses 		= $this->checkAksesLihat(\Request::getRequestUri(),'master_app.master_data.manage_flowmeter_locations');
 		if ($cekAkses['success']) 
 		{
+			$flowmeterCategories 	= FlowmeterCategory::where('is_active','1')->get();
 			$flowmeterLocations 	= FlowmeterLocation::all();
-			return view('master_app.manage_flowmeter_location.dashboard',['menus'=>$this->menus,'flowmeterLocations'=>$flowmeterLocations]);
+			return view('master_app.manage_flowmeter_location.dashboard',['menus'=>$this->menus,'flowmeterLocations'=>$flowmeterLocations,'flowmeterCategories'=>$flowmeterCategories]);
 		} 
 		else 
 		{

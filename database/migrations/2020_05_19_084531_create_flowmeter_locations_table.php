@@ -11,6 +11,7 @@ class CreateFlowmeterLocationsTable extends Migration
         Schema::connection('master_data')->create('flowmeter_locations', function (Blueprint $table)
         {
             $table->bigIncrements('id');
+            $table->bigInteger('flowmeter_category_id');
             $table->char('flowmeter_location', 30);
             $table->boolean('is_active')->comment('0 = inactive ; 1 = active');
             $table->bigInteger('created_by')->comment('connected to user table');

@@ -176,11 +176,12 @@ class PpqController extends ResourceController
         $cekAkses       = $this->checkAksesUbah(\Request::getRequestUri(),'rollie.process_data.rpds');
         if ($cekAkses == true) 
         {
+            // dd($request->all());
             $ppq                        = Ppq::find($this->decrypt($request->ppq_id));
             $ppq->jumlah_pack           = $request->jumlah_pack;
             $ppq->alasan                = $request->alasan_ppq;
             $ppq->detail_titik_ppq      = $request->detail_titik_ppq;
-            $ppq->kategori_ppq          = $request->kategori_ppq;
+            $ppq->kategori_ppq_id       = $this->decrypt($request->kategori_ppq);
             $ppq->status_akhir          = '0';
             $ppq->save();
 

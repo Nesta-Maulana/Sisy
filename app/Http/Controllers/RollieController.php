@@ -205,7 +205,7 @@ class RollieController extends ResourceController
 		{
 			$getPalet               = null;
 			$jumlahpack             = 0;
-			$palets 				= 0;
+			$palets 				= NULL;
 		} 
 		else 
 		{
@@ -291,6 +291,7 @@ class RollieController extends ResourceController
 	            }
 			}
 		}
+		// dd($palets);
 		$params 		= $this->encrypt('rpds');
 		$parent_menu 	= 'data-proses';
 		$route 			= 'rollie-process-data-rpds';
@@ -406,12 +407,16 @@ class RollieController extends ResourceController
 					            	]);
 				            		$jumlah_pack += $palet->jumlah_pack;
 				            	}
+				            	$ppq->jumlah_pack = $jumlah_pack;
+				            	$ppq->save();
 				            }
 
 						}
 					}
             	}
-				return view('rollie.rpd_filling.form-draft-ppq',['menus'=>$this->menus,'ppqs'=>$ppqs,'rpdFillingHead'=>$rpdFillingHead]);
+
+            	$kategoriPpqs 	= KategoriPpq::where('is_active','1')->where('jenis_ppq_id','1')->get();
+				return view('rollie.rpd_filling.form-draft-ppq',['menus'=>$this->menus,'ppqs'=>$ppqs,'rpdFillingHead'=>$rpdFillingHead,'kategoriPpqs'=>$kategoriPpqs]);
             } 
             else 
             {
@@ -1362,5 +1367,9 @@ class RollieController extends ResourceController
 	{
 		$woNumbers 	= WoNumber::whereIn('wo_status',['4','5'])->get();
 		return view('rollie.reports.rpr.dashboard',['menus'=>$this->menus,'woNumbers'=>$woNumbers]);
+	}
+	public function showReportRpdDashboard()
+	{
+		return view('rollie.reports.rpd_filling.dashboard',['menus'=>$this->menus]);
 	}
 }

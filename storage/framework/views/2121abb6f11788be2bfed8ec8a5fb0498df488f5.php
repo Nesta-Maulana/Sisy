@@ -19,7 +19,7 @@
 					    	<div class="card-header bg-dark" id="ppq<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($ppq->id)); ?>" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 						      	<h5 class="mt-2">
 					        		PPQ PI <?php echo e($ppq->nomor_ppq); ?>		
-						        	<span class="pull-right" style="font-size: 30px;transform: rotate(90deg);">&#10145;</span>
+						        	<span class="float-right" style="font-size: 30px;transform: rotate(90deg);">&#10145;</span>
 						      	</h5>
 						    </div>
 						    <div id="collapseOne" class="collapse" aria-labelledby="ppq<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($ppq->id)); ?>" data-parent="#accordionExample">
@@ -53,7 +53,8 @@
 					                        </div>
 						                    <div class="form-group">
 						                        <label for="">Nomor LOT</label>
-						                        <?php if(!is_null($ppq->palets)): ?>
+												
+						                        <?php if(count($ppq->palets) > 0): ?>
 						                            <input type="text" class="form-control" id="nomor_lot_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($ppq->id)); ?>" value="<?php $__currentLoopData = $ppq->palets; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $palet_ppq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><?php echo e($palet_ppq->palet->cppDetail->lot_number); ?>-<?php echo e($palet_ppq->palet->palet); ?>, <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>" readonly>
 						                        <?php else: ?>
 						                            <textarea class="form-control text-white" style="background-color: red" id="nomor_lot_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($ppq->id)); ?>" cols="30" rows="2" readonly>Palet belum tersedia, harap hubungi tim packing untuk segera mengisi form packing dan memisahkan pack PPQ</textarea>
@@ -101,14 +102,9 @@
 						                        <label for="">Kategori PPQ : </label>
 						                        <select id="kategori_ppq_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($ppq->id)); ?>" class="form-control" required>
 						                            <option value="" selected disabled> Pilih Kategori PPQ </option>
-						                            <option value="0" <?php if($ppq->kategori_ppq == '0'): ?> selected <?php endif; ?>> Man </option>
-						                            <option value="1" <?php if($ppq->kategori_ppq == '1'): ?> selected <?php endif; ?>> Machine </option>
-						                            <option value="2" <?php if($ppq->kategori_ppq == '2'): ?> selected <?php endif; ?>> Methode </option>
-						                            <option value="3" <?php if($ppq->kategori_ppq == '3'): ?> selected <?php endif; ?>> Material </option>
-						                            <option value="4" <?php if($ppq->kategori_ppq == '4'): ?> selected <?php endif; ?>> Environment </option>
-						                            <option value="5" <?php if($ppq->kategori_ppq == '5'): ?> selected <?php endif; ?>> Sortasi </option>
-						                            <option value="6" <?php if($ppq->kategori_ppq == '6'): ?> selected <?php endif; ?>> Miss Handling </option>
-						                            <option value="7" <?php if($ppq->kategori_ppq == '7'): ?> selected <?php endif; ?>> Lain-lain </option>
+						                            <?php $__currentLoopData = $kategoriPpqs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kategoriPpq): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+						                            	<option value="<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($kategoriPpq->id)); ?>" <?php if($ppq->kategori_ppq_id == $kategoriPpq->id): ?> selected <?php endif; ?>> <?php echo e($kategoriPpq->kategori_ppq); ?> </option>
+						                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						                        </select>
 						                    </div>
 						                    
@@ -149,9 +145,9 @@
 							</div>
 						</div>
 						<div class="row mt-3">
-							<div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center">
-								<div class="form-group">
-									<button class="btn btn-outline-secondary" onclick="window.location.href='/rollie/rpd-filling/form/list-ppq-pi/<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id)); ?>'">Go To List Done PPQ PI <?php echo e($rpdFillingHead->product->product_name); ?></button>
+							<div class="col-lg-12 col-md-12 col-sm-12 ">
+								<div class="form-group d-flex justify-content-center">
+									<button class="btn btn-outline-secondary" onclick="window.location.href='/rollie/rpd-filling/form/list-ppq-pi/<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id)); ?>'">Go To List Done PPQ PI <?php echo e($rpdFillingHead->product->product_name); ?></button> &nbsp;
 									<button class="btn btn-outline-primary" onclick="window.location.href='/rollie/rpd-filling/form/<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id)); ?>'">Back To RPD Filling Product <?php echo e($rpdFillingHead->product->product_name); ?></button>
 								</div>
 							</div>

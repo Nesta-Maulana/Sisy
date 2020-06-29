@@ -549,7 +549,8 @@
                     $('#button_batal').show();
                     $('#flowmeter_unit_id').val(data.enkripsi_id);
                     $('#flowmeter_unit').val(data.flowmeter_unit);
-                    $('#is_active').val(data.is_active).trigger('change')
+                    $('#is_active').val(data.is_active).trigger('change');
+
                 }
                 else
                 {
@@ -578,7 +579,8 @@
                     $('#button_batal').show();
                     $('#flowmeter_location_id').val(data.enkripsi_id);
                     $('#flowmeter_location').val(data.flowmeter_location);
-                    $('#is_active').val(data.is_active).trigger('change')
+                    $('#is_active').val(data.is_active).trigger('change');
+                    $('#flowmeter_category_id').val(data.enkripsi_flowmeter_category_id).trigger('change');
                 }
                 else
                 {

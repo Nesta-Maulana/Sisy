@@ -19,7 +19,7 @@
 					    	<div class="card-header bg-dark" id="ppq{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->id) }}" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 						      	<h5 class="mt-2">
 					        		PPQ PI {{ $ppq->nomor_ppq }}		
-						        	<span class="pull-right" style="font-size: 30px;transform: rotate(90deg);">&#10145;</span>
+						        	<span class="float-right" style="font-size: 30px;transform: rotate(90deg);">&#10145;</span>
 						      	</h5>
 						    </div>
 						    <div id="collapseOne" class="collapse" aria-labelledby="ppq{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->id) }}" data-parent="#accordionExample">
@@ -53,7 +53,8 @@
 					                        </div>
 						                    <div class="form-group">
 						                        <label for="">Nomor LOT</label>
-						                        @if (!is_null($ppq->palets))
+												
+						                        @if (count($ppq->palets) > 0)
 						                            <input type="text" class="form-control" id="nomor_lot_{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->id) }}" value="@foreach ($ppq->palets as $palet_ppq){{  $palet_ppq->palet->cppDetail->lot_number }}-{{ $palet_ppq->palet->palet }}, @endforeach" readonly>
 						                        @else
 						                            <textarea class="form-control text-white" style="background-color: red" id="nomor_lot_{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->id) }}" cols="30" rows="2" readonly>Palet belum tersedia, harap hubungi tim packing untuk segera mengisi form packing dan memisahkan pack PPQ</textarea>
@@ -101,14 +102,9 @@
 						                        <label for="">Kategori PPQ : </label>
 						                        <select id="kategori_ppq_{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->id) }}" class="form-control" required>
 						                            <option value="" selected disabled> Pilih Kategori PPQ </option>
-						                            <option value="0" @if ($ppq->kategori_ppq == '0') selected @endif> Man </option>
-						                            <option value="1" @if ($ppq->kategori_ppq == '1') selected @endif> Machine </option>
-						                            <option value="2" @if ($ppq->kategori_ppq == '2') selected @endif> Methode </option>
-						                            <option value="3" @if ($ppq->kategori_ppq == '3') selected @endif> Material </option>
-						                            <option value="4" @if ($ppq->kategori_ppq == '4') selected @endif> Environment </option>
-						                            <option value="5" @if ($ppq->kategori_ppq == '5') selected @endif> Sortasi </option>
-						                            <option value="6" @if ($ppq->kategori_ppq == '6') selected @endif> Miss Handling </option>
-						                            <option value="7" @if ($ppq->kategori_ppq == '7') selected @endif> Lain-lain </option>
+						                            @foreach ($kategoriPpqs as $kategoriPpq)
+						                            	<option value="{{ app('App\Http\Controllers\ResourceController')->encrypt($kategoriPpq->id) }}" @if ($ppq->kategori_ppq_id == $kategoriPpq->id) selected @endif> {{ $kategoriPpq->kategori_ppq }} </option>
+						                            @endforeach
 						                        </select>
 						                    </div>
 						                    
@@ -149,9 +145,9 @@
 							</div>
 						</div>
 						<div class="row mt-3">
-							<div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-center">
-								<div class="form-group">
-									<button class="btn btn-outline-secondary" onclick="window.location.href='/rollie/rpd-filling/form/list-ppq-pi/{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}'">Go To List Done PPQ PI {{ $rpdFillingHead->product->product_name }}</button>
+							<div class="col-lg-12 col-md-12 col-sm-12 ">
+								<div class="form-group d-flex justify-content-center">
+									<button class="btn btn-outline-secondary" onclick="window.location.href='/rollie/rpd-filling/form/list-ppq-pi/{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}'">Go To List Done PPQ PI {{ $rpdFillingHead->product->product_name }}</button> &nbsp;
 									<button class="btn btn-outline-primary" onclick="window.location.href='/rollie/rpd-filling/form/{{ app('App\Http\Controllers\ResourceController')->encrypt($rpdFillingHead->id) }}'">Back To RPD Filling Product {{ $rpdFillingHead->product->product_name }}</button>
 								</div>
 							</div>

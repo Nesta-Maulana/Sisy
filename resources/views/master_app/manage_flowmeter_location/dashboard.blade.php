@@ -21,6 +21,15 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="form-group">
+                                    <label for="flowmeter_category_id">Kategori Flowmeter</label>
+                                    <select name="flowmeter_category_id" id="flowmeter_category_id" class="form-control">
+                                        <option value="0" disabled selected>-- Harap Pilih Kategori Flowmeter --</option>
+                                        @foreach ($flowmeterCategories as $flowmeterCategory)
+                                            <option value="{{ app('App\Http\Controllers\ResourceController')->encrypt($flowmeterCategory->id) }}">{{ $flowmeterCategory->flowmeter_category }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="flowmeter_location">Lokasi Flowmeter</label>
                                     <input type="text" name="flowmeter_location" id="flowmeter_location" class="form-control">
                                     <input type="hidden" name="flowmeter_location_id" id="flowmeter_location_id" class="form-control">

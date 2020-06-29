@@ -10,8 +10,9 @@ class FlowmeterLocationController extends ResourceController
     public function manageFlowmeterLocation(Request $request)
     {
         $flowmeter_location_id          = $this->decrypt($request->flowmeter_location_id);
+        $flowmeter_category_id          = $this->decrypt($request->flowmeter_category_id);
         $flowmeter_location             = $request->flowmeter_location;
-        $is_active                  = $request->is_active;
+        $is_active                      = $request->is_active;
 
         if (is_null($request->flowmeter_location_id)) 
         {
@@ -19,12 +20,13 @@ class FlowmeterLocationController extends ResourceController
             $cekAkses   = $this->checkAksesTambah(\Request::getRequestUri(),'master_app.master_data.manage_flowmeter_locations');
             if ($cekAkses['success']) 
             {
-                $checkData              = FlowmeterLocation::where('flowmeter_location',$flowmeter_location)->first();
+                $checkData              = FlowmeterLocation::where('flowmeter_location',$flowmeter_location)->where('flowmeter_category_id',$flowmeter_category_id)->first();
                 if (is_null($checkData)) 
                 {
                     // ini untuk penginputan data nya
                     FlowmeterLocation::create([
-                        'flowmeter_location'            => $flowmeter_location,
+                        'flowmeter_category_id'     => $flowmeter_category_id,
+                        'flowmeter_location'        => $flowmeter_location,
                         'is_active'                 => $is_active
                     ]);
                     return redirect(route('master_app.master_data.manage_flowmeter_locations'))->with('success','Workcenter Flowmeter Baru : '.$flowmeter_location.' Berhasil ditambahkan');
@@ -47,12 +49,14 @@ class FlowmeterLocationController extends ResourceController
             if ($cekAkses['success'])
             {
                 $flowmeter_location_id                              = $request->flowmeter_location_id;
+                $flowmeter_category_id                              = $request->flowmeter_category_id;
                 $flowmeter_location                                 = $request->flowmeter_location;
-                $is_active                                      = $request->is_active;
-                $flowmeterUnit                                  = FlowmeterLocation::find($this->decrypt($flowmeter_location_id));
+                $is_active                                          = $request->is_active;
+                $flowmeterUnit                                      = FlowmeterLocation::find($this->decrypt($flowmeter_location_id));
                 $flowmeter_location_lama                            = $flowmeterUnit->flowmeter_location;
                 $flowmeterUnit->flowmeter_location                  = $flowmeter_location;
-                $flowmeterUnit->is_active                       = $is_active;
+                $flowmeterUnit->flowmeter_category_id               = $flowmeter_category_id;
+                $flowmeterUnit->is_active                           = $is_active;
                 $flowmeterUnit->save();
                 return redirect(route('master_app.master_data.manage_flowmeter_locations'))->with('success','Satuan Flowmeter : '.$flowmeter_location_lama.' Berhasil diubah');
             } 
@@ -76,7 +80,7 @@ class FlowmeterLocationController extends ResourceController
             } 
             else 
             {
-                $flowmeterUnit              = $this->encryptId($flowmeterUnit);
+                $flowmeterUnit              = $this->encryptId($flowmeterUnit,'flowmeter_category_id');
                 $flowmeterUnit->success     = true;
                 return $flowmeterUnit;
             }

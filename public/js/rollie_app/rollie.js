@@ -648,7 +648,7 @@ function refreshTablePi()
                         {    
                             isitable    += '<div class="col-lg-6 col-md-12 col-sm-12">';
                             isitable    += '<div class="form-group">';
-                            isitable    += '<button class="btn btn-info form-control"  onclick="analisa_sampel_at_event(\''+data.rpdFillingDetailPi_nya[i].kode_sampel+'\',\''+data.rpdFillingDetailPi_nya[i].event+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling+'\',\''+data.rpdFillingDetailPi_nya[i].tanggal_filling+'\',\''+data.rpdFillingDetailPi_nya[i].jam_filling+'\',\''+data.rpdFillingDetailPi_nya[i].detail_id_enkripsi+'\',\''+data.rpdFillingDetailPi_nya[i].wo_id+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling_id+'\');getPopUp("analisaSampleAtEvent")"> <i class="fas fa-file-signature"></i> </button>';
+                            isitable    += '<button class="btn btn-info form-control"  onclick="analisa_sampel_at_event(\''+data.rpdFillingDetailPi_nya[i].kode_sampel+'\',\''+data.rpdFillingDetailPi_nya[i].event+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling+'\',\''+data.rpdFillingDetailPi_nya[i].tanggal_filling+'\',\''+data.rpdFillingDetailPi_nya[i].jam_filling+'\',\''+data.rpdFillingDetailPi_nya[i].detail_id_enkripsi+'\',\''+data.rpdFillingDetailPi_nya[i].wo_id+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling_id+'\');getPopUp(\''+"analisaSampleAtEvent"+'\')"> <i class="fas fa-file-signature"></i> </button>';
                             isitable    += '</div>';
                             isitable    += '</div>';
 
@@ -672,7 +672,7 @@ function refreshTablePi()
                         {
                             isitable    += '<div class="col-lg-6 col-md-12 col-sm-12">';
                             isitable    += '<div class="form-group">';
-                            isitable    += '<button class="btn btn-primary form-control" onclick="analisa_sampel_pi(\''+data.rpdFillingDetailPi_nya[i].kode_sampel+'\',\''+data.rpdFillingDetailPi_nya[i].event+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling+'\',\''+data.rpdFillingDetailPi_nya[i].tanggal_filling+'\',\''+data.rpdFillingDetailPi_nya[i].jam_filling+'\',\''+data.rpdFillingDetailPi_nya[i].detail_id_enkripsi+'\',\''+data.rpdFillingDetailPi_nya[i].nama_produk+'\',\''+data.rpdFillingDetailPi_nya[i].wo_id+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling_id+'\');getPopUp("analisaPiSampelModal")"> <i class="fas fa-file-signature"></i> </button>';
+                            isitable    += '<button class="btn btn-primary form-control" onclick="analisa_sampel_pi(\''+data.rpdFillingDetailPi_nya[i].kode_sampel+'\',\''+data.rpdFillingDetailPi_nya[i].event+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling+'\',\''+data.rpdFillingDetailPi_nya[i].tanggal_filling+'\',\''+data.rpdFillingDetailPi_nya[i].jam_filling+'\',\''+data.rpdFillingDetailPi_nya[i].detail_id_enkripsi+'\',\''+data.rpdFillingDetailPi_nya[i].nama_produk+'\',\''+data.rpdFillingDetailPi_nya[i].wo_id+'\',\''+data.rpdFillingDetailPi_nya[i].mesin_filling_id+'\');getPopUp(\''+"analisaPiSampelModal"+'\')"> <i class="fas fa-file-signature"></i> </button>';
                             isitable    += '</div>';
                             isitable    += '</div>';
                         }

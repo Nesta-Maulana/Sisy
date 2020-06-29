@@ -22,6 +22,15 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12">
                                 <div class="form-group">
+                                    <label for="flowmeter_category_id">Kategori Flowmeter</label>
+                                    <select name="flowmeter_category_id" id="flowmeter_category_id" class="form-control">
+                                        <option value="0" disabled selected>-- Harap Pilih Kategori Flowmeter --</option>
+                                        <?php $__currentLoopData = $flowmeterCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $flowmeterCategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeterCategory->id)); ?>"><?php echo e($flowmeterCategory->flowmeter_category); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="flowmeter_location">Lokasi Flowmeter</label>
                                     <input type="text" name="flowmeter_location" id="flowmeter_location" class="form-control">
                                     <input type="hidden" name="flowmeter_location_id" id="flowmeter_location_id" class="form-control">

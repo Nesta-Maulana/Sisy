@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-header">
                 Hak Akses Menu
-                <div class="pull-right {{ Session::get('tambah') }}">
+                <div class="float-right {{ Session::get('tambah') }}">
                     <button class="btn btn-outline-primary" onclick="document.location.href='kelola-hak-akses-menu/tambah-akses'">Tambah Akses Menu</button>
                 </div>
             </div>

@@ -442,7 +442,7 @@ class CppProductController extends ResourceController
                 }
                 else
                 {
-                    if ($start < $allPalet[$keyaktif-1]->end)
+                    if ($start > $allPalet[$keyaktif-1]->end)
                     {
                         return ['success'=>false,'message'=>'Jam awal palet tidak boleh kurang dari jam end palet sebelumnya. Harap menyesuaikan jam palet lebih awal terlebih dahulu'];
                     }

@@ -14,4 +14,8 @@ class FlowmeterLocation extends ResourceModel
     {
         parent::boot();
     }
+    public function flowmeterCategory()
+    {
+    	return $this->belongsTo('App\Models\Master\Emon\FlowmeterCategory', 'flowmeter_category_id', 'id');
+    }
 }

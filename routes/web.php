@@ -261,6 +261,9 @@ Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], f
 	Route::group(['prefix' => 'report-produk-release'], function () {
 		Route::get('','RollieController@showRprDashboard')->name('rollie.reports.rpr');
 	});
+	Route::group(['prefix' => 'report-rpd-filling'], function () {
+		Route::get('','RollieController@showReportRpdDashboard')->name('rollie.reports.rpd_filling');
+	});
 
 
 	Route::get('/rkj-rnd-produk-nfi', 'RollieController@showRkjDashboard')->name('rollie.rkol.rkj_rnd_produk_nfi');
@@ -271,6 +274,19 @@ Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], f
 
 	Route::post('/form-follow-up-rkj/update-follow-up-rkj','Transaction\Rollie\FollowUpRkjController@updateFollowUpRkj');
 
-	
+});
 
+
+Route::group(['prefix' => 'emon','middleware'=>['auth','credential.check']], function() 
+{
+	Route::get('/', 'EmonController@index');
+	Route::get('/home-operator', 'EmonController@homeOperator')->name('emon.home-operator');
+	Route::group(['prefix' => 'monitoring-air'], function() {
+		Route::get('/', 'EmonController@showMonitoringAir')->name('emon.monitoring.water');
+		Route::get('/{location_id}', 'EmonController@showMonitoringFormAir');
+	    
+	});
+	
+	Route::get('/monitoring-listrik', 'EmonController@showMonitoringListrik')->name('emon.monitoring.listrik');
+	Route::get('/monitoring-gas', 'EmonController@showMonitoringGas')->name('emon.monitoring.gas');
 });

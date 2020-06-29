@@ -9,13 +9,12 @@ use App\Models\Master\Menu;
 use App\Models\Master\MenuPermission;
 use App\Models\Master\Application;
 use App\Models\Master\ApplicationPermission;
-use App\Models\Master\User;
 
-use App\Models\energy_monitoring\Bagian;
-use App\Models\energy_monitoring\KategoriMeteran;
-use App\Models\energy_monitoring\Pengamatan;
-use App\Models\energy_monitoring\Penggunaan;
-use App\Models\energy_monitoring\Workcenter;
+use App\Models\Master\Emon\Flowmeter;
+use App\Models\Master\Emon\FlowmeterCategory;
+use App\Models\Master\Emon\FlowmeterUnit;
+use App\Models\Master\Emon\FlowmeterWorkcenter;
+use App\Models\Master\Emon\FlowmeterLocation;
 
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -25,55 +24,66 @@ use DB;
 use Auth;
 class EmonController extends ResourceController
 {
-	
 	public function __construct()
 	{
 		$this->application 	= Application::where('application_name','Energy Monitoring')->first();
     	$this->menus 		= $this->application->menus->where('parent_id','0')->where('is_active','1');  		
     }
+
+    public function index()
+    {
+    	$home 	= $this->menus->where('menu_name','Home')->first();
+    	return redirect(route($home->menu_route));
+    }
+
 	public function homeOperator()
 	{
-		$bagian 	= Bagian::all();
-        $now 		= Carbon::today('Asia/Jakarta');
-        foreach ($bagian as $key => $meteran) 
-        {
-        	$pengamatan 	= Pengamatan::where('bagian_id',$meteran->id)->whereDate('waktu_pengamatan',$now)->first();
-        	if (!is_null($pengamatan)) 
-        	{
-        		unset($bagian[$key]);
-        	}
-        }
-		$akses        	= Menu::where('application_id',$this->application->id)->whereIn('id',['42','43','44','45'])->where('is_active','1')->get();
-		
-        // $aksesmenu 		= array();
-        foreach ($akses as $menu) 
-        {
-        	foreach ($menu->menuPermissions as $hak_akses_menu) 
-	        {
-	        	if ($hak_akses_menu->user_id == Auth::user()->id) 
-	        	{
-	        		$array_menu['menu'] 	= $menu;
-					$array_menu['akses'] 	= $hak_akses_menu->view;
-	        		$namanya 				= explode(' ',$menu->menu_name);
-					$namanya 				= $namanya[1];
-					$aksesmenu[strtolower($namanya)] =  $array_menu;
-					unset($array_menu);
-				}
-	        }
-		}
-		return view('energy_monitoring.home-operator',['menus'=>$this->menus,'bagian'=>$bagian,'akses'=>$aksesmenu]);
+		return view('energy_monitoring.home.home-operator',['menus'=>$this->menus]);
 	}
-	public function showPengamatanAir()
+
+	public function showMonitoringAir()
 	{
-		$workcenter = Workcenter::where('status','1')->get();
-		foreach ($workcenter as $key => $work) 
+		$flowmeterLocations = FlowmeterLocation::where('flowmeter_category_id','1')->get();
+		return view('energy_monitoring.monitoring_air.dashboard',['menus'=>$this->menus,'flowmeterLocations'=>$flowmeterLocations]);
+	}
+	public function showMonitoringFormAir($location_id)
+	{
+		$rumus_custom 		= [
+			'params'	=> [
+				'A' => '1',
+				'B' => '2',
+				'C' => '3',
+				'D' => '4'
+			],
+			'formulas' => 
+			[
+				"A",
+				"+",
+				"B"
+			]
+		];
+		$angka 				=[
+			'1' => 1,
+			'2' => 2,
+			'3' => 3,
+			'4' => 4
+		];
+		foreach ($rumus_custom['formulas'] as $key => $id) 
 		{
-			if ($work->kategoriMeteran->kategori !== 'Air') 
+			dd($id);
+		}
+
+		$flowmeters 		= Flowmeter::where('flowmeter_location_id',$this->decrypt($location_id))->where('is_active','1')->get();
+		$flowmeterLain 		= array();
+ 		foreach ($flowmeters as $key => $flowmeter) 
+		{
+			if ($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeter_category !== 'Air') 
 			{
-				unset($workcenter[$key]);
+				array_push($flowmeterLain, $flowmeter);
+				unset($flowmeters[$key]);
 			}
 		}
-		return view('energy_monitoring.home-pengamatan',['menus'=>$this->menus,'workcenter'=>$workcenter]);
+		return view('energy_monitoring.monitoring_air.form',['menus'=>$this->menus,'flowmeters'=>$flowmeters,'flowmeterLain'=>$flowmeterLain]); 
 	}
 	public function showAirFilter($workcenter_id,$jenis_kirim)
 	{
