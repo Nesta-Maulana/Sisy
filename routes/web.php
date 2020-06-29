@@ -180,6 +180,10 @@ Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], f
 		});
 	});
 	
+	Route::group(['prefix' => 'permintaan-sampel'], function () 
+	{
+		Route::get('/','RollieController@showPsrDashboard')->name('rollie.process_data.psr');
+	});
 
 	Route::group(['prefix' => 'fisikokimia'], function () 
 	{

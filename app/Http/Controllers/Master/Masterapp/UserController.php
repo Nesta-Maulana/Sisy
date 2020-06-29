@@ -24,7 +24,7 @@ class UserController extends ResourceController
     public function showChangePasswordForm($username)
     {
         $user       = User::where('username',$this->decrypt($username))->first();
-        return view('credential_access.change-password',['user'=>$user]);
+        return view('auth.reset_password',['user'=>$user]);
     }
 
         /**

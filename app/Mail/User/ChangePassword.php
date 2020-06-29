@@ -28,6 +28,6 @@ class ChangePassword extends Mailable
         $user       = $this->user;
         $hostname   = $this->hostname;
         $password   = $this->password;
-        return $this->view('credential_access.mail.change-password',['userData'=>$user,'hostname'=>$hostname,'password'=>$password])->subject('Sisy | Change Password');
+        return $this->view('auth.mail.change-password',['userData'=>$user,'hostname'=>$hostname,'password'=>$password])->subject('Sisy | Change Password');
     }
 }

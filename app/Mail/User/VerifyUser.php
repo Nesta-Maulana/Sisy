@@ -30,7 +30,7 @@ class VerifyUser extends Mailable
     public function build()
     {
         $user       = $this->user;
-        return $this->view('credential_access.mail.verify-user')
+        return $this->view('auth.mail.verify-user')
         ->subject("Sisy Menyapa - Verifikasi User")
         ->with(['user'=>$user]);
         

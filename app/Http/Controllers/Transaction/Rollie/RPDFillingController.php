@@ -942,6 +942,13 @@ class RPDFillingController extends ResourceController
                             $woNumber->save();
                         }
                     }
+                    $jumlah_psr     =0;
+                    foreach ($woNumber->rpdFillingDetailPis as $rpdFillingDetailPi) 
+                    {
+                        $jumlah_psr += $rpdFillingDetailPi->fillingSampelCode->jumlah;
+                    }
+                    $woNumber->jumlah_psr = $jumlah_psr;
+                    $woNumber->save();
                 }
                 return ['success'=>true, 'draft_ppq' => false,'message'=>'RPD filling berhasil di close'];
             }

@@ -492,6 +492,12 @@ class RollieController extends ResourceController
 			return redirect()->back()->with('error',$cekAkses['message']);
 		}
 	}
+
+	public function showPsrDashboard()
+	{
+		$draftPsr 		= WoNumber::where('wo_status','4')->whereNull('nomor_psr')->get();
+		return view('rollie.psr.dashboard',['menus'=>$this->menus,'draftPsr'=>$draftPsr]);
+	}
 	public function showFiskokimiaDashboard()
 	{
 		$url 		= explode('/',\Request::getRequestUri());
