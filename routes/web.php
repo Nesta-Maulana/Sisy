@@ -185,6 +185,8 @@ Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], f
 		Route::get('/','RollieController@showPsrDashboard')->name('rollie.process_data.psr');
 		Route::post('/get-psr-detail','Transaction\Rollie\PsrController@getPsrDetail');
 		Route::post('/ubah-psr','Transaction\Rollie\PsrController@ubahPsr');
+		Route::post('/send-notifikasi-psr','Transaction\Rollie\PsrController@sendPsrToPenyelia');
+
 	});
 
 	Route::group(['prefix' => 'fisikokimia'], function () 

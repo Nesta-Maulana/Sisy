@@ -3008,6 +3008,78 @@ function closeCppProduct()
             }
         });
     }
+
+    function sendMailPsr() 
+    {
+        var psr_id = [];
+        $('input[name^="sendmail"]').each(function()
+        {
+            if (this.checked == true) {
+                psr_id.push(this.value);
+            }
+        });
+        if (psr_id.length == 0) 
+        {
+            swal({
+                title: "Proses Gagal",
+                text: "Harap pilih PSR sudah dikonfirmasi jumlahnya dan keterangan untuk kebutuhan informasi PSR.",
+                type: "error",
+            });   
+        } 
+        else 
+        {
+            Swal.fire
+            ({
+                title:  'Konfirmasi Pengiriman Info PSR',
+                text :  'Apakah PSR yang akan dikirim sudah sesuai jumlah dan permintaan dilapangan ?',
+                type : 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Kirim Notifikasi Ke Penyelia',
+                cancelButtonText: 'Cancel',
+            }).then((result) => 
+            {
+                if (result.value) 
+                {
+                    $.ajax({
+                        headers: 
+                        {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url         : 'permintaan-sampel/send-notifikasi-psr',
+                        method      : 'POST',
+                        dataType    : 'JSON',
+                        data        : 
+                        {
+                            psr_id  : psr_id,
+                        },
+                        success      : function(data) 
+                        {
+                            if (data.success == true) 
+                            {
+                                swal({
+                                    title: "Proses Berhasil",
+                                    text: data.message,
+                                    type: "success",
+                                });   
+                                setTimeout(function(){ document.location.href='/rollie/permintaan-sampel' },1000);
+                                
+                            } 
+                            else 
+                            {
+                                swal({
+                                    title: "Proses Gagal",
+                                    text: data.message,
+                                    type: "error",
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    }
 /* end PSR script */
 /* Start Data Analysis */
 /* Start Fisikokimia */

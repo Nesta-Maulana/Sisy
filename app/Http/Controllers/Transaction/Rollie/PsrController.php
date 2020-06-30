@@ -1,12 +1,19 @@
 <?php
 
 namespace App\Http\Controllers\Transaction\Rollie;
+use App\Http\Controllers\ResourceController;
 
 use App\Models\Transaction\Rollie\Psr;
 use App\Models\Master\FillingSampelCode;
 use App\Models\Master\FillingMachine;
+use App\Models\Master\User;
+use App\Models\Master\DistributionList;
+
 use Illuminate\Http\Request;
-use App\Http\Controllers\ResourceController;
+
+use App\Mail\Rollie\Psr\SendNotifPsr;
+use Illuminate\Support\Facades\Mail;
+
 
 class PsrController extends ResourceController
 {
@@ -52,15 +59,42 @@ class PsrController extends ResourceController
         return ['success'=>true];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function sendPsrToPenyelia(Request $request)
     {
-        //
+        $cekAkses   = $this->checkAksesUbah(\Request::getRequestUri(),'rollie.process_data.psr');
+        if ($cekAkses['success']) 
+        {
+            $psr_array  = array();
+            foreach ($request->psr_id as $id) 
+            {
+                $psr = Psr::find($this->decrypt($id));
+                $psr->psr_status = '1';
+                $psr->save();
+                array_push($psr_array,$psr);
+            }
+            
+            $distributionLists  = DistributionList::where('psr_mail_to','1')->get();
+            $user_to            = array();
+            foreach ($distributionLists as $distributionList) 
+            {
+                array_push($user_to, $distributionList->employee->email);
+            }
+            
+            $distributionLists          = DistributionList::where('psr_mail_cc','1')->get();
+            $user_cc            = array();
+            foreach ($distributionLists as $distributionList) 
+            {
+                array_push($user_cc, $distributionList->employee->email);
+            }
+
+            Mail::to($user_to)->cc($user_cc)->bcc('nesta.maulana@nutrifood.co.id')->send(new SendNotifPsr($psr_array));
+            return ['success'=>true,'message'=>'Notifikasi PSR sudah terkirim. Harap print PSR untuk kebutuhan dokumen finance.'];
+        } 
+        else 
+        {
+            return $cekAkses;
+        }
+        
     }
 
     /**

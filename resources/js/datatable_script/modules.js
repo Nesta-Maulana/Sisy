@@ -322,3 +322,22 @@ var report_release_produk_dashboard =  $('#report-release-produk-dashboard').dat
         } );
     },
 });
+
+
+var permintaan_sampel_table = $('#permintaan-sampel-table').DataTable({
+    bLengthChange:false,
+    bFilter:false,
+    bInfo:false,
+    paging:false,
+    pageLength:7,
+    "scrollX":true,
+});
+
+var permintaan_sampel_rtd_table = $('#permintaan-sampel-rtd-table').DataTable({
+    bLengthChange:false,
+    bFilter:false,
+    bInfo:false,
+    paging:false,
+    pageLength:7,
+    "scrollX":true,
+});

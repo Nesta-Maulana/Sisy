@@ -36,8 +36,11 @@ mix.scripts([
     'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js',
     'node_modules/datatables.net-buttons/js/dataTables.buttons.min.js',
     'node_modules/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js',
+    'node_modules/datatables.net-buttons/js/buttons.flash.min.js',
+    'node_modules/jszip/dist/jszip.min.js',
     'node_modules/datatables.net-buttons/js/buttons.html5.min.js',
     'node_modules/datatables.net-buttons/js/buttons.colVis.min.js',
+    'node_modules/datatables.net-buttons/js/buttons.print.min.js',
     'resources/js/datatable_script/modules.js'
 ], 'public/js/master/datatable.js')
 .sass('resources/sass/datatable.scss','public/css/master/datatable.css').version();

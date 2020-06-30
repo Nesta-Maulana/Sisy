@@ -496,8 +496,9 @@ class RollieController extends ResourceController
 
 	public function showPsrDashboard()
 	{
-		$psrs 		= Psr::all();
-		return view('rollie.psr.dashboard',['menus'=>$this->menus,'psrs'=>$psrs]);
+		$psrs 				= Psr::where('psr_status','0')->get();
+		$psrReadyToPrint 	= Psr::where('psr_status','!==','0')->get();
+		return view('rollie.psr.dashboard',['menus'=>$this->menus,'psrs'=>$psrs,'psrReadyToPrint'=>$psrReadyToPrint]);
 	}
 	public function showFiskokimiaDashboard()
 	{
