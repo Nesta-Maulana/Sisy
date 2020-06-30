@@ -19,8 +19,8 @@ class CreateWoNumbersTable extends Migration
             $table->bigInteger('product_id')->comment('connected to product table');
             $table->bigInteger('rpd_filling_head_id')->nullable()->comment('connected to rpd filling head table');
             $table->bigInteger('cpp_head_id')->nullable()->comment('connected to cpp head table');
-            $table->char('nomor_psr')->nullable();
-            $table->Interger('jumlah_psr')->nullable();
+/*            $table->char('nomor_psr')->nullable();
+            $table->integer('jumlah_psr')->nullable();*/
             $table->char('wo_number');
             $table->date('production_plan_date');
             $table->date('production_realisation_date')->nullable();

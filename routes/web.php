@@ -183,6 +183,8 @@ Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], f
 	Route::group(['prefix' => 'permintaan-sampel'], function () 
 	{
 		Route::get('/','RollieController@showPsrDashboard')->name('rollie.process_data.psr');
+		Route::post('/get-psr-detail','Transaction\Rollie\PsrController@getPsrDetail');
+		Route::post('/ubah-psr','Transaction\Rollie\PsrController@ubahPsr');
 	});
 
 	Route::group(['prefix' => 'fisikokimia'], function () 

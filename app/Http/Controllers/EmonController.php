@@ -68,10 +68,10 @@ class EmonController extends ResourceController
 			'3' => 3,
 			'4' => 4
 		];
-		foreach ($rumus_custom['formulas'] as $key => $id) 
-		{
-			dd($id);
-		}
+		// foreach ($rumus_custom['formulas'] as $key => $id) 
+		// {
+		// 	$
+		// }
 
 		$flowmeters 		= Flowmeter::where('flowmeter_location_id',$this->decrypt($location_id))->where('is_active','1')->get();
 		$flowmeterLain 		= array();

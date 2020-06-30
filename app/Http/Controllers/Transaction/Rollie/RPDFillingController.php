@@ -20,6 +20,7 @@ use App\Models\Transaction\Rollie\CppDetail;
 use App\Models\Transaction\Rollie\Palet;
 use App\Models\Transaction\Rollie\PaletPpq;
 use App\Models\Transaction\Rollie\Ppq;
+use App\Models\Transaction\Rollie\Psr;
 
 
 
@@ -947,8 +948,13 @@ class RPDFillingController extends ResourceController
                     {
                         $jumlah_psr += $rpdFillingDetailPi->fillingSampelCode->jumlah;
                     }
-                    $woNumber->jumlah_psr = $jumlah_psr;
-                    $woNumber->save();
+                    $nomor_psr              = $this->getNomorPsr();
+                    $psr                    = Psr::create([
+                        'psr_number'        => $nomor_psr,
+                        'wo_number_id'      => $woNumber->id,
+                        'psr_qty'           => $jumlah_psr,
+                        'psr_status'        => '1'
+                    ]);
                 }
                 return ['success'=>true, 'draft_ppq' => false,'message'=>'RPD filling berhasil di close'];
             }

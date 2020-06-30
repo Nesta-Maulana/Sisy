@@ -2429,7 +2429,6 @@ function closeRpdFilling(rpd_filling_head_id)
 /* End RPD Filling Script */    
 /* Start CPP Packing Script */
 /* Fungsi proses cpp mengacu pada fungsi proses wo number di atas */
-
 /* Fungsi pindah cpp produk mengacu pada fungsi pindah produk number di atas */
 function addPalet(filling_machine_id,wo_number_id,cpp_head_id) 
 {
@@ -2636,7 +2635,7 @@ function changePalet(palet_id)
         {
             if (data.success == true) 
             {
-/*                     swal({
+                /*swal({
                     title: "Proses Berhasil",
                     text: data.message,
                     type: "success",
@@ -2920,7 +2919,96 @@ function closeCppProduct()
     }); 
 }
 /* End CPP Packing Script */    
+/* start PSR Script */
+    function getPsrDetail(psr_id,product_name,wo_number,production_realisation_date,psr_qty,psr_number) 
+    {
+         $.ajax({
+            headers: 
+            {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url         : 'permintaan-sampel/get-psr-detail',
+            method      : 'POST',
+            dataType    : 'JSON',
+            data        : 
+            {
+                psr_id      : psr_id,
+            },
+            success      : function(data) 
+            {
+                for (var i = 0; i < data.length; i++) 
+                {
+                    var isitable = '', $isitable = $('#detail_psr');
+                    for (var j = 0; j < data[i].fillingSampelCode.length; j++) 
+                    {
+                    
+                        isitable    += '<tr class="text-center">';
+                        isitable    += '<td>'+data[i].fillingSampelCode[j].filling_sampel_code+'</td>';
+                        isitable    += '<td>'+data[i].filling_machine_code+'</td>';
+                        isitable    += '<td>'+data[i].fillingSampelCode[j].hitung_jumlah+'</td>';
+                        isitable    += '<td>'+data[i].fillingSampelCode[j].jumlah+'</td>';
+                        isitable    += '<td>'+(data[i].fillingSampelCode[j].hitung_jumlah*1)*(data[i].fillingSampelCode[j].jumlah*1) +'</td>';
+                        isitable    += '</tr>';
+                    }
+                    
+                }
+                $isitable.html(isitable).on('change');
+                $('#product_name').val(product_name);
+                $('#wo_number').val(wo_number);
+                $('#production_realisation_date').val(production_realisation_date);
+                $('#psr_qty').val(psr_qty);
+                document.getElementById('psr_number').innerHTML = psr_number;
 
+            }
+        });
+    }
+
+    function editPsr(psr_id) 
+    {
+        var qty     = document.getElementById('qty_'+psr_id).innerHTML;
+        document.getElementById('qty_'+psr_id).innerHTML    = "<input type='hidden' class='form-control' id='qty_lama_"+psr_id+"' value='"+qty+"' readonly> <br> <input type='text' class='form-control' id='edit_qty_"+psr_id+"' value='"+qty+"' autofocus>";
+        var note    =document.getElementById('note_'+psr_id).innerHTML;
+        document.getElementById('note_'+psr_id).innerHTML   = "<textarea class='form-control hidden' id='note_lama_"+psr_id+"' readonly>"+note+"</textarea> <br> <textarea class='form-control' id='edit_note_"+psr_id+"'>"+note+"</textarea>";
+        $('.button-awal').hide();
+        $('.button-ubah').show();
+    }
+    function cancelEditPsr(psr_id) 
+    {
+        var qty         = $('#qty_lama_'+psr_id).val();
+        var note        = $('#note_lama_'+psr_id).val();
+        document.getElementById('qty_'+psr_id).innerHTML    = qty;
+        document.getElementById('note_'+psr_id).innerHTML   = note;
+        $('.button-awal').show();
+        $('.button-ubah').hide();
+    }
+    function updatePsr(psr_id) 
+    {
+        var qty         = $('#edit_qty_'+psr_id).val();
+        var note        = $('#edit_note_'+psr_id).val();
+        $.ajax({
+            headers: 
+            {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url         : 'permintaan-sampel/ubah-psr',
+            method      : 'POST',
+            dataType    : 'JSON',
+            data        : 
+            {
+                psr_id      : psr_id,
+                qty         : qty,
+                note        : note,
+            },
+            success      : function(data) 
+            {
+                document.getElementById('qty_'+psr_id).innerHTML    = qty;
+                document.getElementById('note_'+psr_id).innerHTML   = note;
+                $('.button-awal').show();
+                $('.button-ubah').hide();
+            }
+        });
+    }
+/* end PSR script */
 /* Start Data Analysis */
 /* Start Fisikokimia */
     function analisaFisikokimiaProduk(params, cpp_head_id,product_name,tanggal_produksi) 
@@ -4670,8 +4758,6 @@ function getFillingSampelMikro()
                 });
             }
         });
-        
-
 
     }
-/* END RKOL*/
+/* END RKOL */

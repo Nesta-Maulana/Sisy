@@ -36,6 +36,7 @@ use App\Models\Transaction\Rollie\AnalisaKimia;
 
 use App\Models\Transaction\Rollie\AnalisaMikro;
 use App\Models\Transaction\Rollie\AnalisaMikroDetail;
+use App\Models\Transaction\Rollie\Psr;
 
 /*use Illuminate\Support\Facades\Mail;
 use App\Mail\Rollie\Ppq\NewPpqMail;*/
@@ -495,8 +496,8 @@ class RollieController extends ResourceController
 
 	public function showPsrDashboard()
 	{
-		$draftPsr 		= WoNumber::where('wo_status','4')->whereNull('nomor_psr')->get();
-		return view('rollie.psr.dashboard',['menus'=>$this->menus,'draftPsr'=>$draftPsr]);
+		$psrs 		= Psr::all();
+		return view('rollie.psr.dashboard',['menus'=>$this->menus,'psrs'=>$psrs]);
 	}
 	public function showFiskokimiaDashboard()
 	{

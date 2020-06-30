@@ -8,6 +8,7 @@ use App\Models\Master\Application;
 use App\Models\Master\Menu;
 use App\Models\Master\MenuPermission;
 use App\Models\Transaction\Rollie\Ppq;
+use App\Models\Transaction\Rollie\Psr;
 
 use Auth;
 use Session;
@@ -393,6 +394,44 @@ class ResourceController extends Controller
         $bulan          = ['01'=>'I','02'=>'II','03'=>'III','04'=>'IV','05'=>'V','06'=>'VI','07'=>'VII','08'=>'VIII','09'=>'IX','10'=>'X','11'=>'XI','12'=>'XII'];
         $nomor_ppq      = $nomor_ppq.'/PPQ/'.$bulan[date('m')].'/'.date('Y');
         return $nomor_ppq;
+    }
+    public function getNomorPsr()
+    {
+        $psrs               = Psr::all();
+        $psrakhir           = $psrs->last();
+        if ($psrakhir !== null) 
+        {      
+            $nomor_psr      = explode('/', $psrakhir->psr_number);
+        }
+        else
+        {
+            $nomor_psr      = null;
+        }
+        if($nomor_psr == null)
+        {
+            $nomor_psr   = 1;
+        }
+        else
+        {
+            $nomor_psr   = $nomor_psr['0']+1;
+        }
+
+        if (strlen($nomor_psr) == 1) 
+        {
+            $nomor_psr = '00'.$nomor_psr;
+        }
+        else if(strlen($nomor_psr) == 2)
+        {
+            $nomor_psr = '0'.$nomor_psr;
+        }
+        else if (strlen($nomor_psr) == 3) 
+        {
+            $nomor_psr = $nomor_psr;
+        }
+
+        $bulan          = ['01'=>'I','02'=>'II','03'=>'III','04'=>'IV','05'=>'V','06'=>'VI','07'=>'VII','08'=>'VIII','09'=>'IX','10'=>'X','11'=>'XI','12'=>'XII'];
+        $nomor_psr      = $nomor_psr.'/PSR/FQC/'.$bulan[date('m')].'/'.date('Y');
+        return $nomor_psr;
     }
     public function cekChild($menu_id)
 	{

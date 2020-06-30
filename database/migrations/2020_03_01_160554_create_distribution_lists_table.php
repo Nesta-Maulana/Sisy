@@ -26,6 +26,8 @@ class CreateDistributionListsTable extends Migration
             $table->boolean('rkj_hb_mail_cc')->comment('0 = inactive , 1 = active');
             $table->boolean('sortasi_mail_to')->comment('0 = inactive , 1 = active');
             $table->boolean('sortasi_mail_cc')->comment('0 = inactive , 1 = active');
+            $table->boolean('psr_mail_to')->comment('0 = inactive , 1 = active');
+            $table->boolean('psr_mail_cc')->comment('0 = inactive , 1 = active');
             $table->bigInteger('created_by')->comment('connected to user table');
             $table->bigInteger('updated_by')->comment('connected to user table')->nullable();
             $table->bigInteger('deleted_by')->comment('connected to user table')->nullable();
