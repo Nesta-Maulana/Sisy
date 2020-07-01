@@ -2936,12 +2936,11 @@ function closeCppProduct()
             },
             success      : function(data) 
             {
+                var isitable = '', $isitable = $('#detail_psr');
                 for (var i = 0; i < data.length; i++) 
                 {
-                    var isitable = '', $isitable = $('#detail_psr');
                     for (var j = 0; j < data[i].fillingSampelCode.length; j++) 
                     {
-                    
                         isitable    += '<tr class="text-center">';
                         isitable    += '<td>'+data[i].fillingSampelCode[j].filling_sampel_code+'</td>';
                         isitable    += '<td>'+data[i].filling_machine_code+'</td>';
@@ -2950,9 +2949,9 @@ function closeCppProduct()
                         isitable    += '<td>'+(data[i].fillingSampelCode[j].hitung_jumlah*1)*(data[i].fillingSampelCode[j].jumlah*1) +'</td>';
                         isitable    += '</tr>';
                     }
-                    
                 }
                 $isitable.html(isitable).on('change');
+                // console.log(isitable);
                 $('#product_name').val(product_name);
                 $('#wo_number').val(wo_number);
                 $('#production_realisation_date').val(production_realisation_date);

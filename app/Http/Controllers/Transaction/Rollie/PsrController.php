@@ -31,10 +31,11 @@ class PsrController extends ResourceController
             }
         }
         $array_return   = array();
+
         foreach ($filling_machine_id as $filling_machine_id_nya) 
         {
             $fillingMachine         = FillingMachine::find($filling_machine_id_nya); 
-            $fillingSampelCodes     = FillingSampelCode::where('product_type_id',$product_type)->where('filling_machine_id',$filling_machine_id)->get();
+            $fillingSampelCodes     = FillingSampelCode::where('product_type_id',$product_type)->where('filling_machine_id',$fillingMachine->id)->get();
             foreach ($fillingSampelCodes as $fillingSampelCode) 
             {
                 $hitung_jumlah      = $psr->woNumber->rpdFillingDetailPis->where('filling_machine_id',$filling_machine_id_nya)->where('filling_sampel_code_id',$fillingSampelCode->id)->count();
@@ -86,7 +87,8 @@ class PsrController extends ResourceController
             {
                 array_push($user_cc, $distributionList->employee->email);
             }
-
+            // $user_to        =array('adiyono@nutrifood.co.id','hendra@nutrifood.co.id','yunianto@nutrifood.co.id');
+            // $user_cc        = array('febdian@nutrifood.co.id','qc.rtd@nutrifood.co.id','annisa.mutiara@nutrifood.co.id');
             Mail::to($user_to)->cc($user_cc)->bcc('nesta.maulana@nutrifood.co.id')->send(new SendNotifPsr($psr_array));
             return ['success'=>true,'message'=>'Notifikasi PSR sudah terkirim. Harap print PSR untuk kebutuhan dokumen finance.'];
         } 

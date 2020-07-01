@@ -623,11 +623,11 @@ class RPDFillingController extends ResourceController
                         $ls_sa_proportion !== '70:30'
                     ) && 
                     $volume_kanan       >= 198 && 
-                    $volume_kiri        >= 198 && 
+                    $volume_kiri        >= 198 /* && 
                     (
                         $overlap >= 4.5 && 
                         $overlap <= 6.0
-                    )
+                    ) */
                 ) 
                 {
                     $status_akhir_validasi  = 'OK';
@@ -663,11 +663,11 @@ class RPDFillingController extends ResourceController
                         $ls_sa_proportion !== '70:30'
                     ) && 
                     $volume_kanan       >= 198 && 
-                    $volume_kiri        >= 198 && 
+                    $volume_kiri        >= 198/*  && 
                     (
                         $overlap >= 3.5 && 
                         $overlap <= 4.5
-                    )
+                    ) */
                 ) 
                 {
                     $status_akhir_validasi  = 'OK';
@@ -949,11 +949,12 @@ class RPDFillingController extends ResourceController
                         $jumlah_psr += $rpdFillingDetailPi->fillingSampelCode->jumlah;
                     }
                     $nomor_psr              = $this->getNomorPsr();
+                    // dd($nomor_psr);
                     $psr                    = Psr::create([
                         'psr_number'        => $nomor_psr,
                         'wo_number_id'      => $woNumber->id,
                         'psr_qty'           => $jumlah_psr,
-                        'psr_status'        => '1'
+                        'psr_status'        => '0'
                     ]);
                 }
                 return ['success'=>true, 'draft_ppq' => false,'message'=>'RPD filling berhasil di close'];
@@ -970,6 +971,5 @@ class RPDFillingController extends ResourceController
             return $cekAkses;
         }
         
-        dd($request->all());
     }
 }
