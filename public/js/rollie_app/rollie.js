@@ -3079,6 +3079,191 @@ function closeCppProduct()
             });
         }
     }
+    function handleChangeMail() 
+    {
+        var checked     = 0;
+        $('input[name^="sendmail"]').each(function()
+        {
+            if (this.checked == true) {
+                checked++;
+            }
+        });
+        if (checked > 0 ) {
+            $('#mail_psr').show();
+        } else {
+            $('#mail_psr').hide();
+        }
+    }
+    function handlePrintPsr() 
+    {
+        var checked     = 0;
+        $('input[name^="printpsr"]').each(function()
+        {
+            if (this.checked == true) {
+                checked++;
+            }
+        });
+        if (checked > 0 ) {
+            $('#print_psr').show();
+        } else {
+            $('#print_psr').hide();
+        }
+    }
+
+    function printPsr() 
+    {
+        var psr_id = [];
+        $('input[name^="printpsr"]').each(function()
+        {
+            if (this.checked == true) {
+                psr_id.push(this.value);
+            }
+        });
+        if (psr_id.length == 0) 
+        {
+            swal({
+                title: "Proses Gagal",
+                text: "Harap pilih PSR yang akan diprint.",
+                type: "error",
+            });   
+        } 
+        else 
+        {
+            Swal.fire
+            ({
+                title:  'Konfirmasi Print Dokumen PSR',
+                text :  'Apakah anda yakin PSR akan di Print?',
+                type : 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Print PSR',
+                cancelButtonText: 'Cancel',
+            }).then((result) => 
+            {
+                if (result.value) 
+                {
+                    $.ajax({
+                        headers: 
+                        {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url         : 'permintaan-sampel/print-psr',
+                        method      : 'POST',
+                        dataType    : 'JSON',
+                        data        : 
+                        {
+                            psr_id  : psr_id,
+                        },
+                        success      : function(data) 
+                        {
+                            win         = window.open();
+                            var html    = "";
+                            html += "<style>"
+                            html += "table{ border-collapse:collapse; }  td, th{ border:1px solid black; font-size:8px;font-family: Calibri,sans-serif; } .text-center{ text-align:center; }"
+                            html += "</style>"
+
+                            html += "<table>";
+                            html += "<thead>";
+                            html += "<tr class='text-center'>";
+                            html += "<th>No</th>";
+                            html += "<th>Nomor PSR</th>";
+                            html += "<th style='width:65'>Tanggal Produksi</th>";
+                            html += "<th style='width:65px'>Nomor Wo</th>";
+                            html += "<th  style='width:65px'>Kode Batch 1</th>";
+                            html += "<th  style='width:65px'>Kode Batch 2</th>";
+                            html += "<th  style='width:55px'>Kode Produk</th>";
+                            html += "<th style='width: 200px'>Nama Produk</th>";
+                            html += "<th>Dept.<br>Pemilik</th>";
+                            html += "<th>Dept.<br>Pengguna</th>";
+                            html += "<th>Jumlah<br>Sampel</th>";
+                            html += "<th style='width: 120px'>Note</th>";
+                            html += "</tr>";
+                            html += "</thead>";
+                            html += "<tbody>";
+                            var j =0;
+                            for (i = 0; i < data.length; i++) 
+                            {
+                                j++;
+                                html += "<tr style='text-align:center'>";
+                                html += "<td>"+ j +"</td>";
+                                html += "<td>"+data[i].psr_number+"</td>";
+                                html += "<td>"+data[i].wo_number.production_realisation_date+"</td>";
+                                html += "<td>"+data[i].wo_number.wo_number+"</td>";
+                                if (data[i].wo_number.cpp_details.length == 1) 
+                                {
+                                    if (data[i].wo_number.cpp_details[0].filling_machine.filling_machine_code == "A3CF B" || data[i].wo_number.cpp_details[0].filling_machine.filling_machine_code == "TPA A" )
+                                    {
+                                        html += "<td>"+ data[i].wo_number.cpp_details[0].lot_number +"</td>";
+                                        html += "<td> - </td>";
+                                    } 
+                                    else
+                                    {
+                                        html += "<td> - </td>";
+                                        html += "<td>"+ data[i].wo_number.cpp_details[0].lot_number +"</td>";
+                                    }
+                                } 
+                                else 
+                                {
+                                    for (j = 0; j < data[i].wo_number.cpp_details.length; j++) 
+                                    {
+                                        html += "<td>"+ data[i].wo_number.cpp_details[j].lot_number +"</td>";
+                                    }
+                                }
+                                html += "<td>"+data[i].wo_number.product.oracle_code+"</td>";
+                                html += "<td>"+data[i].wo_number.product.product_name+"</td>";
+                                html += "<td> FQC </td>";
+                                html += "<td> FQC </td>";
+                                html += "<td>"+data[i].psr_qty+"</td>";
+                                if (!data[i].psr_note) {
+                                    html += "<td> - </td>";
+                                } else {
+                                    html += "<td>"+data[i].psr_note+"</td>";
+                                }
+                                html += "</tr>";
+                            }
+                            html += "<tr>";
+                            html += "<td colspan='12' rowspan='2' style='border:none;'> <br>";
+                            html += "</td>";
+                            html += "</tr>";
+                            html += "<tr>";
+                            html += "</tr>";
+                            html += "<tr>";
+                            html += "<td colspan='6' style='border:none;'></td>";
+                            html += "<td colspan='4' style='text-align:center'>Mengetahui</td>";
+                            html += "<td colspan='2' style='text-align:center'>Dibuat Oleh</td>";
+                            html += "</tr>";
+                            html += "<tr>";
+                            html += "<td colspan='6' rowspan='3' style='border:none;'><br><br></td>";
+                            html += "<td colspan='2' rowspan='3'><br><br></td>";
+                            html += "<td colspan='2' rowspan='3'><br><br></td>";
+                            html += "<td colspan='2' rowspan='3'><br><br></td>";
+                            html += "</tr>";
+                            html += "<tr>";
+                            html += "</tr>";
+                            html += "<tr>";
+                            html += "</tr>";
+                            html += "<tr class='text-center'>";
+                            html += "<td colspan='6' style='border:none;'></td>";
+                            html += "<td colspan='2'>FQC Manager</td>";
+                            html += "<td colspan='2'>Penyelia Produksi</td>";
+                            html += "<td colspan='2'>Inspektor QC</td>";
+                            html += "</tr>";
+                            html += "</tbody>";
+                            html += "</table>";
+                            win.document.write(html);
+                            var document_focus = false; // var we use to monitor document focused status.
+                            // Now our event handlers.
+                            $(document).ready(function() { win.window.print();document_focus = true; });
+                            setInterval(function() { if (document_focus === true) { win.window.close(); }  }, 100);
+                            setTimeout(function(){ document.location.href='/rollie/permintaan-sampel' },3000);
+                            
+                        }
+                    });
+                }
+            });
+        }
+    }
 /* end PSR script */
 /* Start Data Analysis */
 /* Start Fisikokimia */
@@ -4832,3 +5017,140 @@ function getFillingSampelMikro()
 
     }
 /* END RKOL */
+
+/* Start Report */
+    /* Start Report RPD  */
+        function filterTanggalProduksi(tanggal_produksi) 
+        {
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace(' - ',' s.d ');
+            // tanggal_produksi    = tanggal_produksi.replace(' - ',' s.d ');
+            $.ajax({
+                url     : '/rollie/report-rpd-filling/filter-tanggal-produksi/'+tanggal_produksi,
+                method  : 'GET',
+                dataType: 'JSON',
+                success : function(data) 
+                {
+                    var optionwo = '', $combowo = $('#product_id');
+                    for (i = 0; i < data.length; i++) 
+                    {
+                        for ( b = 0; b < data[i].length; b++) {
+                            optionwo += "<option value='"+data[i][b].product.enkripsi_id+"'>"+data[i][b].product.product_name+"</option>";
+                        }
+                    }
+                    $combowo.html(optionwo).on('change');
+                    refreshTableReportRpd(data);
+                    
+                }
+            });
+        }
+
+        function filterProductName()
+        {
+            product_id          = [];
+            $.each($("#product_id option:selected"), function(){
+                product_id.push($(this).val());
+            });
+            tanggal_produksi    = $('#filter_tanggal').val();
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace(' - ',' s.d ');
+            $.ajax({
+                url     : '/rollie/report-rpd-filling/filter-produk/'+product_id+'/'+tanggal_produksi,
+                method  : 'GET',
+                dataType: 'JSON',
+                success : function(data) 
+                {
+                    var optionwo = '', $combowo = $('#wo_number_id');
+                    for (i = 0; i < data.length; i++) 
+                    {
+                        for (z = 0; z < data[i].length; z++) 
+                        {
+                            optionwo += "<option value='"+data[i][z].enkripsi_id+"'>"+data[i][z].wo_number+"</option>";
+                        }
+                    }
+                    console.log(optionwo);
+                    $combowo.html(optionwo).on('change');
+                    refreshTableReportRpd(data);
+                }
+            });
+        }
+        function filterWoNumber()
+        {
+            wo_number_id          = [];
+            $.each($("#wo_number_id option:selected"), function(){
+                wo_number_id.push($(this).val());
+            });
+            $.ajax({
+                url     : '/rollie/report-rpd-filling/filter-wo/'+wo_number_id,
+                method  : 'GET',
+                dataType: 'JSON',
+                success : function(data) 
+                {
+                    refreshTableReportRpd(data);
+                }
+            });
+        }
+        function refreshTableReportRpd(data) 
+        {
+            for (a = 0; a < data.length; a++) 
+            {
+                var isitable = '', $table = $('#isi-report-rpd-filling');
+                for (i = 0; i < data[a].length; i++) 
+                {
+                    //$('#report-rpd-filling').dataTable().fnDestroy();
+                    for ( j = 0; j < data[a][i].rpd_filling_detail_pis.length; j++) 
+                    {
+                        isitable += "<tr>";
+                        isitable += "<td >"+ data[a][i].wo_number +"</td>";
+                        isitable += "<td >"+ data[a][i].product.product_name +"</td>";
+                        isitable += "<td >"+ data[a][i].production_realisation_date +"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].filling_machine.filling_machine_code +"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].filling_sampel_code.filling_sampel_code +" - "+ data[a][i].rpd_filling_detail_pis[j].filling_sampel_code.filling_sampel_event +"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].filling_date +"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].filling_time +"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].berat_kanan+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].berat_kiri+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].overlap+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].ls_sa_proportion+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].volume_kanan+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].volume_kiri+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].airgap+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].ts_accurate_kanan+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].ts_accurate_kiri+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].ls_accurate+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].sa_accurate+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].surface_check+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].pinching+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].strip_folding+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].konduktivity_kanan+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].konduktivity_kiri+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].design_kanan+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].design_kiri+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].dye_test+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].residu_h2o2+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].prod_code_and_no_md+"</td>";
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].correction+"</td>";
+                        if (!data[a][i].rpd_filling_detail_pis[j].dissolving_test) 
+                        {
+                            isitable += "<td > - </td>";
+                            
+                        } 
+                        else 
+                        {
+                            isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].dissolving_test+"</td>";                    
+                        }
+                        isitable += "<td >"+ data[a][i].rpd_filling_detail_pis[j].status_akhir+"</td>";                    
+                        isitable += "</tr>";                    
+                    }      
+                    $table.html(isitable).on('change');
+                }
+            }
+        }
+    /* End Report RPD  */
+/* END Report */

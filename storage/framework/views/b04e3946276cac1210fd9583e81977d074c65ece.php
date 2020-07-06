@@ -39,6 +39,7 @@
     <table border='1'>
         <thead>
             <tr class="text-center">
+                <th style="width: 150px">Nomor PSR</th>
                 <th style="width: 150px">Tanggal Produksi</th>
                 <th style="width: 120px">Nomor Wo</th>
                 <th style="width: 120px">Kode Batch 1</th>
@@ -52,6 +53,7 @@
         <tbody>
             <?php $__currentLoopData = $psrs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $psr): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
+                    <td><?php echo e($psr->psr_number); ?></td>
                     <td><?php echo e($psr->woNumber->production_realisation_date); ?></td>
                     <td><?php echo e($psr->woNumber->wo_number); ?></td>
                     <?php if(count($psr->woNumber->cppDetails) == 1): ?>

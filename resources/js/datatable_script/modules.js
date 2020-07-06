@@ -341,3 +341,27 @@ var permintaan_sampel_rtd_table = $('#permintaan-sampel-rtd-table').DataTable({
     pageLength:7,
     "scrollX":true,
 });
+
+var report_rpd_filling = $('#report-rpd-filling').DataTable({
+    bLengthChange:false,
+    bFilter:false,
+    bInfo:false,
+    paging:true,
+    pageLength:15,
+    "scrollX":true,
+    dom: 'Bfrtip',
+    aaSorting: [[5,'asc'],[6,'asc']],
+    columnDefs: [
+        {
+            targets: 1,
+            className: 'noVis'
+        }
+    ],
+    buttons: [
+        {
+            text: 'Filter Column',
+            extend: 'colvis',
+            columns: ':not(.noVis)'
+        }
+    ]
+});

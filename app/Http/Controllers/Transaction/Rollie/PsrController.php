@@ -99,15 +99,26 @@ class PsrController extends ResourceController
         
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Transaction\Rollie\Psr  $psr
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Psr $psr)
+    public function printPsr(Request $request)
     {
-        //
+        $psr_array  = array();
+        foreach ($request->psr_id as $id) 
+        {
+            $psr                = Psr::find($this->decrypt($id));
+            $psr->psr_status    = '2';
+            $psr->save();
+            $psr->wo_number      = $psr->woNumber;
+            $psr->product       = $psr->woNumber->product;
+            foreach ($psr->woNumber->cppDetails as $cppDetail) 
+            {
+                foreach ($cppDetail->fillingMachine as $fillingMachine) 
+                {
+                
+                }
+            }
+            array_push($psr_array,$psr);
+        }
+        return $psr_array;
     }
 
     /**

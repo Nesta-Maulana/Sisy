@@ -186,6 +186,7 @@ Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], f
 		Route::post('/get-psr-detail','Transaction\Rollie\PsrController@getPsrDetail');
 		Route::post('/ubah-psr','Transaction\Rollie\PsrController@ubahPsr');
 		Route::post('/send-notifikasi-psr','Transaction\Rollie\PsrController@sendPsrToPenyelia');
+		Route::post('/print-psr','Transaction\Rollie\PsrController@printPsr');
 
 	});
 
@@ -271,6 +272,9 @@ Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], f
 	});
 	Route::group(['prefix' => 'report-rpd-filling'], function () {
 		Route::get('','RollieController@showReportRpdDashboard')->name('rollie.reports.rpd_filling');
+		Route::get('filter-tanggal-produksi/{tanggal_produksi}','Transaction\Rollie\RPDFillingController@filterTanggalReport');
+		Route::get('filter-produk/{product_id}/{tangal_produksi}','Transaction\Rollie\RPDFillingController@filterProductReport');
+		Route::get('filter-wo/{wo_number_id}','Transaction\Rollie\RPDFillingController@filterWoNumberReport');
 	});
 
 

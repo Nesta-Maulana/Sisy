@@ -972,4 +972,81 @@ class RPDFillingController extends ResourceController
         }
         
     }
+
+    public function filterTanggalReport($tanggal_produksi)
+    {
+        $tanggal_produksi   = explode(' s.d ',$tanggal_produksi);
+        $tanggal_awal       = date('Y-m-d',strtotime($tanggal_produksi[0]));
+        $tanggal_akhir      = date('Y-m-d',strtotime($tanggal_produksi[1]));
+
+        $woNumbers          = WoNumber::whereBetween('production_realisation_date',[$tanggal_awal,$tanggal_akhir])->whereIn('wo_status',['4','5'])->groupBy('product_id')->get();
+        foreach ($woNumbers as $woNumber) 
+        {
+            $product                = $this->encryptId($woNumber->product);
+            foreach ($woNumber->rpdFillingDetailPis as $rpdFillingDetailPi) 
+            {
+                $kode_sampel        = $rpdFillingDetailPi->fillingSampelCode;
+                $mesin_filling      = $rpdFillingDetailPi->fillingMachine;
+            }
+        }        
+        $woNumbers  = $this->encryptId($woNumbers,'product_id');
+        $return     = array();
+        // $return['woNumbers'] = $woNumbers;
+        array_push($return,$woNumbers);
+        return $return;
+        
+    }
+
+    public function filterProductReport($product_id, $production_date)
+    {
+        $explode            = explode(',',$product_id);
+
+        $return             = array();
+        foreach ($explode as $product_id) 
+        {
+            $product_id         = $this->decrypt($product_id);
+            $tanggal_produksi   = explode(' s.d ',$production_date);
+            $tanggal_awal       = date('Y-m-d',strtotime($tanggal_produksi[0]));
+            $tanggal_akhir      = date('Y-m-d',strtotime($tanggal_produksi[1]));
+
+            $woNumbers          = WoNumber::whereBetween('production_realisation_date',[$tanggal_awal,$tanggal_akhir])->whereIn('wo_status',['4','5'])->where('product_id',$product_id)->groupBy('product_id')->get();
+            foreach ($woNumbers as $woNumber) 
+            {
+                $product                = $this->encryptId($woNumber->product);
+                foreach ($woNumber->rpdFillingDetailPis as $rpdFillingDetailPi) 
+                {
+                    $kode_sampel        = $rpdFillingDetailPi->fillingSampelCode;
+                    $mesin_filling      = $rpdFillingDetailPi->fillingMachine;
+                }
+            }        
+            $woNumbers = $this->encryptId($woNumbers,'product_id');
+            array_push($return,$woNumbers);
+        }
+        
+        return $return;
+    }
+    public function filterWoNumberReport($wo_number_id)
+    {
+        $explode            = explode(',',$wo_number_id);
+        $return             = array();
+        foreach ($explode as $wo_number_id) 
+        {
+            $wo_number_id       = $this->decrypt($wo_number_id);
+            $woNumbers          = WoNumber::find($wo_number_id);
+            foreach ($woNumbers as $woNumber) 
+            {
+                $product                = $this->encryptId($woNumber->product);
+                foreach ($woNumber->rpdFillingDetailPis as $rpdFillingDetailPi) 
+                {
+                    $kode_sampel        = $rpdFillingDetailPi->fillingSampelCode;
+                    $mesin_filling      = $rpdFillingDetailPi->fillingMachine;
+                }
+            }        
+            $woNumbers = $this->encryptId($woNumbers,'product_id');
+            array_push($return,$woNumbers);
+        }
+        
+        return $return;
+
+    }
 }

@@ -39,6 +39,7 @@
     <table border='1'>
         <thead>
             <tr class="text-center">
+                <th style="width: 150px">Nomor PSR</th>
                 <th style="width: 150px">Tanggal Produksi</th>
                 <th style="width: 120px">Nomor Wo</th>
                 <th style="width: 120px">Kode Batch 1</th>
@@ -52,6 +53,7 @@
         <tbody>
             @foreach ($psrs as $psr)
                 <tr>
+                    <td>{{ $psr->psr_number }}</td>
                     <td>{{ $psr->woNumber->production_realisation_date }}</td>
                     <td>{{ $psr->woNumber->wo_number }}</td>
                     @if (count($psr->woNumber->cppDetails) == 1)
