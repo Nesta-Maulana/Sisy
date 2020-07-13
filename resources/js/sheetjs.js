@@ -1,0 +1,1 @@
+require('xlsx/dist/xlsx.full.min.js');

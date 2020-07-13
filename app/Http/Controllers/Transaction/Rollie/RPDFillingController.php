@@ -10,6 +10,8 @@ use App\Models\Master\FillingSampelCode;
 use App\Models\Master\FillingMachineGroupHead;
 use App\Models\Master\FillingMachineGroupDetail;
 
+use App\Exports\Rollie\ReportRpdFilling;
+
 use App\Models\Transaction\Rollie\WoNumber;
 use App\Models\Transaction\Rollie\RpdFillingHead;
 use App\Models\Transaction\Rollie\RpdFillingDetailPi;
@@ -22,9 +24,8 @@ use App\Models\Transaction\Rollie\PaletPpq;
 use App\Models\Transaction\Rollie\Ppq;
 use App\Models\Transaction\Rollie\Psr;
 
-
-
 use Illuminate\Http\Request;
+use Excel;
 use Auth;
 use Session;
 use DB;
@@ -1047,6 +1048,32 @@ class RPDFillingController extends ResourceController
         }
         
         return $return;
-
+    }
+    public function exportReportExcel($production_date,$product_id,$wo_number_id)
+    {
+        $production_date            = explode(' s.d ',$production_date);
+        $production_date_start      = date('Y-m-d',strtotime($production_date[0]));
+        $production_date_end        = date('Y-m-d',strtotime($production_date[1]));
+        $product_id                 = explode(',',$product_id);
+        $wo_number_id               = explode(',',$wo_number_id);
+        if ($product_id[0] == 'null') 
+        {
+            $product_id = null;
+        }
+        if ($wo_number_id[0] == 'null') 
+        {
+            $wo_number_id = null;
+        }
+        $woNumbers                  = WoNumber::whereBetween('production_realisation_date',[$production_date_start,$production_date_end])->whereIn('wo_status',['4','5'])->get();
+        if (!is_null($product_id)) 
+        {
+            $woNumbers      = $woNumbers->whereIn('product_id',$product_id);
+        }
+        if (!is_null($wo_number_id)) 
+        {
+            $woNumbers      = $woNumbers->whereIn('wo_nu$wo_number_id',$wo_number_id);
+        }
+        
+        return Excel::download(new ReportRpdFilling($woNumbers), 'Report Rpd Filling '.$production_date_start.' - '.$production_date_end.'.xlsx');
     }
 }

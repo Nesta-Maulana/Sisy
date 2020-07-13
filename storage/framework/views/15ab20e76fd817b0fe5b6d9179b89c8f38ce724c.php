@@ -280,6 +280,7 @@
             <script src="<?php echo e(asset('js/master_app/master_app.js')); ?>"></script>
         <?php break; ?>
         <?php case ('Rollie'): ?>
+            <script src="<?php echo e(mix('js/master/sheet.js')); ?>"></script>
             <script src="<?php echo e(asset('js/rollie_app/rollie.js')); ?>"></script>
         <?php break; ?>
     <?php endswitch; ?>

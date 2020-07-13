@@ -31,6 +31,9 @@ mix.js('resources/js/app.js', 'public/js/master/app.js')
 .js('resources/js/general_script/custom.js','public/js/master/app.js')
 .sass('resources/sass/app.scss', 'public/css/master').version();
 
+
+mix.js('resources/js/sheetjs.js', 'public/js/master/sheet.js')
+.js('resources/js/filesaver.min.js','public/js/master/sheet.js').version();
 mix.scripts([
     'node_modules/datatables.net/js/jquery.dataTables.min.js',
     'node_modules/datatables.net-bs4/js/dataTables.bootstrap4.min.js',

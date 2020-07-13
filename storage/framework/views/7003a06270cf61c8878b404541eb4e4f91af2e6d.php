@@ -31,6 +31,7 @@
                                     Filter For Export Excel
                                </div>
                                <div class="card-body">
+                                
                                     <div class="row">
                                         <div class="col-lg-4 col-md-4 col-sm-4">
                                             <div class="form-group">
@@ -65,9 +66,10 @@
                                         <div class="col-lg-10 col-md-10 col-sm-10">
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-2">
-                                            <button class="btn btn-primary form-control">Export Excel</button>
+                                            <button class="btn btn-primary form-control" id="export" onclick="exportReportRpd()">Export Excel</button>
                                         </div>
                                     </div>
+                                
                                </div>
                            </div>
                        </div>
@@ -83,7 +85,7 @@
                            <table class="table table-bordered text-center" id="report-rpd-filling">
                                <thead>
                                    <tr>
-                                       <th class="no-wrap">Nomor Wo</th>
+                                       <th class="width: 300px">Nomor&nbsp;&nbsp;&nbsp;&nbsp;Wo</th>
                                        <th style="width: 300px">Nama Produk</th>
                                        <th style="width: 135px">Tanggal Produksi</th>
                                        <th style="width: 100px">Mesin Filling</th>
@@ -117,7 +119,11 @@
                                    </tr>
                                </thead>
                                <tbody id="isi-report-rpd-filling">
-                                   
+                                   <?php $__currentLoopData = $rpdHeads; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rpdHead): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                       <?php $__currentLoopData = $rpdHead->rpdFillingDetailPis; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $rpdFillingDetail): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            
+                                       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                </tbody>
                            </table>
                        </div>
@@ -128,6 +134,7 @@
    </div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('extract-plugin-footer'); ?>
+    
     <link rel="stylesheet" href="<?php echo e(asset('datetime-picker/css/daterangepicker.css')); ?>">
     <script type="text/javascript" src="<?php echo e(asset('datetime-picker/js/moment2.min.js')); ?>"></script>
     <script src="<?php echo e(asset('datetime-picker/js/daterangepicker.js')); ?>"></script>
@@ -139,6 +146,6 @@
                 format: 'DD/MM/YYYY'
             }
         });
-    </script>
+    </script>   
 <?php $__env->stopSection(); ?> 
 <?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\Sisy\resources\views/rollie/reports/rpd_filling/dashboard.blade.php ENDPATH**/ ?>

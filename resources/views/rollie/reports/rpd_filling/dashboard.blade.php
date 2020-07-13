@@ -31,6 +31,7 @@
                                     Filter For Export Excel
                                </div>
                                <div class="card-body">
+                                {{-- <form action="export-excel" method="post"> --}}
                                     <div class="row">
                                         <div class="col-lg-4 col-md-4 col-sm-4">
                                             <div class="form-group">
@@ -65,9 +66,10 @@
                                         <div class="col-lg-10 col-md-10 col-sm-10">
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-2">
-                                            <button class="btn btn-primary form-control" onclick="exportExcel()">Export Excel</button>
+                                            <button class="btn btn-primary form-control" id="export" onclick="exportReportRpd()">Export Excel</button>
                                         </div>
                                     </div>
+                                {{-- </form> --}}
                                </div>
                            </div>
                        </div>
@@ -83,7 +85,7 @@
                            <table class="table table-bordered text-center" id="report-rpd-filling">
                                <thead>
                                    <tr>
-                                       <th class="no-wrap">Nomor Wo</th>
+                                       <th class="width: 300px">Nomor&nbsp;&nbsp;&nbsp;&nbsp;Wo</th>
                                        <th style="width: 300px">Nama Produk</th>
                                        <th style="width: 135px">Tanggal Produksi</th>
                                        <th style="width: 100px">Mesin Filling</th>
@@ -117,9 +119,9 @@
                                    </tr>
                                </thead>
                                <tbody id="isi-report-rpd-filling">
-                                   {{-- @foreach ($rpdHeads as $rpdHead)
+                                   @foreach ($rpdHeads as $rpdHead)
                                        @foreach ($rpdHead->rpdFillingDetailPis as $rpdFillingDetail)
-                                            <tr>
+                                            {{-- <tr>
                                                 <td>{{ $rpdFillingDetail->woNumber->wo_number }}</td>
                                                 <td>{{ $rpdFillingDetail->woNumber->product->product_name }}</td>
                                                 <td>{{ $rpdFillingDetail->woNumber->production_realisation_date }}</td>
@@ -157,9 +159,9 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $rpdFillingDetail->status_akhir }}</td>
-                                            </tr>
+                                            </tr> --}}
                                        @endforeach
-                                   @endforeach --}}
+                                   @endforeach
                                </tbody>
                            </table>
                        </div>
@@ -170,6 +172,7 @@
    </div>
 @endsection
 @section('extract-plugin-footer')
+    
     <link rel="stylesheet" href="{{ asset('datetime-picker/css/daterangepicker.css') }}">
     <script type="text/javascript" src="{{ asset('datetime-picker/js/moment2.min.js') }}"></script>
     <script src="{{ asset('datetime-picker/js/daterangepicker.js') }}"></script>
@@ -181,5 +184,5 @@
                 format: 'DD/MM/YYYY'
             }
         });
-    </script>
+    </script>   
 @endsection 

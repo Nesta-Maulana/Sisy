@@ -269,12 +269,14 @@ Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], f
 
 	Route::group(['prefix' => 'report-produk-release'], function () {
 		Route::get('','RollieController@showRprDashboard')->name('rollie.reports.rpr');
+		Route::post('upload-bar','Transaction\Rollie\RPRController@exportBar');
 	});
 	Route::group(['prefix' => 'report-rpd-filling'], function () {
 		Route::get('','RollieController@showReportRpdDashboard')->name('rollie.reports.rpd_filling');
 		Route::get('filter-tanggal-produksi/{tanggal_produksi}','Transaction\Rollie\RPDFillingController@filterTanggalReport');
 		Route::get('filter-produk/{product_id}/{tangal_produksi}','Transaction\Rollie\RPDFillingController@filterProductReport');
 		Route::get('filter-wo/{wo_number_id}','Transaction\Rollie\RPDFillingController@filterWoNumberReport');
+		Route::get('export-excel/{tanggal_produksi}/{product_id}/{wo_number_id}','Transaction\Rollie\RPDFillingController@exportReportExcel');
 	});
 
 

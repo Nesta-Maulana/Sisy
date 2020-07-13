@@ -276,6 +276,7 @@
             <script src="{{  asset('js/master_app/master_app.js') }}"></script>
         @break
         @case('Rollie')
+            <script src="{{  mix('js/master/sheet.js') }}"></script>
             <script src="{{  asset('js/rollie_app/rollie.js') }}"></script>
         @break
     @endswitch

@@ -1380,4 +1380,10 @@ class RollieController extends ResourceController
 		$rpdHeads 		= RpdFillingHead::where('rpd_status','1')->get();
 		return view('rollie.reports.rpd_filling.dashboard',['menus'=>$this->menus,'rpdHeads'=>$rpdHeads]);
 	}
+	
+	public function showReportRpdExcel()
+	{
+		$rpdHeads 		= RpdFillingHead::where('rpd_status','1')->get();
+		return view('rollie.reports.rpd_filling.export',['menus'=>$this->menus,'rpdHeads'=>$rpdHeads]);
+	}
 }

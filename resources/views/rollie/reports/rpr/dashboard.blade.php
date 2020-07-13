@@ -50,8 +50,19 @@
                 <div class="card-header bg-dark">
                     Upload Data BAR
                 </div>
-                <div class="card-body">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam blanditiis vero eum earum! Vel quod iste inventore totam. Dolores vero excepturi ad velit consequuntur quaerat eaque consectetur illum modi voluptate?
+                <div class="card-body" >
+                    <div class="form-group">
+                        <label for="barFile">File input</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="barFile">
+                                <label class="custom-file-label" for="barFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="small bg-warning">
+                            * file akan terupload otomatis ketika anda memilihnya
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -307,5 +318,75 @@
     <script src="{{ asset('datetime-picker/js/daterangepicker.js') }}"></script>
     <script>
         $('#filter_tanggal').daterangepicker();
+    </script>
+    <script src="{{asset('js/master/xlsx.min.js')}}"></script>
+    <script src="{{asset('js/master/filesaver.min.js')}}"></script>
+    <script src="{{asset('js/master/custom-file.min.js')}}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+          bsCustomFileInput.init();
+        });
+
+        $('#barFile').change(function(e) 
+        {
+            var reader  = new FileReader();
+            reader.readAsArrayBuffer(e.target.files[0]);
+            reader.onload   = function (e) {
+                var data    = new Uint8Array(reader.result);
+                var wb      = XLSX.read(data,{type:'array'});
+                // var htmlstr = XLSX.write(wb,{sheet:wb.SheetNames[0],type:'binary',bookType:'html'});
+                var json    = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {raw: true});
+                // console.log(json);
+                if (json.length > 0) 
+                {
+                    Swal.fire({
+                        title: 'Konfirmasi Ekstract Excel BAR',
+                        text:  'Apakah anda yakin akan mengekstrak BAR dengan nomor bar '+json[1].__EMPTY_8+' ?',
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'Tidak, Proses yang lain',
+                        confirmButtonText: 'Ya, Extract BAR',
+                    }).then((result) => {
+                        if (result.value) 
+                        {
+                            $.ajax({
+                                headers: 
+                                {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                url: '/rollie/report-produk-release/upload-bar', 
+                                method: 'POST',
+                                dataType: 'JSON',
+                                data:{
+                                    'data_bar' :json
+                                },
+                                success: function (data) 
+                                {
+                                    if (data.success)
+                                    {
+                                        swal({
+                                            title: 'Proses Berhasil',
+                                            text: data.message,
+                                            type: 'success'
+                                        });
+                                        document.location.href='';
+                                    }
+                                    else
+                                    {
+                                        swal({
+                                            title: 'Proses Gagal',
+                                            text: data.message,
+                                            type: 'error'
+                                        });
+                                    }
+                                }  
+                            });
+                        }
+                    });         
+                }
+            }    
+        })
     </script>
 @endsection

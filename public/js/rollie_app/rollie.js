@@ -5152,5 +5152,37 @@ function getFillingSampelMikro()
                 }
             }
         }
+        function exportReportRpd()
+        {
+            tanggal_produksi    = $('#filter_tanggal').val();
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace('/','-');
+            tanggal_produksi    = tanggal_produksi.replace(' - ',' s.d ');
+            product_id          = [];
+            $.each($("#product_id option:selected"), function(){
+                product_id.push($(this).val());
+            });
+            if (product_id.length < 1) 
+            {
+                product_id = null;    
+            }
+            
+            wo_number_id          = [];
+            $.each($("#wo_number_id option:selected"), function(){
+                wo_number_id.push($(this).val());
+            });
+            
+            if (wo_number_id.length < 1) 
+            {
+                wo_number_id = null;    
+            }
+            window.open('/rollie/report-rpd-filling/export-excel/'+tanggal_produksi+'/'+product_id+'/'+wo_number_id);
+        }
+        
     /* End Report RPD  */
+    /* Start Report RPR */
+
+    /* End Report RPR */
 /* END Report */
