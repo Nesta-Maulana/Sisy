@@ -53,15 +53,17 @@
                 <div class="card-body" >
                     <div class="form-group">
                         <label for="barFile">File input</label>
-                        <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="barFile">
-                                <label class="custom-file-label" for="barFile">Choose file</label>
+                        <form >
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="barFile">
+                                    <label class="custom-file-label" for="barFile">Choose file</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="small bg-warning">
-                            * file akan terupload otomatis ketika anda memilihnya
-                        </div>
+                            <div class="small bg-warning mt-3">
+                                * file akan terupload otomatis ketika anda memilihnya
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -91,8 +93,9 @@
                                 <th style="width: 500px">PPQ</th>
                                 <th style="width: 200px">Estimasi Release</th>
                                 <th style="width: 200px">Status Mutu Akhir FG</th>
-                                <th style="width: 200px">Referensi Bar</th>
-                                <th style="width: 200px">Tanggal Bar</th>
+                                <th style="width: 200px">Referensi BAR</th>
+                                <th style="width: 200px">Tanggal BAR</th>
+                                <th style="width: 200px">Status BAR</th>
                                 <th style="width: 200px">Keterangan</th>
                             </tr>
                         </thead>
@@ -276,9 +279,47 @@
                                                         <td class="bg-warning">On Progress Analisa</td>
                                                     <?php break; ?>
                                                 <?php endswitch; ?>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>
+                                                <?php if(is_null($palet->bar_number)): ?>
+                                                    -
+                                                <?php else: ?>
+                                                    <?php echo e($palet->bar_number); ?>
+
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if(is_null($palet->bar_date)): ?>
+                                                    -
+                                                <?php else: ?>
+                                                    <?php echo e($palet->bar_date); ?>
+
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <?php if(is_null($palet->bar_status)): ?>
+                                                    -
+                                                <?php else: ?>
+                                                    <?php echo e($palet->bar_status); ?>
+
+                                                <?php endif; ?>
+                                            </td>
+                                            <?php if(is_null($palet->bar_note) && is_null($palet->bar_number)): ?>
+                                                <td>
+                                                    -
+                                                </td>
+                                            <?php else: ?>
+                                                <?php if(is_null($palet->bar_status)): ?>
+                                                    <td onclick="" id="td_note_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($palet->id)); ?>">
+                                                        -
+                                                    </td>
+                                                <?php else: ?>
+                                                    <td>
+                                                        <?php echo e($palet->bar_note); ?>
+
+                                                    </td>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+
                                         </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -303,6 +344,7 @@
                                 <th>Status Mutu Akhir FG</th>
                                 <th>Referensi Bar</th>
                                 <th>Tanggal Bar</th>
+                                <th>Status Bar</th>
                                 <th>Keterangan</th>
                             </tr>
                         </tfoot>
@@ -364,6 +406,9 @@
                                 },
                                 success: function (data) 
                                 {
+                                    $('#barFile').val("");
+                                    $('.custom-file-label')[0].innerHTML = 'Choose file' ;
+
                                     if (data.success)
                                     {
                                         swal({
@@ -383,6 +428,11 @@
                                     }
                                 }  
                             });
+                        }
+                        else
+                        {
+                            $('#barFile').val("");
+                            $('.custom-file-label')[0].innerHTML = 'Choose file';
                         }
                     });         
                 }

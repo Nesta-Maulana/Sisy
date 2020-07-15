@@ -313,7 +313,9 @@ class CppProductController extends ResourceController
         {
             $fillingMachineGroupDetail->filling_machine             = $fillingMachineGroupDetail->fillingMachine->filling_machine_name;
             $fillingMachineGroupDetail->fillingMachine->short_name  = strtolower($fillingMachineGroupDetail->fillingMachine->filling_machine_name);
-            $fillingMachineGroupDetail->fillingMachine->short_code  = $fillingMachineGroupDetail->fillingMachine->filling_machine_code[strlen($fillingMachineGroupDetail->fillingMachine->filling_machine_code)-1];
+            $tahun                                                  = date('Y');
+            $tahun                                                  = $this->tahunKeHuruf($tahun);
+            $fillingMachineGroupDetail->fillingMachine->short_code  = $tahun.''.$fillingMachineGroupDetail->fillingMachine->filling_machine_code[strlen($fillingMachineGroupDetail->fillingMachine->filling_machine_code)-1];
             $this->encryptId($cppHead->product,'subbrand_id','product_type_id','filling_machine_group_head_id');
             $this->encryptId($cppHead->product->fillingMachineGroupHead);
             $this->encryptId($fillingMachineGroupDetail,'filling_machine_group_head_id','filling_machine_id');

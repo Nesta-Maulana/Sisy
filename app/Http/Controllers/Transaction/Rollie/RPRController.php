@@ -44,19 +44,19 @@ class RPRController extends Controller
         {
             $explode_lot            = explode('-',$list_lot['lot_number']);
             $lot_numbers            = CppDetail::where('lot_number',$explode_lot[0])->first();
-            $palets                 = $lot_numbers->palets->where('palet',$explode_lot[1]);
+            $palets                 = $lot_numbers->palets->where('palet',$explode_lot[1])->first();
+            $bar_date               = date('Y-m-d',strtotime($list_lot['bar_date']));
             if (is_null($palets->bar_number))
             {
-                $palets->bar_number     = $bar_number;
             }
+            $palets->bar_number     = $bar_number;
+            $palets->bar_status     = $list_lot['bar_status'];
+            $palets->bar_date       = $bar_date;
+            $palets->save();
             /*else
             {
                 $fail_update        .= ' Palet '.$palets->palet.' ';
             } */
-            $palets->bar_status     = $list_lot['bar_status'];
-            $palets->bar_date       = $list_lot['bar_date'];
-            /* $palets->bar_note       = $list_lot['bar_note']; */
-            $palets->save();
         }
         return ['success'=>true,'message'=>'Data berhasil diupload'];
     }
