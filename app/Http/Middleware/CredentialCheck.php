@@ -36,6 +36,8 @@ class CredentialCheck
                     
                     if ($menu->is_active) 
                     {
+
+                        // dd(Auth::user());
                         $menu_permission    = $menu->menuPermissions->where('user_id',Auth::user()->id)->first();
                         if ($menu_permission->view) 
                         {
@@ -71,6 +73,8 @@ class CredentialCheck
                         } 
                         else 
                         {
+                        dd($menu->menuPermissions);
+
                             return redirect(url()->previous())->with('error', 'Anda tidak memiliki hak akses ke menu ini. Harap hubungi Administrator Aplikasi atau Mengisi Form Request Hak Akses untuk request hak akses pada menu tersebut');
                         }
                         

@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-5">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
             <form action="kelola-flowmeter" method="post">
                 {{ csrf_field() }}
                 <div class="card">
@@ -19,10 +19,10 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="flowmeter_name">Nama Flowmeter</label>
-                                    <input type="text" name="flowmeter_name" id="flowmeter_name" class="form-control">
+                                    <input type="text" name="flowmeter_name" id="flowmeter_name" class="form-control" autocomplete="off">
                                     <input type="hidden" name="flowmeter_id" id="flowmeter_id" class="form-control">
                                 </div>
                                 <div class="form-group">
@@ -43,7 +43,8 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
                                 <div class="form-group">
                                     <label for="flowmeter_location_id">Lokasi Flowmeter</label>
                                     <select name="flowmeter_location_id" id="flowmeter_location_id" class="form-control" required>
@@ -72,17 +73,15 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12" id="button_simpan">
-                                <button class="btn btn-primary form-control">Tambahkan </button>
+                        <div class="row justify-content-end" >
+                            <div class="col-6">
+                                <button class="btn btn-primary form-control" id="button_simpan">Tambahkan </button>
                             </div>
-                            
-                            <div class="col-lg-6 col-md-6 col-sm-6 hidden" id="button_update">
+                            <div class="col-3 hidden" id="button_update">
                                 <button class="btn btn-primary form-control">Ubah Data </button>
                             </div>
                             
-                            <div class="col-lg-6 col-md-6 col-sm-6 hidden" id="button_batal">
+                            <div class="col-3 hidden" id="button_batal">
                                 <a class="btn btn-outline-secondary form-control" onclick="window.location.href=''">Batal</a>
                             </div>
                         </div>
@@ -90,53 +89,55 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-7 col-md-7 col-sm-7">
-           <div class="card">
-               <div class="card-header bg-dark">
-                   Data Workcenter Flowmeter
-               </div>
-               <div class="card-body">
-                   <div class="row">
-                       <div class="col-lg-12 col-md-12 col-sm-12">
-                           <table class="table table-bordered" id="flowmeter-categories-table" >
-                              <thead >
-                                    <tr>
-                                        <th style="width: 50px">#</th>
-                                        <th style="width: 200px">Nama Flowmeter</th>
-                                        <th style="width: 200px">Satuan Flowmeter</th>
-                                        <th style="width: 200px">Workcenter Flowmeter</th>
-                                        <th style="width: 200px">Lokasi Flowmeter</th>
-                                        <th style="width: 200px">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($flowmeters as $flowmeter)
-                                    <tr>
-                                        <td>
-                                            <button class="btn btn-outline-primary" onclick="editFlowmeter('{{ app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id) }}')">
-                                                <i class="fa fa-pencil"></i>
-                                            </button>
-                                        </td>
-                                        <td>{{ $flowmeter->flowmeter_name }}</td>
-                                        <td>{{ $flowmeter->flowmeterUnit->flowmeter_unit }}</td>
-                                        <td>{{ $flowmeter->flowmeterWorkcenter->flowmeter_workcenter }}</td>
-                                        <td>{{ $flowmeter->flowmeterLocation->flowmeter_location }}</td>
-                                        <td>
-                                            @if ($flowmeter->is_active == '0')
-                                                Inactive
-                                            @else
-                                                Active
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                           </table>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="card-header bg-dark">
+                    Data Flowmeter
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="table table-bordered" id="flowmeter-categories-table" >
+                               <thead >
+                                     <tr>
+                                         <th style="width: 50px">#</th>
+                                         <th style="width: 200px">Nama Flowmeter</th>
+                                         <th style="width: 200px">Satuan Flowmeter</th>
+                                         <th style="width: 200px">Workcenter Flowmeter</th>
+                                         <th style="width: 200px">Lokasi Flowmeter</th>
+                                         <th style="width: 200px">Status</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     @foreach ($flowmeters as $flowmeter)
+                                     <tr>
+                                         <td>
+                                             <button class="btn btn-outline-primary" onclick="editFlowmeter('{{ app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id) }}')">
+                                                 <i class="fa fa-edit"></i>
+                                             </button>
+                                         </td>
+                                         <td>{{ $flowmeter->flowmeter_name }}</td>
+                                         <td>{{ $flowmeter->flowmeterUnit->flowmeter_unit }}</td>
+                                         <td>{{ $flowmeter->flowmeterWorkcenter->flowmeter_workcenter }}</td>
+                                         <td>{{ $flowmeter->flowmeterLocation->flowmeter_location }}</td>
+                                         <td>
+                                             @if ($flowmeter->is_active == '0')
+                                                 Inactive
+                                             @else
+                                                 Active
+                                             @endif
+                                         </td>
+                                     </tr>
+                                     @endforeach
+                                 </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   
 @endsection

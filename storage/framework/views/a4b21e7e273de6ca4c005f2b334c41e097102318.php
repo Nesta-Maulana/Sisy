@@ -20,7 +20,7 @@
                                             <h1 class="d-flex justify-content-center">
                                                 <i class="fas fa-fire text-white"></i> <br>
                                             </h1>
-                                            <h4 class="text-white"><?php echo e($monitoring->menu_name); ?></h4>
+                                            <h6 class="text-white"><?php echo e($monitoring->menu_name); ?></h6>
                                         </div>
                                     </div>
                                 </div>    
@@ -32,7 +32,7 @@
                                             <h1 class="d-flex justify-content-center">
                                                 <i class="fas fa-tint text-white"></i> <br>
                                             </h1>
-                                            <h4 class="text-white"><?php echo e($monitoring->menu_name); ?></h4>
+                                            <h6 class="text-white"><?php echo e($monitoring->menu_name); ?></h6>
                                         </div>
                                     </div>
                                 </div>    
@@ -45,7 +45,7 @@
                                             <h1 class="d-flex justify-content-center">
                                                 <i class="fas fa-bolt text-white"></i> <br>
                                             </h1>
-                                            <h4 class="text-white"><?php echo e($monitoring->menu_name); ?></h4>
+                                            <h6 class="text-white"><?php echo e($monitoring->menu_name); ?></h6>
                                         </div>
                                     </div>
                                 </div>    
@@ -58,7 +58,7 @@
                                 <h1 class="d-flex justify-content-center">
                                     <i class="fas fa-database text-white"></i> <br>
                                 </h1>
-                                <h4 class="text-white">Riwayat Pengamatan</h4>
+                                <h6 class="text-white">Riwayat Pengamatan</h6>
                             </div>
                         </div>
                     </div>    

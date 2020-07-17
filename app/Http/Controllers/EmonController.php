@@ -48,31 +48,6 @@ class EmonController extends ResourceController
 	}
 	public function showMonitoringFormAir($location_id)
 	{
-		$rumus_custom 		= [
-			'params'	=> [
-				'A' => '1',
-				'B' => '2',
-				'C' => '3',
-				'D' => '4'
-			],
-			'formulas' => 
-			[
-				"A",
-				"+",
-				"B"
-			]
-		];
-		$angka 				=[
-			'1' => 1,
-			'2' => 2,
-			'3' => 3,
-			'4' => 4
-		];
-		// foreach ($rumus_custom['formulas'] as $key => $id) 
-		// {
-		// 	$
-		// }
-
 		$flowmeters 		= Flowmeter::where('flowmeter_location_id',$this->decrypt($location_id))->where('is_active','1')->get();
 		$flowmeterLain 		= array();
  		foreach ($flowmeters as $key => $flowmeter) 

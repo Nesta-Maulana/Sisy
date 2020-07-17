@@ -11,9 +11,9 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
 	<div class="row">
-		<di class="col-lg-12 col-md-12 col-sm-12">
+		<div class="col-lg-12 col-md-12 col-sm-12">
 			<div class="card">
-				<div class="card-header">
+				<div class="card-header bg-primary">
 					Lokasi Monitoring Air
 				</div>
 				<div class="card-body">

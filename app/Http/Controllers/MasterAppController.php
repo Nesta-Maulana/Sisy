@@ -220,6 +220,7 @@ class MasterAppController extends ResourceController
 		{
 			$flowmeterCategories 	= FlowmeterCategory::where('is_active','1')->get();
 			$flowmeterLocations 	= FlowmeterLocation::all();
+			
 			return view('master_app.manage_flowmeter_location.dashboard',['menus'=>$this->menus,'flowmeterLocations'=>$flowmeterLocations,'flowmeterCategories'=>$flowmeterCategories]);
 		} 
 		else 
