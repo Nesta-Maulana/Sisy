@@ -50,18 +50,20 @@
                                     </div>
                                 </div>    
                             @break
+                            @case('Riwayat Pengamatan')
+                                <div class="col-lg col-md col-sm-12 mt-2">
+                                    <div class="card">
+                                        <div class="card-body btn bg-info text-center" onclick="window.location.href='{{ route($monitoring->menu_route) }}'">
+                                            <h1 class="d-flex justify-content-center">
+                                                <i class="fas fa-database text-white"></i> <br>
+                                            </h1>
+                                            <h6 class="text-white">Riwayat Pengamatan</h6>
+                                        </div>
+                                    </div>
+                                </div>    
+                            @break
                         @endswitch
                     @endforeach
-                    <div class="col-lg col-md col-sm-12 mt-2">
-                        <div class="card">
-                            <div class="card-body btn bg-info text-center" onclick="window.location.href='{{ route($monitoring->menu_route) }}'">
-                                <h1 class="d-flex justify-content-center">
-                                    <i class="fas fa-database text-white"></i> <br>
-                                </h1>
-                                <h6 class="text-white">Riwayat Pengamatan</h6>
-                            </div>
-                        </div>
-                    </div>    
                 </div>
             </div>
         </div>

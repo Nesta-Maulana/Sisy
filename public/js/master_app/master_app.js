@@ -476,6 +476,8 @@
             }
         });
     }
+/* end manage filling machine */
+/* start emon data master */
     function editFlowmeterCategory(flowmeter_category_id) 
     {
         $.ajax({
@@ -628,4 +630,28 @@
         });  
     }
     
+    function changeLocationPermissions()
+    {
+        var user_id                     = $('#location_permission_user').val();
+        var flowmeter_category_id       = $('#flowmeter_category_id').val();
+        if (!user_id || !flowmeter_category_id || user_id == '' || flowmeter_category_id == '' )
+        {
+            swal({
+                title: 'Proses Gagal',
+                text: "Harap pilih parameter user dan kategori flowmeter terlebih dahulu",
+                type: 'error'
+            });
+        }
+        else
+        {
+            $.ajax({
+                url: 'get-location/' + flowmeter_category_id + '/' +user_id,
+                method: 'GET',
+                dataType:'JSON',
+                success: function(data)
+                {  
+                }
+            });
+        }
+    }
 /*  */

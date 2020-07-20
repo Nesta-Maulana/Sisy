@@ -373,3 +373,21 @@ var list_formula_flowmeter = $('#list-formula-flowmeter').DataTable({
     pageLength:7,
     "scrollX":true,
 });
+/* var monitoring_history_table = $('#monitoring-history-table').DataTable({
+    bLengthChange:false,
+    bFilter:false,
+    bInfo:false,
+    paging:true,
+    pageLength:100,
+    "scrollX":true,
+});
+ */
+var add_location_permission_table = $('#add-location-permission-table').DataTable({
+    bLengthChange:false,
+    bFilter:false,
+    bInfo:false,
+    paging:true,
+    pageLength:10,
+    "scrollX":true,
+    "pagingType":"simple"
+});

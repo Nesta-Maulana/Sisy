@@ -130,6 +130,13 @@ Route::group(['prefix' => 'master-apps','middleware'=>['auth','credential.check'
 		Route::get('edit-flowmeter-formula/{flowmeter_id}', 'Master\Emon\FlowmeterUsageController@editFlowmeter');
 	});
 	
+	Route::group(['prefix' => 'kelola-flowmeter-location-permission'], function () 
+	{
+		Route::get('', 'MasterAppController@manageLocationPermission')->name('master_app.master_data.manage_flowmeter_location_permissions');
+		Route::get('tambah-akses', 'MasterAppController@showFormManageLocationPermission');
+		Route::get('get-location/{category_id}/{user_id}', 'Master\Emon\FlowmeterLocationPermissionsController@getFlowmeter');
+	});
+	
 });
 
 Route::group(['prefix' => 'rollie','middleware'=>['auth','credential.check']], function() 
@@ -320,4 +327,5 @@ Route::group(['prefix' => 'emon','middleware'=>['auth','credential.check']], fun
 	
 	Route::get('/monitoring-listrik', 'EmonController@showMonitoringListrik')->name('emon.monitoring.listrik');
 	Route::get('/monitoring-gas', 'EmonController@showMonitoringGas')->name('emon.monitoring.gas');
+	Route::get('/histori-pengamatan', 'EmonController@showMonitoringHistory')->name('emon.monitoring.histories');
 });

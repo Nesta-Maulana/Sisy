@@ -39,6 +39,7 @@ class EnergyUsageController extends ResourceController
                         if (!is_null($energyMonitoringToday)) 
                         {
                             $energyMonitoringYesterday  = $flowmeter->energyMonitorings->where('monitoring_date',$yesterday)->first();
+                            
                             if (!is_null($energyMonitoringYesterday)) 
                             {
                                 $energyUsageToday       = $energyMonitoringToday->monitoring_value - $energyMonitoringYesterday->monitoring_value;
@@ -58,6 +59,7 @@ class EnergyUsageController extends ResourceController
                                 }
                             }
                             $energyUsageTodayFromDB     = $flowmeterUsage->energyUsages->where('usage_date',$today)->first();
+                            
                             if (is_null($energyUsageTodayFromDB)) 
                             {
                                 $energyUsage        = EnergyUsage::create([
@@ -71,13 +73,13 @@ class EnergyUsageController extends ResourceController
                             {
                                 $energyUsageTodayFromDB->usage_value    = $energyUsageToday;
                                 $energyUsageTodayFromDB->save();
-
                             }
                         }
                     }
                 } 
                 else 
                 {
+                    // dd($flowmeterUsage);
                     /*$a  = 10;
                     $b  = 5;
                     $d  = 10;
@@ -103,9 +105,13 @@ class EnergyUsageController extends ResourceController
                         {
                             if (substr($formula, 0,2) == 'FU') 
                             {
-                                $flowmeterUsage         = FlowmeterUsage::where('flowmeter_code',$formula)->first();
+                                $flowmeterUsageRumus         = FlowmeterUsage::where('flowmeter_code',$formula)->first();
                                 // $energy usage today
-                                $energyUsageToday       = $flowmeterUsage->energyUsages->where('usage_date',$today)->first();
+                                // if(is_null($flowmeterUsageRumus))
+                                // {   
+                                //     dd($formula);
+                                // }
+                                $energyUsageToday       = $flowmeterUsageRumus->energyUsages->where('usage_date',$today)->first();
                                 if (is_null($energyUsageToday))
                                 {
                                     $energyUsageToday  =0;
@@ -118,10 +124,23 @@ class EnergyUsageController extends ResourceController
                             }
                         }
                     }
-                    $rumus  .= ';';
-                    eval($rumus);
-                    echo $rumus;
-                    die();
+                    $rumus                  .= ';';
+                    eval($rumus); // for usage value 
+                    $energyUsageToday    = $flowmeterUsage->energyUsages->where('usage_date',$today)->first();
+                    if (is_null($energyUsageToday)) 
+                    {
+                        $energyUsage        = EnergyUsage::create([
+                            'flowmeter_usage_id'        => $flowmeterUsage->id,
+                            'flowmeter_formula_id'      => $flowmeterUsage->flowmeter_formula_id,
+                            'usage_value'               => $rumus,
+                            'usage_date'                => $today
+                        ]);
+                    } 
+                    else 
+                    {
+                        $energyUsageToday->usage_value  = $rumus;
+                        $energyUsageToday->save();
+                    }
                 }
                 
             }

@@ -187,10 +187,11 @@ class EmonController extends ResourceController
 			
 		}
 	}
-	public function showDatabasePengamatan()
+	
+	public function showMonitoringHistory()
 	{
-		$jenis_pengamatan 	= KategoriMeteran::where('status','1')->get(); 	
-		return view('energy_monitoring.home-database',['menus'=>$this->menus,'jenis_pengamatan'=>$jenis_pengamatan]);
+		// $flowmeter 		=
+		return view('energy_monitoring.monitoring_history.dashboard',['menus'=>$this->menus]);
 	}
 
 	public function databaseFilterWorkcenter($jenis_pengamatan_id)

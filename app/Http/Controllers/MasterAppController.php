@@ -268,6 +268,42 @@ class MasterAppController extends ResourceController
 		}
 		
 	}
+	public function manageLocationPermission()
+	{
+		$cekAkses 	= $this->checkAksesLihat(\Request::getRequestUri(),'master_app.master_data.manage_flowmeter_location_permissions');
+		if ($cekAkses['success'])
+		{
+			return view('master_app.manage_flowmeter_location_permission.dashboard',['menus'=>$this->menus]);
+		} 
+		else 
+		{
+			return redirect()->back()->with('error',$cekAkses['message']);
+		}
+	}
+	public function showFormManageLocationPermission()
+	{
+		$users 					= User::all();
+		$aksesPengamatans 		= Menu::find('70')->childMenus;
+		$flowmeterCategories 	= array();
+		foreach ($aksesPengamatans as $aksesPengamatan) 
+		{
+			$pecah 		= explode(' ',$aksesPengamatan->menu_name);
+			if ($pecah[1] !== 'Pengamatan') 
+			{
+				$flowmeterCategory 	= FlowmeterCategory::where('flowmeter_category',$pecah[1])->first();
+				array_push($flowmeterCategories,$flowmeterCategory);
+			}
+		}
+		$cekAkses 		= $this->checkAksesLihat(\Request::getRequestUri(),'master_app.master_data.manage_flowmeter_location_permissions');
+		if ($cekAkses['success'])
+		{
+			return view('master_app.manage_flowmeter_location_permission.form',['menus'=>$this->menus,'users'=>$users,'flowmeterCategories'=>$flowmeterCategories]);
+		} 
+		else 
+		{
+			return redirect()->back()->with('error',$cekAkses['message']);
+		}
+	}
 	public function manageFlowmeterFormula()
 	{
 		$cekAkses 	= $this->checkAksesLihat(\Request::getRequestUri(),'master_app.master_data.manage_flowmeter_usages');
