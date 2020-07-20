@@ -25,6 +25,8 @@ use App\Models\Master\fillingMachineGroupHead;
 use App\Models\Master\fillingMachineGroupDetail;
 
 use App\Models\Master\Emon\Flowmeter;
+use App\Models\Master\Emon\FlowmeterUsage;
+use App\Models\Master\Emon\FlowmeterFormula;
 use App\Models\Master\Emon\FlowmeterCategory;
 use App\Models\Master\Emon\FlowmeterWorkcenter;
 use App\Models\Master\Emon\FlowmeterUnit;
@@ -245,7 +247,39 @@ class MasterAppController extends ResourceController
 			return redirect()->back()->with('error',$cekAkses['message']);
 		}
 	}
+	public function manageFlowmeterUsage()
+	{
+		$cekAkses 	= $this->checkAksesLihat(\Request::getRequestUri(),'master_app.master_data.manage_flowmeter_usages');
+		if ($cekAkses['success']) 
+		{
+			$flowmeter_usages 		= FlowmeterUsage::all();
+			$flowmeterLocations 	= FlowmeterLocation::where('is_active','1')->get();
+			$flowmeterUnits 		= FlowmeterUnit::where('is_active','1')->get();
+			$flowmeterWorkcenters 	= FlowmeterWorkcenter::where('is_active','1')->get();
+			$flowmeterFormulas 		= FlowmeterFormula::where('is_active','1')->get(); /*ini hanya mengambil formula atau rumus yang aktif  digunakan untuk */
+			return view('master_app.manage_flowmeter_usage.dashboard',['menus'=>$this->menus,'flowmeter_usages'=>$flowmeter_usages,'flowmeterLocations'=>$flowmeterLocations,'flowmeterUnits'=>$flowmeterUnits,'flowmeterWorkcenters'=>$flowmeterWorkcenters,'flowmeterFormulas'=>$flowmeterFormulas]);
+			
+			//return view('master_app.manage_flowmeter_usage.dashboard',['menus'=>$this->menus]);
 
+		} 
+		else 
+		{
+			return redirect()->back()->with('error',$cekAkses['message']);
+		}
+		
+	}
+	public function manageFlowmeterFormula()
+	{
+		$cekAkses 	= $this->checkAksesLihat(\Request::getRequestUri(),'master_app.master_data.manage_flowmeter_usages');
+		if ($cekAkses['success']) 
+		{
+			return view('master_app.manage_flowmeter_formula.dashboard',['menus'=>$this->menus]);
+		} 
+		else 
+		{
+			return redirect()->back()->with('error',$cekAkses['message']);
+		}
+	}
 	public function perhitunganPernggunaan()
 	{
 		return view('master_app.perhitungan_penggunaan',['menus'=>$this->menus]);	

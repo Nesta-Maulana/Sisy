@@ -365,3 +365,11 @@ var report_rpd_filling = $('#report-rpd-filling').DataTable({
         }
     ]
 });
+var list_formula_flowmeter = $('#list-formula-flowmeter').DataTable({
+    bLengthChange:false,
+    bFilter:true,
+    bInfo:false,
+    paging:true,
+    pageLength:7,
+    "scrollX":true,
+});

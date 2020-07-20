@@ -283,6 +283,9 @@
             <script src="<?php echo e(mix('js/master/sheet.js')); ?>"></script>
             <script src="<?php echo e(asset('js/rollie_app/rollie.js')); ?>"></script>
         <?php break; ?>
+        <?php case ('Emon'): ?>
+            <script src="<?php echo e(asset('js/emon_app/emon.js')); ?>"></script>
+        <?php break; ?>
     <?php endswitch; ?>
     <?php echo $__env->yieldContent('extract-plugin-footer'); ?>
 

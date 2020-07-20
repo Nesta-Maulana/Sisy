@@ -49,6 +49,7 @@ class EmonController extends ResourceController
 	public function showMonitoringFormAir($location_id)
 	{
 		$flowmeters 		= Flowmeter::where('flowmeter_location_id',$this->decrypt($location_id))->where('is_active','1')->get();
+		$flowmeterLocations = FlowmeterLocation::where('is_active','1')->get();
 		$flowmeterLain 		= array();
  		foreach ($flowmeters as $key => $flowmeter) 
 		{
@@ -58,7 +59,7 @@ class EmonController extends ResourceController
 				unset($flowmeters[$key]);
 			}
 		}
-		return view('energy_monitoring.monitoring_air.form',['menus'=>$this->menus,'flowmeters'=>$flowmeters,'flowmeterLain'=>$flowmeterLain]); 
+		return view('energy_monitoring.monitoring_air.form',['menus'=>$this->menus,'flowmeters'=>$flowmeters,'flowmeterLain'=>$flowmeterLain,'flowmeterLocations'=>$flowmeterLocations]); 
 	}
 	public function showAirFilter($workcenter_id,$jenis_kirim)
 	{

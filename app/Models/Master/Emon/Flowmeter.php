@@ -28,4 +28,8 @@ class Flowmeter extends ResourceModel
     {
     	return $this->belongsTo('App\Models\Master\Emon\FlowmeterLocation', 'flowmeter_location_id', 'id');
     }
+    public function energyMonitorings()
+    {
+        return $this->hasMany('App\Models\Transaction\Emon\EnergyMonitoring', 'flowmeter_id', 'id');
+    }
 }

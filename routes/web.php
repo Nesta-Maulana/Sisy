@@ -115,6 +115,20 @@ Route::group(['prefix' => 'master-apps','middleware'=>['auth','credential.check'
 		Route::post('', 'Master\Emon\FlowmeterController@manageFlowmeter');
 		Route::get('edit-flowmeter/{flowmeter_id}', 'Master\Emon\FlowmeterController@editFlowmeter');
 	});
+
+	Route::group(['prefix' => 'kelola-flowmeter-usage'], function () 
+	{
+		Route::get('', 'MasterAppController@manageFlowmeterUsage')->name('master_app.master_data.manage_flowmeter_usages');
+		Route::post('', 'Master\Emon\FlowmeterUsageController@manageFlowmeter');
+		Route::get('edit-flowmeter-usage/{flowmeter_id}', 'Master\Emon\FlowmeterUsageController@editFlowmeter');
+	});
+
+	Route::group(['prefix' => 'kelola-flowmeter-formula'], function () 
+	{
+		Route::get('', 'MasterAppController@manageFlowmeterFormula')->name('master_app.master_data.manage_flowmeter_formulas');
+		Route::post('', 'Master\Emon\FlowmeterFormulaController@manageFormula');
+		Route::get('edit-flowmeter-formula/{flowmeter_id}', 'Master\Emon\FlowmeterUsageController@editFlowmeter');
+	});
 	
 });
 
@@ -298,6 +312,9 @@ Route::group(['prefix' => 'emon','middleware'=>['auth','credential.check']], fun
 	Route::group(['prefix' => 'monitoring-air'], function() {
 		Route::get('/', 'EmonController@showMonitoringAir')->name('emon.monitoring.water');
 		Route::get('/{location_id}', 'EmonController@showMonitoringFormAir');
+		Route::post('/input-monitoring', 'Transaction\Emon\EnergyMonitoringController@inputMonitoringEnergy');
+		Route::post('/update-data-monitoring', 'Transaction\Emon\EnergyMonitoringController@updateDataMonitoringEnergy');
+		Route::get('/get-monitoring-data/{flowmeter_id}', 'Transaction\Emon\EnergyMonitoringController@getMonitoringData');
 	    
 	});
 	

@@ -14,7 +14,7 @@ class FlowmeterCategory extends ResourceModel
     {
         parent::boot();
     }
-    public function flowmeterWorkcenter()
+    public function flowmeterWorkcenters()
     {
     	return $this->hasMany('App\Models\Master\Emon\FlowmeterWorkcenter', 'flowmeter_category_id', 'id');
     }

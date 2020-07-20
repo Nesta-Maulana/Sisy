@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-5">
+        <div class="col-lg-3 col-md-3 col-sm-3" id="form-workcenter">
             <form action="kelola-flowmeter-workcenter" method="post">
                 {{ csrf_field() }}
                 <div class="card">
@@ -31,14 +31,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="flowmeter_workcenter">Workcenter Flowmeter</label>
-                                    <input type="text" name="flowmeter_workcenter" id="flowmeter_workcenter" class="form-control">
+                                    <input type="text" name="flowmeter_workcenter" id="flowmeter_workcenter" class="form-control" autocomplete="off">
                                     <input type="hidden" name="flowmeter_workcenter_id" id="flowmeter_workcenter_id" class="form-control">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="is_active">Status Flowmeter Workcenter</label>
+                                    <label for="is_active">Status Workcenter</label>
                                     <select name="is_active" id="is_active" class="form-control" required>
-                                        <option value="id" selected disabled>-- Pilih Status Workcenter Flowmeter-- </option>
+                                        <option value="id" selected disabled>-- Pilih Status Workcenter -- </option>
                                         <option value="1" >Active</option>
                                         <option value="0" >Inactive</option>
                                     </select>
@@ -63,7 +63,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-7 col-md-7 col-sm-7">
+        <div class="col-lg-9 col-md-9 col-sm-9" id="table-workcenter">
             <div class="card">
                 <div class="card-header bg-dark">
                     Data Workcenter Flowmeter
@@ -99,7 +99,7 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-outline-primary" onclick="editFlowmeterWorkcenter('{{ app('App\Http\Controllers\ResourceController')->encrypt($flowmeterWorkcenter->id) }}')">
-                                                Ubah Data
+                                                <i class="fas fa-edit"></i>
                                             </button>
                                         </td>
                                     </tr>

@@ -279,6 +279,9 @@
             <script src="{{  mix('js/master/sheet.js') }}"></script>
             <script src="{{  asset('js/rollie_app/rollie.js') }}"></script>
         @break
+        @case('Emon')
+            <script src="{{  asset('js/emon_app/emon.js') }}"></script>
+        @break
     @endswitch
     @yield('extract-plugin-footer')
 

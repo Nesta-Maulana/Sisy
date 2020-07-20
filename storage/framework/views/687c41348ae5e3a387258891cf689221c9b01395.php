@@ -9,7 +9,7 @@
     active 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-    <div class="row">
+    <div class="row" id="form-manage-flowmeter">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
             <form action="kelola-flowmeter" method="post">
                 <?php echo e(csrf_field()); ?>
@@ -91,7 +91,7 @@
             </form>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-2" id="table-manage-flowmeter">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header bg-dark">

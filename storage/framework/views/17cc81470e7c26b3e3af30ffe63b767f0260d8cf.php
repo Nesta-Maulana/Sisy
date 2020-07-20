@@ -10,7 +10,7 @@
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-5">
+        <div class="col-lg-4 col-md-4 col-sm-4">
             <form action="kelola-flowmeter-location" method="post">
                 <?php echo e(csrf_field()); ?>
 
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="flowmeter_location">Lokasi Flowmeter</label>
-                                    <input type="text" name="flowmeter_location" id="flowmeter_location" class="form-control">
+                                    <input type="text" name="flowmeter_location" id="flowmeter_location" class="form-control" autocomplete="off">
                                     <input type="hidden" name="flowmeter_location_id" id="flowmeter_location_id" class="form-control">
                                 </div>
 
@@ -64,10 +64,10 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-7 col-md-7 col-sm-7">
+        <div class="col-lg-8 col-md-8 col-sm-8">
             <div class="card">
                 <div class="card-header bg-dark">
-                    Data Workcenter Flowmeter
+                    Data Lokasi Flowmeter
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -98,7 +98,7 @@
                                         </td>
                                         <td>
                                             <button class="btn btn-outline-primary" onclick="editFlowmeterLocation('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeterLocation->id)); ?>')">
-                                                Ubah Data
+                                                <i class="fas fa-edit"></i>
                                             </button>
                                         </td>
                                     </tr>

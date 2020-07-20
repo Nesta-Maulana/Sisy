@@ -18,4 +18,8 @@ class FlowmeterWorkcenter extends ResourceModel
     {
     	return $this->belongsTo('App\Models\Master\Emon\FlowmeterCategory', 'flowmeter_category_id', 'id');
     }
+    public function flowmeterUsages()
+    {
+        return $this->hasMany('App\Models\Master\Emon\FlowmeterUsage', 'flowmeter_workcenter_id', 'id');
+    }
 }
