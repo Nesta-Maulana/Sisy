@@ -650,8 +650,79 @@
                 dataType:'JSON',
                 success: function(data)
                 {  
+                    var isi = '', $add_location_permission_table = $('#add-location-permission-table-body');
+                    for ( i = 0; i < data.length; i++) 
+                    {
+                        isi += "<tr>";
+                        isi += "<td>";
+                        isi += data[i].flowmeter_category.flowmeter_category;
+                        isi += "</td>";
+                        
+                        isi += "<td>";
+                        isi += data[i].flowmeter_location;
+                        isi += "</td>";
+                        denied_access = "";
+                        allow_access = "";
+                        if(data[i].permissions == '0')
+                        { 
+                            denied_access = "selected";    
+                        }
+                        else if(data[i].permissions == '1')
+                        {
+                            allow_access = "selected";    
+                        }
+                        isi += "<td>";
+                        
+                        isi += "<select class='form-control' name='location_permission_"+data[i].enkripsi_id+"'>";
+                        
+                        isi += "<option value='-' disabled selected> Grant Access </option>";
+                        isi += "<option value='0' "+denied_access+"> Denied </option>";
+                        isi += "<option value='1'"+allow_access+"> Allowed </option>";
+                        isi += "</select>";
+                        isi += "</td>";
+
+                        isi += "</tr>";
+                    }
+                    $add_location_permission_table.html(isi).on('change');
+                    $('#button_submit').removeClass('hidden');
                 }
             });
         }
+    }
+    
+    function changeAccessFlowmeterLocation(flowmeter_location_id) 
+    {
+        flowmeter_location_permission_id    = flowmeter_location_id;
+        access                              = $('#is_allow_'+flowmeter_location_permission_id).val();
+        // console.log(access);
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: 'kelola-flowmeter-location-permission/ubah-akses',
+            method: 'POST',
+            dataType: 'JSON',
+            data: {
+                'flowmeter_location_permission_id' : flowmeter_location_permission_id,
+                'access' : access
+            },
+            success: function (data) 
+            {
+                if (data.success == true) 
+                {
+                    swal({
+                        title: 'Proses Berhasil',
+                        text: data.message,
+                        type: 'success'
+                    });
+                } else {
+                    swal({
+                        title: 'Proses Gagal',
+                        text: data.message,
+                        type: 'error'
+                    });
+                }
+            }
+        });   
     }
 /*  */

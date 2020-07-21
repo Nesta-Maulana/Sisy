@@ -129,5 +129,52 @@
 	    })
 
 	}
+	function editMonitoringHistory(monitoring_date,monitoring_id)
+	{
+		$('#td_'+monitoring_date+'_'+monitoring_id).attr('style','padding:0px;');
+		$('#td_'+monitoring_date+'_'+monitoring_id).removeAttr('onclick');
+		// <input type='hidden' class='form-control' value'"+$('#td_'+monitoring_date+'_'+monitoring_id).html()+"'>;
+		monitoring_value_before 	= $('#td_'+monitoring_date+'_'+monitoring_id).html();
+		if (monitoring_value_before == 'No Value') 
+		{
+			monitoring_value 		= "";	
+		} else {
+			monitoring_value 		= monitoring_value_before;
+		}
+		$('#td_'+monitoring_date+'_'+monitoring_id).html("<input type='number' class='form-control' onkeypress='return event.charCode >= 46 && event.charCode <= 57 && event.charCode !== 47' style='width:200px' id='input_monitoring_"+monitoring_date+"_"+monitoring_id+"' onfocusout=\"updateMonitoringData('"+monitoring_date+"','"+monitoring_id+"')\" value='"+monitoring_value+"' autofocus> <input type='hidden' class='form-control' id='hidden_monitoring_"+monitoring_date+"_"+monitoring_id+"' value='"+monitoring_value_before+"'>").on('change');
+		// document.getElementById('td_'+monitoring_date+monitoring_id).innerHTML 	= "<input type='text' class='form-control'>";
+		$('#input_monitoring_'+monitoring_date+'_'+monitoring_id).focus();
 
-
+	}
+	function updateMonitoringData(monitoring_date,monitoring_id)
+	{
+		var hidden_monitoring 	= $('#hidden_monitoring_'+monitoring_date+'_'+monitoring_id).val();
+		var input_monitoring 	= $('#input_monitoring_'+monitoring_date+'_'+monitoring_id).val();
+		if ( (hidden_monitoring == 'No Value' && (!input_monitoring || input_monitoring == '')) || hidden_monitoring == input_monitoring) 
+		{
+			$('#td_'+monitoring_date+'_'+monitoring_id).attr('style','padding: .75rem;');
+			$('#td_'+monitoring_date+'_'+monitoring_id).attr('onclick','editMonitoringHistory("'+monitoring_date+'","'+monitoring_id+'")');
+			$('#td_'+monitoring_date+'_'+monitoring_id).html(hidden_monitoring).on('change');
+		}
+		else
+		{
+			
+			$.ajax({
+		        headers: 
+		        {
+		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		        },
+		        url: 'input-monitoring', 
+		        method: 'POST',
+		        dataType: 'JSON',
+		        data:
+		        {
+		        	'flowmeter_id' 				: flowmeter_id,
+		        	'monitoring_value' 			: monitoring_value,
+		        },
+		        success: function (data) 
+		        {
+				}
+			});	
+		}
+	}

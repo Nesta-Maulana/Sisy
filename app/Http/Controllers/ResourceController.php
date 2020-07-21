@@ -454,6 +454,17 @@ class ResourceController extends Controller
 		$return 	= array('jumlahchild' => $hitungchild, 'child' => $cekChild);
 		return $return;
     }
+    Public function daysInMonth() 
+    {
+        $list=array();
+        for($d=1; $d<=31; $d++)
+        {
+            $time=mktime(12, 0, 0, date('m'), $d, date('Y'));
+            if (date('m', $time)==date('m'))
+                $list[]=date('Y-m-d', $time);
+        }
+        return $list;
+    }
    /*  public function getMenu($application_name)
     {
         $application    = Application::where('application_name',$application_name)->first();

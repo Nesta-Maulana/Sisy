@@ -24,17 +24,31 @@
                         <tr>
                             <th>Fullname</th>
                             <th>Flowmeter Kategori</th>
-                            <th>Flowmeter Workcenter</th>
                             <th>Flowmeter Location</th>
                             <th>Akses</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                        <?php $__currentLoopData = $flowmeterLocationPermissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $flowmeterLocationPermission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e($flowmeterLocationPermission->user->employee->fullname); ?></td>
+                                <td><?php echo e($flowmeterLocationPermission->flowmeterLocation->flowmeterCategory->flowmeter_category); ?></td>
+                                <td><?php echo e($flowmeterLocationPermission->flowmeterLocation->flowmeter_location); ?></td>
+                                <td>
+                                <select class="form-control" name="is_allow" id="is_allow_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeterLocationPermission->id)); ?>" onchange="changeAccessFlowmeterLocation('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeterLocationPermission->id)); ?>')">
+                                       <option value="0" <?php if($flowmeterLocationPermission->is_allow == '0'): ?> selected <?php endif; ?>>Denied</option>
+                                       <option value="1" <?php if($flowmeterLocationPermission->is_allow == '1'): ?> selected <?php endif; ?>>Allowed</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td  style="width: 200px" class="filter-search">Fullname</td>
+                            <td style="width: 200px" class="filter-search"></td>
+                            <td style="width: 200px" class="filter-search"></td>
+                            <td  style="width: 200px" class="filter-search"></td>
+                            
                         </tr>
                     </tfoot>
                 </table>

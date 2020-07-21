@@ -135,6 +135,8 @@ Route::group(['prefix' => 'master-apps','middleware'=>['auth','credential.check'
 		Route::get('', 'MasterAppController@manageLocationPermission')->name('master_app.master_data.manage_flowmeter_location_permissions');
 		Route::get('tambah-akses', 'MasterAppController@showFormManageLocationPermission');
 		Route::get('get-location/{category_id}/{user_id}', 'Master\Emon\FlowmeterLocationPermissionsController@getFlowmeter');
+		Route::post('ubah-akses', 'Master\Emon\FlowmeterLocationPermissionsController@changeAccess');
+		
 	});
 	
 });

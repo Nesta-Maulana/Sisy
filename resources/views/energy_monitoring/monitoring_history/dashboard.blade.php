@@ -38,13 +38,11 @@
                                     @endforeach
                                 </select>
                             </div>
+                            
                             <div class="form-group">
                                 <label for="monitoring_month_filter">Bulan Monitoring</label>
-                                <div class='input-group date timepickernya' >
-                                    <input type='text' class="form-control" name="monitoring_month_filter" id="monitoring_month_filter">
-                                    <span class="input-group-addon" style="margin-top: 5px; font-size: 20px; margin-left: 10px;">
-                                        <span class="fas fa-calendar"></span>
-                                    </span>
+                                <div class='input-group date' >
+                                    <input type='month' class="form-control" name="monitoring_month_filter" id="monitoring_month_filter" value="{{ date('Y-m') }}">
                                 </div>
                             </div>
                         </div>
@@ -74,34 +72,47 @@
     </div>
     <div class="row mt-3">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card">
-                <div class="card-header bg-dark">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                            <strong>Riwayat Pengamatan <span id="filter_month_text"></span></strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="monitoring_history_table" style="overflow-x: overflow">
-                                    <thead class="bg-dark">
-                                        <tr>
-                                            <th>Flowmeter Workcenter</th>
-                                            <th>Nama Flowmeter</th>
-                                            <th colspan="">Tanggal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="table-responsive">
+                <style>
+                    tr {
+                        white-space: nowrap;
+                    }
+                    th:first-child,td:first-child
+                    {
+                        position:sticky;
+                        left:0px;
+                    }
+                </style>
+                <table class="table table-bordered" id="monitoring_history_table" style="overflow-x: overflow;">
+                    <thead class="bg-dark">
+                        <tr>
+                            <th rowspan="2" class="bg-dark" style="background-color: black;color:white">Nama Flowmeter</th>
+                            <th rowspan="2" style="vertical-align: bottom">Flowmeter Workcenter</th>
+                            <th colspan="{{ $colspan }}" class="text-center">Tanggal</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 0px" class="hidden"></th>
+                            @foreach ($allDay as $day)
+                                <td>{{$day}}</td>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($flowmeters as $flowmeter)
+                            <tr>
+                                <td style="background-color: black;color:white">
+                                    {{$flowmeter->flowmeter_name}}
+                                </td>
+                                <td>
+                                    {{ $flowmeter->flowmeterWorkcenter->flowmeter_workcenter }}
+                                </td>
+                                @foreach ($flowmeter->monitoringHistories as $monitoringHistory)
+                                    <td id="td_{{ app('App\Http\Controllers\ResourceController')->encrypt($monitoringHistory['monitoring_date']) }}_{{ app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id) }}" onclick="editMonitoringHistory('{{ app('App\Http\Controllers\ResourceController')->encrypt($monitoringHistory['monitoring_date']) }}','{{ app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id) }}')">{{ $monitoringHistory['monitoring_value'] }}</td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

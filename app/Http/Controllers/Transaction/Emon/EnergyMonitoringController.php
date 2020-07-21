@@ -41,22 +41,39 @@ class EnergyMonitoringController extends EnergyUsageController
         if ($cekAkses['success'] == true) 
         {
             $flowmeter          = Flowmeter::find($this->decrypt($request->flowmeter_id));
-            switch ($flowmeter->recording_schedule) 
+            if ($flowmeter->flowmeterLocation->flowmeterLocationPermission->is_allow = '1') 
             {
-                case '0':
-                    /* harian */
-                    if ( is_null($flowmeter->energyMonitorings->where('monitoring_date',$today)->first() )) 
-                    {
-                        $yesterdayMonitoringValue    = $flowmeter->energyMonitorings->where('monitoring_date',$yesterday)->first();
-                        if (is_null($yesterdayMonitoringValue)) 
+                switch ($flowmeter->recording_schedule) 
+                {
+                    case '0':
+                        /* harian */
+                        if ( is_null($flowmeter->energyMonitorings->where('monitoring_date',$today)->first() )) 
                         {
-                            $lastMonitoringValue    = $yesterdayMonitoringValue->monitoring_value;
-                        } 
-                        else 
-                        {
-                            if (count($flowmeter->energyMonitorings) > 0) 
+                            $yesterdayMonitoringValue    = $flowmeter->energyMonitorings->where('monitoring_date',$yesterday)->first();
+                            if (is_null($yesterdayMonitoringValue)) 
                             {
-                                $lastMonitoringValue = $flowmeter->energyMonitorings[count($flowmeter->energyMonitorings)-1]->monitoring_value;
+                                $lastMonitoringValue    = $yesterdayMonitoringValue->monitoring_value;
+                            } 
+                            else 
+                            {
+                                if (count($flowmeter->energyMonitorings) > 0) 
+                                {
+                                    $lastMonitoringValue = $flowmeter->energyMonitorings[count($flowmeter->energyMonitorings)-1]->monitoring_value;
+                                }
+                                else
+                                {
+                                    $energyMonitoring   = EnergyMonitoring::create([
+                                        'flowmeter_id'      => $flowmeter->id,
+                                        'monitoring_value'  => $request->monitoring_value,
+                                        'monitoring_date'   => date('Y-m-d')
+                                        ]);
+                                    $refreshEnergyUsage = $this->refreshEnergyUsage($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters);
+                                    return ['success' => true,'message'=>'Data monitoring flowmeter berhasil disimpan'];
+                                }
+                            }
+                            if ($request->monitoring_value < $lastMonitoringValue) 
+                            {
+                                return ['success'=>false,'message'=>'Angka meteran hari ini tidak boleh kurang dari hari kemarin'];
                             }
                             else
                             {
@@ -68,30 +85,21 @@ class EnergyMonitoringController extends EnergyUsageController
                                 $refreshEnergyUsage = $this->refreshEnergyUsage($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters);
                                 return ['success' => true,'message'=>'Data monitoring flowmeter berhasil disimpan'];
                             }
-                        }
-                        if ($request->monitoring_value < $lastMonitoringValue) 
-                        {
-                            return ['success'=>false,'message'=>'Angka meteran hari ini tidak boleh kurang dari hari kemarin'];
+                            
                         }
                         else
                         {
-                            $energyMonitoring   = EnergyMonitoring::create([
-                                'flowmeter_id'      => $flowmeter->id,
-                                'monitoring_value'  => $request->monitoring_value,
-                                'monitoring_date'   => date('Y-m-d')
-                                ]);
-                            $refreshEnergyUsage = $this->refreshEnergyUsage($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters);
-                            return ['success' => true,'message'=>'Data monitoring flowmeter berhasil disimpan'];
+                                    $refreshEnergyUsage = $this->refreshEnergyUsage($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters);
+                            
                         }
-                        
-                    }
-                    else
-                    {
-                                $refreshEnergyUsage = $this->refreshEnergyUsage($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters);
-                        
-                    }
-                break;
+                    break;
+                }
+            } 
+            else 
+            {
+                return ['success'=>false,'message'=>'Anda tidak memiliki akses untuk melakukan pengamatan pada flowmeter '.$flowmeter->flowmeter_name.' yang berada dilokasi '.$flowmeter->flowmeterLocation->flowmeter_location];
             }
+            
             
         } 
         else 

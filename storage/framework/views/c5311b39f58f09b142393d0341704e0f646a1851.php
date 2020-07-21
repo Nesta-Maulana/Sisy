@@ -38,13 +38,11 @@
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
+                            
                             <div class="form-group">
                                 <label for="monitoring_month_filter">Bulan Monitoring</label>
-                                <div class='input-group date timepickernya' >
-                                    <input type='text' class="form-control" name="monitoring_month_filter" id="monitoring_month_filter">
-                                    <span class="input-group-addon" style="margin-top: 5px; font-size: 20px; margin-left: 10px;">
-                                        <span class="fas fa-calendar"></span>
-                                    </span>
+                                <div class='input-group date' >
+                                    <input type='month' class="form-control" name="monitoring_month_filter" id="monitoring_month_filter" value="<?php echo e(date('Y-m')); ?>">
                                 </div>
                             </div>
                         </div>
@@ -74,34 +72,49 @@
     </div>
     <div class="row mt-3">
         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-            <div class="card">
-                <div class="card-header bg-dark">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-4">
-                            <strong>Riwayat Pengamatan <span id="filter_month_text"></span></strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="monitoring_history_table" style="overflow-x: overflow">
-                                    <thead class="bg-dark">
-                                        <tr>
-                                            <th>Flowmeter Workcenter</th>
-                                            <th>Nama Flowmeter</th>
-                                            <th colspan="">Tanggal</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+            <div class="table-responsive">
+                <style>
+                    tr {
+                        white-space: nowrap;
+                    }
+                    th:first-child,td:first-child
+                    {
+                        position:sticky;
+                        left:0px;
+                    }
+                </style>
+                <table class="table table-bordered" id="monitoring_history_table" style="overflow-x: overflow;">
+                    <thead class="bg-dark">
+                        <tr>
+                            <th rowspan="2" class="bg-dark" style="background-color: black;color:white">Nama Flowmeter</th>
+                            <th rowspan="2" style="vertical-align: bottom">Flowmeter Workcenter</th>
+                            <th colspan="<?php echo e($colspan); ?>" class="text-center">Tanggal</th>
+                        </tr>
+                        <tr>
+                            <th style="border: 0px" class="hidden"></th>
+                            <?php $__currentLoopData = $allDay; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $day): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <td><?php echo e($day); ?></td>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $__currentLoopData = $flowmeters; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $flowmeter): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td style="background-color: black;color:white">
+                                    <?php echo e($flowmeter->flowmeter_name); ?>
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                </td>
+                                <td>
+                                    <?php echo e($flowmeter->flowmeterWorkcenter->flowmeter_workcenter); ?>
+
+                                </td>
+                                <?php $__currentLoopData = $flowmeter->monitoringHistories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $monitoringHistory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <td id="td_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($monitoringHistory['monitoring_date'])); ?>_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id)); ?>" onclick="editMonitoringHistory('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($monitoringHistory['monitoring_date'])); ?>','<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id)); ?>')"><?php echo e($monitoringHistory['monitoring_value']); ?></td>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </tr>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

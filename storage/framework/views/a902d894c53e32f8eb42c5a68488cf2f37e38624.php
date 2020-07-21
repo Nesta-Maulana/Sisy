@@ -16,14 +16,15 @@
                     Tambah Hak Akses Lokasi Pengamatan
                 </div>
                 <div class="card-body">
+                    <form action="tambah-akses" method="POST">
                         <?php echo e(csrf_field()); ?>
 
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="col-lg-4 col-md-4 col-sm-4">
                                 <div class="form-group">
                                     <label for="location_permission_user"> Pilih Pengguna </label>
                                     <select name="location_permission_user[]" id="location_permission_user" class="form-control select2 select" data-placeholder="Pilih Pengguna" multiple >
-                                            <option value="<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt(0)); ?>">Semua Pengguna</option>
+                                            <option value="<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt('all')); ?>">Semua Pengguna</option>
                                         <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($user->id)); ?>"><?php echo e($user->employee->fullname); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -39,37 +40,35 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn btn-outline-primary form-control" onclick="changeLocationPermissions()">Filter Akses</button>
+                                    <a class="btn btn-outline-primary form-control" onclick="changeLocationPermissions()">Filter Akses</a>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <form action="tambah-akses" method="POST">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                                            <table class="table table-bordered" id="add-location-permission-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Category</th>
-                                                        <th>Location</th>
-                                                        <th>Access</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="add-location-permission-table-body">
-                                                </tbody>
-                                            </table>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <table class="table table-bordered" id="add-location-permission-table" style="min-width: 100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Category</th>
+                                                    <th>Location</th>
+                                                    <th>Access</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="add-location-permission-table-body">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-12 order-last hidden" id="button_submit">
+                                        <div class="form-group">
+                                            <input type="submit" value="Tambah Hak Akses" class="btn btn-primary form-control">
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-8 order-last hidden" id="button_submit">
-                                            <div class="form-group">
-                                                <input type="submit" value="Tambah Hak Akses" class="btn btn-primary form-control">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
-                    
+                    </form>
                 </div>
             </div>
         </div>

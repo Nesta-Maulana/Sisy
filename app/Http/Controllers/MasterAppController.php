@@ -31,6 +31,7 @@ use App\Models\Master\Emon\FlowmeterCategory;
 use App\Models\Master\Emon\FlowmeterWorkcenter;
 use App\Models\Master\Emon\FlowmeterUnit;
 use App\Models\Master\Emon\FlowmeterLocation;
+use App\Models\Master\Emon\FlowmeterLocationPermissions;
 
 
 use DB;
@@ -273,7 +274,8 @@ class MasterAppController extends ResourceController
 		$cekAkses 	= $this->checkAksesLihat(\Request::getRequestUri(),'master_app.master_data.manage_flowmeter_location_permissions');
 		if ($cekAkses['success'])
 		{
-			return view('master_app.manage_flowmeter_location_permission.dashboard',['menus'=>$this->menus]);
+			$flowmeterLocationPermissions	 	= FlowmeterLocationPermissions::all();
+			return view('master_app.manage_flowmeter_location_permission.dashboard',['menus'=>$this->menus,'flowmeterLocationPermissions'=>$flowmeterLocationPermissions]);
 		} 
 		else 
 		{

@@ -14,8 +14,14 @@ class FlowmeterLocationPermissions extends ResourceModel
     {
         parent::boot();
     }
+    
     public function flowmeterLocation()
     {
     	return $this->belongsTo('App\Models\Master\Emon\FlowmeterLocation', 'flowmeter_location_id', 'id');
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo('App\Models\Master\User', 'user_id','id');
     }
 }

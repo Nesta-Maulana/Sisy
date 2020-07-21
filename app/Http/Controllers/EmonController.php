@@ -44,12 +44,44 @@ class EmonController extends ResourceController
 	public function showMonitoringAir()
 	{
 		$flowmeterLocations = FlowmeterLocation::where('flowmeter_category_id','1')->get();
+		foreach ($flowmeterLocations as $key => $flowmeterLocation) 
+		{
+			$flowmeterLocationPermission 	= $flowmeterLocation->flowmeterLocationPermissions->where('user_id',Auth::user()->id)->first();
+			if (is_null($flowmeterLocationPermission)) 
+			{
+				unset($flowmeterLocations[$key]);
+			} 
+			else
+			{
+				if ($flowmeterLocationPermission->is_allow == '0') 
+				{
+					unset($flowmeterLocations[$key]);	
+				} 
+			}
+			
+		}
 		return view('energy_monitoring.monitoring_air.dashboard',['menus'=>$this->menus,'flowmeterLocations'=>$flowmeterLocations]);
 	}
 	public function showMonitoringFormAir($location_id)
 	{
 		$flowmeters 		= Flowmeter::where('flowmeter_location_id',$this->decrypt($location_id))->where('is_active','1')->get();
 		$flowmeterLocations = FlowmeterLocation::where('is_active','1')->get();
+		foreach ($flowmeterLocations as $key => $flowmeterLocation) 
+		{
+			$flowmeterLocationPermission 	= $flowmeterLocation->flowmeterLocationPermissions->where('user_id',Auth::user()->id)->first();
+			if (is_null($flowmeterLocationPermission)) 
+			{
+				unset($flowmeterLocations[$key]);
+			} 
+			else
+			{
+				if ($flowmeterLocationPermission->is_allow == '0') 
+				{
+					unset($flowmeterLocations[$key]);
+				} 
+			}
+			
+		}
 		$flowmeterLain 		= array();
  		foreach ($flowmeters as $key => $flowmeter) 
 		{
@@ -190,8 +222,31 @@ class EmonController extends ResourceController
 	
 	public function showMonitoringHistory()
 	{
-		// $flowmeter 		=
-		return view('energy_monitoring.monitoring_history.dashboard',['menus'=>$this->menus]);
+		$getAllDay 		= $this->daysInMonth();
+		$colspan 		= count($getAllDay);
+		$flowmeters 	= Flowmeter::all();
+		foreach ($flowmeters as $flowmeter) 
+		{
+			$monitoringHistory 	= array();
+			foreach ($getAllDay as $day) 
+			{
+				$monitoring 						= array();
+				$monitoring_value 	= $flowmeter->energyMonitorings->where('monitoring_date',$day)->first();
+				if (is_null($monitoring_value))
+				{
+					$monitoring['monitoring_value'] = 'No Value';
+				} 
+				else
+				{
+					$monitoring['monitoring_value'] = $monitoring_value->monitoring_value;
+				}
+				$monitoring['monitoring_date']	= $day;
+				array_push($monitoringHistory,$monitoring);
+			}
+			$flowmeter->monitoringHistories 	= $monitoringHistory; 	
+		}
+		// return $flowmeters;
+		return view('energy_monitoring.monitoring_history.dashboard',['menus'=>$this->menus,'flowmeters'=>$flowmeters,'colspan'=>$colspan,'allDay'=>$getAllDay]);
 	}
 
 	public function databaseFilterWorkcenter($jenis_pengamatan_id)
