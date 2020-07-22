@@ -68,7 +68,7 @@ Monitoring Air
 												<div class="col-lg-12 col-md-12 col-sm-12 col-12 <?php if(is_null($energyMonitoringToday)): ?>
 														hidden
 													<?php endif; ?>" id="button_edit_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id)); ?>">
-													<button class="btn btn-outline-primary form-control" type="button"  onclick="editMonitoringData('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id)); ?>')">
+													<button  onclick="editMonitoringData('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id)); ?>')" class="btn btn-outline-primary form-control" type="button">
 														<i style="font-size: 25px;" class="fas fa-edit" id="icon_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($flowmeter->id)); ?>"></i>
 													</button>
 												</div>

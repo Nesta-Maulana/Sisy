@@ -329,5 +329,9 @@ Route::group(['prefix' => 'emon','middleware'=>['auth','credential.check']], fun
 	
 	Route::get('/monitoring-listrik', 'EmonController@showMonitoringListrik')->name('emon.monitoring.listrik');
 	Route::get('/monitoring-gas', 'EmonController@showMonitoringGas')->name('emon.monitoring.gas');
-	Route::get('/histori-pengamatan', 'EmonController@showMonitoringHistory')->name('emon.monitoring.histories');
+	
+	Route::group(['prefix' => 'histori-pengamatan'], function () {
+		Route::get('', 'EmonController@showMonitoringHistory')->name('emon.monitoring.histories');
+		Route::post('/input-monitoring', 'Transaction\Emon\EnergyMonitoringController@inputMonitoringEnergyByHistory');
+	});
 });
