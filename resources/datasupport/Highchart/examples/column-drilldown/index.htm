@@ -14,14 +14,18 @@
 <script src="../../code/modules/data.js"></script>
 <script src="../../code/modules/drilldown.js"></script>
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<div id="container" style="min-width: 310px; max-width: 100%; height: 400px; margin: 0 auto"></div>
 
 
 		<script type="text/javascript">
 // Create the chart
 Highcharts.chart('container', {
     chart: {
-        type: 'column'
+        type: 'column',
+        scrollablePlotArea: {
+            minWidth: 500,
+            scrollPositionX: 0
+        }
     },
     title: {
         text: 'Browser market shares. January, 2018'
@@ -32,11 +36,15 @@ Highcharts.chart('container', {
     xAxis: {
         type: 'category'
     },
+    
     yAxis: {
         title: {
             text: 'Total percent market share'
-        }
-
+        },
+        scrollbar: {
+            enabled: true,
+            showFull: true
+        },
     },
     legend: {
         enabled: false
@@ -47,7 +55,14 @@ Highcharts.chart('container', {
             dataLabels: {
                 enabled: true,
                 format: '{point.y:.1f}%'
-            }
+            },
+            pointWidth:50
+        },
+        column: {
+            pointPadding: 0,
+            borderWidth: 0,
+            groupPadding: 0,
+            shadow: false
         }
     },
 
@@ -95,7 +110,126 @@ Highcharts.chart('container', {
                     name: "Other",
                     y: 7.62,
                     drilldown: null
-                }
+                },
+                {
+                    name: "Percobaan",
+                    y: 7.62,
+                    drilldown: "Percobaan"
+                },
+                
+                {
+                    name: "Other",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 1",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 2",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 3",
+                    y: 7.62,
+                    drilldown: null
+                },
+                {
+                    name: "Other 4",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 5",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 6",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 7",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 8",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 9",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 10",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 11",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 12",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "Other 13",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "l",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "l2",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "2",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "sa",
+                    y: 7.62,
+                    drilldown: null
+                },
+                
+                {
+                    name: "dadad",
+                    y: 7.62,
+                    drilldown: null
+                },
+
             ]
         }
     ],
@@ -316,7 +450,21 @@ Highcharts.chart('container', {
                         0.14
                     ]
                 ]
-            }
+            },
+            {
+                name    : "Percobaan",
+                id      : "Percobaan",
+                data    : [
+                    [
+                        "v10.09",
+                        908
+                    ],
+                    [
+                        "v10.10",
+                        90458
+                    ],
+                ]
+            },
         ]
     }
 });
