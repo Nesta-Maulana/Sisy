@@ -12,7 +12,7 @@ use App\Models\Master\Emon\FlowmeterCategory;
 use App\Models\Master\Emon\FlowmeterWorkcenter;
 use App\Models\Master\Emon\FlowmeterUnit;
 use App\Models\Master\Emon\FlowmeterLocation;
-
+use App\Models\Master\Emon\FlowmeterLocationPermissions;
 use App\Models\Transaction\Emon\EnergyMonitoring;
 
 use \Carbon\Carbon;
@@ -206,10 +206,12 @@ class EnergyMonitoringController extends EnergyUsageController
                     {
                         if (count($flowmeter->energyMonitorings) > 0) 
                         {
-                            $lastMonitoringBeforeToday      = $flowmeter->energyMonitorings->where('monitoring_date','<',$today);
+                            $lastMonitoringBeforeToday      = $flowmeter->energyMonitorings->where('monitoring_date','<',$today)->sortBy('monitoring_date');
                             if (!is_null($lastMonitoringBeforeToday) && count($lastMonitoringBeforeToday) > 0)
                             {
-                                $lastMonitoringValue    = $lastMonitoringBeforeToday[count($lastMonitoringBeforeToday)-1]->monitoring_value;
+                                $reset          = end($checkLastMonitoringBefore);
+                                $last_key       = key($reset);
+                                $lastMonitoringValue    = $lastMonitoringBeforeToday[$last_key]->monitoring_value;
                             }
                             else
                             {
@@ -281,7 +283,8 @@ class EnergyMonitoringController extends EnergyUsageController
                         case '0':
                             /* pengamatan dilakukan perhari */
                             $energyMonitoring  = $flowmeter->energyMonitorings->where('monitoring_date',$monitoring_date)->first();
-                            $checkLastMonitoringBefore      = $flowmeter->energyMonitorings->where('monitoring_date','<',$monitoring_date);
+                            $checkLastMonitoringBefore      = $flowmeter->energyMonitorings->where('monitoring_date','<',$monitoring_date)->sortBy('monitoring_date');
+                            
                             if (is_null($checkLastMonitoringBefore) || count($checkLastMonitoringBefore) < 1) 
                             {
                                 /* ini jika pengamatan yang dilakukan adalah pengamatan pertama atay sebelumnya sama sekali belum ada pengamatan */
@@ -290,11 +293,13 @@ class EnergyMonitoringController extends EnergyUsageController
                             }
                             else 
                             {
-                                $last_monitoring_value_before       = $checkLastMonitoringBefore[count($checkLastMonitoringBefore)-1]->monitoring_value;
-                                $last_monitoring_date_before        = $checkLastMonitoringBefore[count($checkLastMonitoringBefore)-1]->monitoring_date;
+                                $reset          = end($checkLastMonitoringBefore);
+                                $last_key       = key($reset);
+                                $last_monitoring_value_before       = $checkLastMonitoringBefore[$last_key]->monitoring_value;
+                                $last_monitoring_date_before        = $checkLastMonitoringBefore[$last_key]->monitoring_date;
                             }
                             
-                            $checkLastMonitoringAfter       = $flowmeter->energyMonitorings->where('monitoring_date','>',$monitoring_date);
+                            $checkLastMonitoringAfter       = $flowmeter->energyMonitorings->where('monitoring_date','>',$monitoring_date)->sortBy('monitoring_date');
                             if (is_null($checkLastMonitoringAfter) || count($checkLastMonitoringAfter) < 1) 
                             {
                                 /* ini jika pengamatan yang dilakukan adalah pengamatan pertama atay sebelumnya sama sekali belum ada pengamatan */
@@ -302,11 +307,12 @@ class EnergyMonitoringController extends EnergyUsageController
                             }
                             else 
                             {
-                                $last_monitoring_value_after        = $checkLastMonitoringAfter[0]->monitoring_value;
+                                $reset              = reset($checkLastMonitoringAfter);
+                                $first_key          = key($reset);
+                                $last_monitoring_value_after        = $checkLastMonitoringAfter[$first_key]->monitoring_value;
                                 $last_monitoring_date_after         = $checkLastMonitoringAfter[count($checkLastMonitoringAfter)-1]->monitoring_date;
 
                             }
-
                             if (is_null($energyMonitoring))     
                             {
                                 if ($last_monitoring_value_before !== 'No Value') 
@@ -326,7 +332,8 @@ class EnergyMonitoringController extends EnergyUsageController
                                                     'flowmeter_id'      => $flowmeter->id,
                                                     'monitoring_value'  => $monitoring_value,
                                                     'monitoring_date'   => $monitoring_date
-                                                ]);  
+                                                ]);
+                                                $refreshEnergyUsage                     = $this->refreshEnergyUsageByHistoryEdit($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters,$monitoring_date);
                                                 return ['success'=>true,'message'=>'Data monitoring pada tanggal '.$monitoring_date.' berhasil diinput'];     
                                             }
                                         } 
@@ -336,7 +343,8 @@ class EnergyMonitoringController extends EnergyUsageController
                                                 'flowmeter_id'      => $flowmeter->id,
                                                 'monitoring_value'  => $monitoring_value,
                                                 'monitoring_date'   => $monitoring_date
-                                            ]);  
+                                            ]);
+                                            $refreshEnergyUsage                     = $this->refreshEnergyUsageByHistoryEdit($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters,$monitoring_date);
                                             return ['success'=>true,'message'=>'Data monitoring pada tanggal '.$monitoring_date.' berhasil diinput'];    
                                         }
                                     } 
@@ -361,6 +369,7 @@ class EnergyMonitoringController extends EnergyUsageController
                                                 'monitoring_value'  => $monitoring_value,
                                                 'monitoring_date'   => $monitoring_date
                                             ]);  
+                                            $refreshEnergyUsage                     = $this->refreshEnergyUsageByHistoryEdit($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters,$monitoring_date);
                                             return ['success'=>true,'message'=>'Data monitoring pada tanggal '.$monitoring_date.' berhasil diinput'];     
                                         }
                                     } 
@@ -370,7 +379,8 @@ class EnergyMonitoringController extends EnergyUsageController
                                             'flowmeter_id'      => $flowmeter->id,
                                             'monitoring_value'  => $monitoring_value,
                                             'monitoring_date'   => $monitoring_date
-                                        ]);  
+                                        ]); 
+                                        $refreshEnergyUsage                     = $this->refreshEnergyUsageByHistoryEdit($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters,$monitoring_date);
                                         return ['success'=>true,'message'=>'Data monitoring pada tanggal '.$monitoring_date.' berhasil diinput'];    
                                     }
                                 }
@@ -394,6 +404,7 @@ class EnergyMonitoringController extends EnergyUsageController
                                                 /* ini kalo energy monitoring dihari itu masih kosong atau no value */
                                                 $energyMonitoring->monitoring_value     = $monitoring_value;
                                                 $energyMonitoring->save();
+                                                $refreshEnergyUsage                     = $this->refreshEnergyUsageByHistoryEdit($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters,$monitoring_date);
                                                 return ['success'=>true,'message'=>'Data monitoring pada tanggal '.$monitoring_date.' berhasil diubah.'];     
                                             }
                                         } 
@@ -401,6 +412,7 @@ class EnergyMonitoringController extends EnergyUsageController
                                         {
                                             $energyMonitoring->monitoring_value     = $monitoring_value;
                                             $energyMonitoring->save();
+                                            $refreshEnergyUsage                     = $this->refreshEnergyUsageByHistoryEdit($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters,$monitoring_date);
                                             return ['success'=>true,'message'=>'Data monitoring pada tanggal '.$monitoring_date.' berhasil diubah.'];    
                                         }
                                     } 
@@ -420,9 +432,9 @@ class EnergyMonitoringController extends EnergyUsageController
                                         else 
                                         {
                                             /* ini kalo energy monitoring dihari itu masih kosong atau no value */
-                                            $refreshEnergyUsage                     = $this->refreshEnergyUsageByHistoryEdit($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters,$monitoring_date);
                                             $energyMonitoring->monitoring_value     = $monitoring_value;
                                             $energyMonitoring->save();
+                                            $refreshEnergyUsage                     = $this->refreshEnergyUsageByHistoryEdit($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters,$monitoring_date);
                                             return ['success'=>true,'message'=>'Data monitoring pada tanggal '.$monitoring_date.' berhasil diubah.'];     
                                         }
                                     } 
@@ -430,6 +442,7 @@ class EnergyMonitoringController extends EnergyUsageController
                                     {
                                         $energyMonitoring->monitoring_value     = $monitoring_value;
                                         $energyMonitoring->save();
+                                        $refreshEnergyUsage                     = $this->refreshEnergyUsageByHistoryEdit($flowmeter->flowmeterWorkcenter->flowmeterCategory->flowmeterWorkcenters,$monitoring_date);
                                         return ['success'=>true,'message'=>'Data monitoring pada tanggal '.$monitoring_date.' berhasil diubah.'];    
                                     }
                                 }
@@ -457,5 +470,117 @@ class EnergyMonitoringController extends EnergyUsageController
         
 
     }
-    
+    public function refreshMonitoringHistoriesTable($monitoring_month,$flowmeter_category,$flowmeter_workcenter)
+    {
+        $month          = date('m',strtotime($monitoring_month));
+        $years          = date('Y',strtotime($monitoring_month));
+        $getAllDay 		= $this->daysInMonth($month,$years);
+		$flowmeterLocationPermissions	= FlowmeterLocationPermissions::where('user_id',Auth::user()->id)->where('is_allow','1')->get();
+        $flowmeter_return 				= array();
+        $kategori_flowmeter 			= array();
+        $flowmeter_workcenter_active    = $flowmeter_workcenter;
+        $flowmeter_workcenters           = 'null';
+        foreach ($flowmeterLocationPermissions as $flowmeterLocationPermission) 
+        {
+            if ($flowmeter_category == 'null' || is_null($flowmeter_category)) 
+            {
+                foreach ($flowmeterLocationPermission->flowmeterLocation->flowmeters as $flowmeter) 
+                {
+                    $monitoringHistory 	= array();
+                    foreach ($getAllDay as $day) 
+                    {
+                        $monitoring 						= array();
+                        $monitoring_value 	= $flowmeter->energyMonitorings->where('monitoring_date',$day)->first();
+                        if (is_null($monitoring_value))
+                        {
+                            $monitoring['monitoring_value'] = 'No Value';
+                        } 
+                        else
+                        {
+                            $monitoring['monitoring_value'] = $monitoring_value->monitoring_value;
+                        }
+                        $monitoring['monitoring_date']	= $day;
+                        $monitoring['enkripsi_monitoring_date'] = $this->encrypt($day);
+                        array_push($monitoringHistory,$monitoring);
+                    }
+                    $flowmeter->monitoringHistories 	= $monitoringHistory; 	
+                    $flowmeter                              = $this->encryptId($flowmeter);
+                    $workcenter                             = $flowmeter->flowmeterWorkcenter;
+                    array_push($flowmeter_return,$flowmeter);
+                }
+            } 
+            else 
+            {
+                if ($flowmeter_workcenter == 'null' || is_null($flowmeter_workcenter)) 
+                {
+                    foreach ($flowmeterLocationPermission->flowmeterLocation->flowmeters as $flowmeter) 
+                    {
+                        if ($flowmeter->flowmeterWorkcenter->flowmeterCategory->id  == $flowmeter_category) 
+                        {
+                            $monitoringHistory 	= array();
+                            foreach ($getAllDay as $day) 
+                            {
+                                $monitoring 						= array();
+                                $monitoring_value 	= $flowmeter->energyMonitorings->where('monitoring_date',$day)->first();
+                                if (is_null($monitoring_value))
+                                {
+                                    $monitoring['monitoring_value'] = 'No Value';
+                                } 
+                                else
+                                {
+                                    $monitoring['monitoring_value'] = $monitoring_value->monitoring_value;
+                                }
+                                $monitoring['monitoring_date']	= $day;
+                                $monitoring['enkripsi_monitoring_date'] = $this->encrypt($day);
+
+                                array_push($monitoringHistory,$monitoring);
+                            }
+                            $flowmeter->monitoringHistories 	    = $monitoringHistory; 	
+                            $flowmeter                              = $this->encryptId($flowmeter);
+                            $workcenter                             = $flowmeter->flowmeterWorkcenter;
+                            array_push($flowmeter_return,$flowmeter);
+                        }
+                    }
+                } 
+                else 
+                {
+                    foreach ($flowmeterLocationPermission->flowmeterLocation->flowmeters as $flowmeter) 
+                    {
+                        if ($flowmeter->flowmeterWorkcenter->flowmeterCategory->id  == $flowmeter_category && $flowmeter->flowmeterWorkcenter->id == $flowmeter_workcenter) 
+                        {
+                            $monitoringHistory 	= array();
+                            foreach ($getAllDay as $day) 
+                            {
+                                $monitoring 						= array();
+                                $monitoring_value 	= $flowmeter->energyMonitorings->where('monitoring_date',$day)->first();
+                                if (is_null($monitoring_value))
+                                {
+                                    $monitoring['monitoring_value'] = 'No Value';
+                                } 
+                                else
+                                {
+                                    $monitoring['monitoring_value'] = $monitoring_value->monitoring_value;
+                                }
+                                $monitoring['monitoring_date']	= $day;
+                                $monitoring['enkripsi_monitoring_date'] = $this->encrypt($day);
+                                array_push($monitoringHistory,$monitoring);
+                            }
+                            $flowmeter->monitoringHistories 	= $monitoringHistory; 	
+                            $flowmeter                              = $this->encryptId($flowmeter);
+                            $workcenter                             = $flowmeter->flowmeterWorkcenter;
+                            array_push($flowmeter_return,$flowmeter);
+                        }
+                    }
+                }
+                
+            }
+               
+        }
+        if ( $flowmeter_category !== 'null' && $flowmeter_workcenter == 'null' ) 
+        {
+            $getWorkCenter          = FlowmeterWorkcenter::where('flowmeter_category_id',$flowmeter_category)->get();
+            $flowmeter_workcenters   = $getWorkCenter;
+        }
+        return ['success'=>true,'tabel'=>$flowmeter_return,'flowmeter_workcenter_active'=>$flowmeter_workcenter_active,'flowmeter_workcenters'=>$flowmeter_workcenters];
+    }
 }
