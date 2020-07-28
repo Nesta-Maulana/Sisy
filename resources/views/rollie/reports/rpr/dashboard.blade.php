@@ -193,7 +193,8 @@
                                             @if (is_null($palet->cppDetail->cppHead->analisaKimia))
                                                 <td>Analisa Kimia Belum Dilakukan</td>
                                             @else
-                                                @if (is_null($palet->cppDetail->cppHead->analisaKimia->ppq->palets->where('palet_id',$palet->id)->first()))
+                                            <td></td>
+                                               {{--  @if (is_null($palet->cppDetail->cppHead->analisaKimia->ppq->palets->where('palet_id',$palet->id)->first()))
                                                     <td class="bg-success">OK</td>
                                                 @else
                                                     @if ($palet->cppDetail->cppHead->analisaKimia->progress_status == '0')
@@ -248,7 +249,7 @@
                                                         @endif
                                                     @endif
 
-                                                @endif
+                                                @endif --}}
                                             @endif
                                             <td>-</td>
                                             <td>

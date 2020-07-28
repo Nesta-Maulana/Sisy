@@ -90,7 +90,9 @@
                                     @endforeach
                                     <tr class="bg-warning">
                                         <td>
-                                            <button onclick="document.location.href='fisiko-kimia-form/{{ app('App\Http\Controllers\ResourceController')->encrypt($draftAnalisa->id) }}/{{ $params }}'" class="btn btn-primary">Update Fisikokimia</button>
+                                            <button onclick="document.location.href='fisiko-kimia-form/{{ app('App\Http\Controllers\ResourceController')->encrypt($draftAnalisa->id) }}/{{ $params }}'" class="btn btn-primary">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
                                         </td>
                                         <td>{{ $draftAnalisa->cppHead->woNumbers[0]->product->product_name }}</td>
                                         <td>{{ rtrim($tanggal_produksi,', ') }}</td>
@@ -100,6 +102,46 @@
                                     </tr>
                                 @endforeach
                             @endif
+                            @if ($params == app('App\Http\Controllers\ResourceController')->encrypt("fiskokimias_qc_penyelia"))
+                                @if (!is_null($draftTsOven))
+                                    @foreach ($draftTsOven as $draftAnalisa)
+                                        @php
+                                            $wo_number          = '';
+                                            $mesin_filling      = '';
+                                            $tanggal_produksi   ='';
+                                        @endphp
+                                        @foreach ($draftAnalisa->cppHead->woNumbers as $woNumber)
+                                        @php
+                                            $wo_number      .= $woNumber->wo_number.',';
+                                            if ($woNumber->production_realisation_date.', ' !== $tanggal_produksi) 
+                                            {
+                                                $tanggal_produksi .= $woNumber->production_realisation_date.', ';
+                                            }
+                                        @endphp
+                                        @endforeach
+                                        @foreach ($draftAnalisa->cppHead->product->fillingMachineGroupHead->fillingMachineGroupDetails as $fillingMachineGroupDetail)
+                                            @php
+                                                if ($mesin_filling !==  $fillingMachineGroupDetail->fillingMachine->filling_machine_code.', ') 
+                                                {
+                                                    $mesin_filling      .= $fillingMachineGroupDetail->fillingMachine->filling_machine_code.', ';
+                                                }
+                                            @endphp
+                                        @endforeach
+                                        <tr class="bg-warning">
+                                            <td>
+                                                <button onclick="document.location.href='fisiko-kimia-form/{{ app('App\Http\Controllers\ResourceController')->encrypt($draftAnalisa->id) }}/{{ $params }}'" class="btn btn-primary">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
+                                            <td>{{ $draftAnalisa->cppHead->woNumbers[0]->product->product_name }}</td>
+                                            <td>{{ rtrim($tanggal_produksi,', ') }}</td>
+                                            <td>{{ rtrim($wo_number,', ') }}</td>
+                                            <td>Draft Analisa</td>
+                                            <td>{{ rtrim($mesin_filling,', ') }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -107,7 +149,7 @@
         </div>
     </div>
 
-    <div class="row mt-3">
+    {{-- <div class="row mt-3">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header bg-dark">
@@ -171,5 +213,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection

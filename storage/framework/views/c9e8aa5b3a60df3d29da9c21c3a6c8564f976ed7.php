@@ -24,7 +24,7 @@
 							    	<div class="card-header bg-warning" id="ppq<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($ppq->id)); ?>" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 								      	<h5 class="mt-2">
 							        		PPQ PI <?php echo e($ppq->nomor_ppq); ?>		
-								        	<span class="pull-right" style="font-size: 30px;transform: rotate(90deg);">&#10145;</span>
+								        	<span class="float-right" style="font-size: 30px;transform: rotate(90deg);">&#10145;</span>
 								      	</h5>
 								    </div>
 								    <div id="collapseOne" class="collapse" aria-labelledby="ppq<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($ppq->id)); ?>" data-parent="#accordionExample">
@@ -104,17 +104,7 @@
 								                    </div>
 								                    <div class="form-group">
 								                        <label for="">Kategori PPQ : </label>
-								                        <select id="kategori_ppq_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($ppq->id)); ?>" class="form-control" disabled>
-								                            <option value="" selected disabled> Pilih Kategori PPQ </option>
-								                            <option value="0" <?php if($ppq->kategori_ppq == '0'): ?> selected <?php endif; ?>> Man </option>
-								                            <option value="1" <?php if($ppq->kategori_ppq == '1'): ?> selected <?php endif; ?>> Machine </option>
-								                            <option value="2" <?php if($ppq->kategori_ppq == '2'): ?> selected <?php endif; ?>> Methode </option>
-								                            <option value="3" <?php if($ppq->kategori_ppq == '3'): ?> selected <?php endif; ?>> Material </option>
-								                            <option value="4" <?php if($ppq->kategori_ppq == '4'): ?> selected <?php endif; ?>> Environment </option>
-								                            <option value="5" <?php if($ppq->kategori_ppq == '5'): ?> selected <?php endif; ?>> Sortasi </option>
-								                            <option value="6" <?php if($ppq->kategori_ppq == '6'): ?> selected <?php endif; ?>> Miss Handling </option>
-								                            <option value="7" <?php if($ppq->kategori_ppq == '7'): ?> selected <?php endif; ?>> Lain-lain </option>
-								                        </select>
+								                        <input type="text" class="form-control" value="<?php echo e($ppq->kategoriPpq->kategori_ppq); ?>" readonly>
 								                    </div>
 								                    
 								                    <div class="form-group">

@@ -53,7 +53,6 @@
 					                        </div>
 						                    <div class="form-group">
 						                        <label for="">Nomor LOT</label>
-												
 						                        @if (count($ppq->palets) > 0)
 						                            <input type="text" class="form-control" id="nomor_lot_{{ app('App\Http\Controllers\ResourceController')->encrypt($ppq->id) }}" value="@foreach ($ppq->palets as $palet_ppq){{  $palet_ppq->palet->cppDetail->lot_number }}-{{ $palet_ppq->palet->palet }}, @endforeach" readonly>
 						                        @else

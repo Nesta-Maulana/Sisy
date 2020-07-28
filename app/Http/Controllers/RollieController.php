@@ -527,8 +527,8 @@ class RollieController extends ResourceController
 			}
 			
 			$draftAnalisa 		= AnalisaKimia::where('progress_status','0')->get();
-			$doneDraft 			= AnalisaKimia::where('progress_status','1')->get();
-			return view('rollie.fiskokimia.dashboard',['menus'=>$this->menus,'cppHeads'=>$cppHeads,'draftAnalisas'=>$draftAnalisa,'doneAnalisa'=>$doneDraft,'params'=>$params]);
+			$analisaTsOven 			= AnalisaKimia::where('progress_status','1')->orWhereNull('ts_oven_awal')->orWhereNull('ts_oven_tengah')->orWhereNull('ts_oven_akhir')->get();
+			return view('rollie.fiskokimia.dashboard',['menus'=>$this->menus,'cppHeads'=>$cppHeads,'draftAnalisas'=>$draftAnalisa,'draftTsOven'=>$analisaTsOven,'params'=>$params]);
 		} 
 		else 
 		{
