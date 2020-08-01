@@ -134,6 +134,8 @@ Route::group(['prefix' => 'master-apps','middleware'=>['auth','credential.check'
 	{
 		Route::get('', 'MasterAppController@manageLocationPermission')->name('master_app.master_data.manage_flowmeter_location_permissions');
 		Route::get('tambah-akses', 'MasterAppController@showFormManageLocationPermission');
+		Route::post('tambah-akses', 'Master\Emon\FlowmeterLocationPermissionsController@grantAccess');
+		
 		Route::get('get-location/{category_id}/{user_id}', 'Master\Emon\FlowmeterLocationPermissionsController@getFlowmeter');
 		Route::post('ubah-akses', 'Master\Emon\FlowmeterLocationPermissionsController@changeAccess');
 		
@@ -330,8 +332,13 @@ Route::group(['prefix' => 'emon','middleware'=>['auth','credential.check']], fun
 	Route::get('/monitoring-listrik', 'EmonController@showMonitoringListrik')->name('emon.monitoring.listrik');
 	Route::get('/monitoring-gas', 'EmonController@showMonitoringGas')->name('emon.monitoring.gas');
 	
-	Route::group(['prefix' => 'histori-pengamatan'], function () {
+	Route::group(['prefix' => 'history-pengamatan'], function () {
 		Route::get('', 'EmonController@showMonitoringHistory')->name('emon.monitoring.histories');
 		Route::post('/input-monitoring', 'Transaction\Emon\EnergyMonitoringController@inputMonitoringEnergyByHistory');
+		Route::get('refresh-flowmeter-table/{monitoring_month}/{flowmeter_category}/{flowmeter_workcenter}', 'Transaction\Emon\EnergyMonitoringController@refreshMonitoringHistoriesTable');
+	});
+
+	Route::group(['prefix' => 'report-penggunaan-air'], function () {
+		Route::get('', 'EmonController@showDailyUsageReportWater')->name('emon.energy_usage_report.water');
 	});
 });

@@ -164,7 +164,7 @@
 		        {
 		            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		        },
-		        url: 'histori-pengamatan/input-monitoring', 
+		        url: 'history-pengamatan/input-monitoring', 
 		        method: 'POST',
 		        dataType: 'JSON',
 		        data:
@@ -198,4 +198,75 @@
 				}
 			});	
 		}
+	}
+
+	function refreshTableMonitoringHistory() 
+	{
+		var month 		= $('#monitoring_month_filter').val();
+		var category 	= $('#flowmeter_monitoring_category').val();
+		var workcenter 	= $('#flowmeter_workcenter_filter').val();
+		if(!month) month 				= 'null';
+		if(!category) category 			= 'null';
+		if(!workcenter) workcenter 		= 'null';
+		$.ajax({
+            url     : 'history-pengamatan/refresh-flowmeter-table/'+month+'/'+category+'/'+workcenter,
+            method  : 'GET',
+            dataType: 'JSON',
+            success : function(data) 
+            {
+				if (data.success == true)
+				{
+					$('#colpan_tanggal').removeAttr('colspan');
+					$('#colpan_tanggal').attr('colspan',data.tabel[0].monitoringHistories.length);
+					isiheadtable = '',$headtable = $('#monitoring_history_head');
+					isiheadtable += "<th class='hidden' style='border: 0px'>";	
+					isiheadtable += "</th>";
+					for (let c = 0; c < data.tabel[0].monitoringHistories.length; c++) 
+					{
+						isiheadtable += "<th>"+ data.tabel[0].monitoringHistories[c].monitoring_date +"</th>";	
+					}
+					$headtable.html(isiheadtable).on('change');
+
+					var isitable = '', $table = $('#monitoring_history_table_body');
+					for (var a = 0; a < data.tabel.length; a++) 
+					{
+						isitable += "<tr>";	
+						isitable += "<td style='background-color: black;color:white'>";	
+						isitable += data.tabel[a].flowmeter_name;	
+						isitable += "</td>";	
+						isitable += "<td>";	
+						isitable += data.tabel[a].flowmeter_workcenter.flowmeter_workcenter;	
+						isitable += "</td>";	
+						for (let b = 0; b < data.tabel[a].monitoringHistories.length; b++) 
+						{
+							isitable += "<td id='td_"+data.tabel[a].monitoringHistories[b].enkripsi_monitoring_date+'_'+data.tabel[a].enkripsi_id+"' onclick=\"editMonitoringHistory('"+data.tabel[a].monitoringHistories[b].enkripsi_monitoring_date+"','"+data.tabel[a].enkripsi_id+"')\">";	
+							isitable += data.tabel[a].monitoringHistories[b].monitoring_value;	
+							isitable += "</td>";	
+						}
+						isitable += "</tr>";	
+					}
+					$table.html(isitable).on('change');
+					if(data.flowmeter_workcenters !== 'null')
+					{
+						var optionvalue_flowmeter = '', $selectbox_workcenter = $('#flowmeter_workcenter_filter');
+						optionvalue_flowmeter 	+= "<option value='0' selected disabled>-- Pilih Flowmeter Workcenter --</option>";
+						for(var i = 0 ; i < data.flowmeter_workcenters.length ; i++)
+						{
+							optionvalue_flowmeter 	+= "<option value='"+data.flowmeter_workcenters[i].id+"'";
+							if (data.flowmeter_workcenters[i].id == data.flowmeter_workcenter_active) 
+							{
+								optionvalue_flowmeter += " selected ";	
+							}
+							optionvalue_flowmeter   += ">"+data.flowmeter_workcenters[i].flowmeter_workcenter+"</option>";
+						}
+						$selectbox_workcenter.html(optionvalue_flowmeter).on('change');
+					}
+				} 
+				else
+				{
+
+				}
+			}
+		});				
+		
 	}

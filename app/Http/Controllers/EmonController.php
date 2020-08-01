@@ -15,6 +15,7 @@ use App\Models\Master\Emon\FlowmeterCategory;
 use App\Models\Master\Emon\FlowmeterUnit;
 use App\Models\Master\Emon\FlowmeterWorkcenter;
 use App\Models\Master\Emon\FlowmeterLocation;
+use App\Models\Master\Emon\FlowmeterLocationPermissions;
 
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -222,31 +223,41 @@ class EmonController extends ResourceController
 	
 	public function showMonitoringHistory()
 	{
-		$getAllDay 		= $this->daysInMonth();
-		$colspan 		= count($getAllDay);
-		$flowmeters 	= Flowmeter::all();
-		foreach ($flowmeters as $flowmeter) 
+		$month 							= date('m');
+		$years 							= date('Y');
+		$getAllDay 						= $this->daysInMonth($month,$years);
+		$colspan 						= count($getAllDay);
+		$flowmeterLocationPermissions	= FlowmeterLocationPermissions::where('user_id',Auth::user()->id)->where('is_allow','1')->get();
+		$flowmeter_return 				= array();
+		$kategori_flowmeter 			= array();
+		foreach ($flowmeterLocationPermissions as $flowmeterLocationPermission) 
 		{
-			$monitoringHistory 	= array();
-			foreach ($getAllDay as $day) 
+			foreach ($flowmeterLocationPermission->flowmeterLocation->flowmeters as $flowmeter) 
 			{
-				$monitoring 						= array();
-				$monitoring_value 	= $flowmeter->energyMonitorings->where('monitoring_date',$day)->first();
-				if (is_null($monitoring_value))
+				$monitoringHistory 	= array();
+				foreach ($getAllDay as $day) 
 				{
-					$monitoring['monitoring_value'] = 'No Value';
-				} 
-				else
-				{
-					$monitoring['monitoring_value'] = $monitoring_value->monitoring_value;
+					$monitoring 						= array();
+					$monitoring_value 	= $flowmeter->energyMonitorings->where('monitoring_date',$day)->first();
+					if (is_null($monitoring_value))
+					{
+						$monitoring['monitoring_value'] = 'No Value';
+					} 
+					else
+					{
+						$monitoring['monitoring_value'] = $monitoring_value->monitoring_value;
+					}
+					$monitoring['monitoring_date']	= $day;
+					array_push($monitoringHistory,$monitoring);
 				}
-				$monitoring['monitoring_date']	= $day;
-				array_push($monitoringHistory,$monitoring);
+				$flowmeter->monitoringHistories 	= $monitoringHistory; 	
+				array_push($flowmeter_return,$flowmeter);
 			}
-			$flowmeter->monitoringHistories 	= $monitoringHistory; 	
+			if (!in_array($flowmeterLocationPermission->flowmeterLocation->flowmeterCategory->flowmeter_category,$kategori_flowmeter)) {
+				$kategori_flowmeter[$flowmeterLocationPermission->flowmeterLocation->flowmeterCategory->id] 		= $flowmeterLocationPermission->flowmeterLocation->flowmeterCategory->flowmeter_category;
+			}
 		}
-		// return $flowmeters;
-		return view('energy_monitoring.monitoring_history.dashboard',['menus'=>$this->menus,'flowmeters'=>$flowmeters,'colspan'=>$colspan,'allDay'=>$getAllDay]);
+		return view('energy_monitoring.monitoring_history.dashboard',['menus'=>$this->menus,'flowmeters'=>$flowmeter_return,'colspan'=>$colspan,'allDay'=>$getAllDay,'flowmeterCategory'=>$kategori_flowmeter]);
 	}
 
 	public function databaseFilterWorkcenter($jenis_pengamatan_id)

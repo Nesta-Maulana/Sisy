@@ -53,8 +53,11 @@ class EnergyUsageController extends ResourceController
                                 }
                                 else
                                 {
+                                    $energyMonitoringBeforeToday    = $flowmeter->energyMonitorings->where('monitoring_date','<',$today)->sortBy('monitoring_date');
+                                    $reset          = end($energyMonitoringBeforeToday);
+                                    $last_key       = key($reset);
                                     /* jika pengamatan hari kemarin tidak ada maka akan diambil dari pengamatan terakhir sebelum hari ini */
-                                    $energyUsageToday   = $energyMonitoringToday->monitoring_value - $flowmeter->energyMonitorings[count($flowmeter->energyMonitorings)-2]->monitoring_value;
+                                    $energyUsageToday   = $energyMonitoringToday->monitoring_value - $energyMonitoringBeforeToday[$last_key]->monitoring_value;
 
                                 }
                             }
@@ -153,6 +156,7 @@ class EnergyUsageController extends ResourceController
                     if (!is_null($flowmeter->energyMonitorings)) 
                     {
                         $energyMonitoringToday      = $flowmeter->energyMonitorings->where('monitoring_date',$today)->first();
+
                         if (!is_null($energyMonitoringToday)) 
                         {
                             $energyMonitoringYesterday  = $flowmeter->energyMonitorings->where('monitoring_date',$yesterday)->first();
@@ -183,6 +187,7 @@ class EnergyUsageController extends ResourceController
                                 }
                             }
                             $energyUsageTodayFromDB     = $flowmeterUsage->energyUsages->where('usage_date',$today)->first();
+                            
                             if (is_null($energyUsageTodayFromDB)) 
                             {
                                 $energyUsage        = EnergyUsage::create([
@@ -190,20 +195,70 @@ class EnergyUsageController extends ResourceController
                                     'flowmeter_formula_id'      => $flowmeterUsage->flowmeter_formula_id,
                                     'usage_value'               => $energyUsageToday,
                                     'usage_date'                => $today
-                                ]);
+                                    ]);
                             }
                             else
                             {
                                 $energyUsageTodayFromDB->usage_value    = $energyUsageToday;
                                 $energyUsageTodayFromDB->save();
                             }
-                            $this->changeEnergyAfterToday($flowmeterUsage,$today);
+                        }
+                        $real_date                  = Carbon::today()->toDateString();
+                        $usagesAfterToday           = $flowmeterUsage->energyUsages->where('usage_date','>',$today)->where('usage_date','<=',$real_date)->sortBy('usage_date');
+                        if(!is_null($usagesAfterToday))
+                        {
+                            foreach ($usagesAfterToday as $usageAfterToday) 
+                            {
+                                $flowmeter_code             = $usageAfterToday->flowmeterUsage->flowmeter_code;
+                                $flowmeter_code             = explode('FU_',$flowmeter_code); /* akan dihilangkan kode FU nya dan ambil kode belakangnya */
+                                $flowmeter                  = Flowmeter::where('flowmeter_code',$flowmeter_code[1])->first();
+                                if (!is_null($flowmeter->energyMonitorings)) 
+                                {
+                                    $energyMonitoringToday      = $flowmeter->energyMonitorings->where('monitoring_date',$usageAfterToday->usage_date)->first();
+                                    
+                                    if (!is_null($energyMonitoringToday)) 
+                                    {
+                                        $kemarin                    = date('Y-m-d', strtotime('-1 day', strtotime($today)));
+                                        $energyMonitoringYesterday  = $flowmeter->energyMonitorings->where('monitoring_date',$kemarin)->first();
+                                        if (!is_null($energyMonitoringYesterday)) 
+                                        {
+                                            $energyUsageToday       = $energyMonitoringToday->monitoring_value - $energyMonitoringYesterday->monitoring_value;
+                                        } 
+                                        else 
+                                        {
+                                            if (count($flowmeter->energyMonitorings) == 1) 
+                                            {
+                                                /* ini  jika flowmeter tersebut baru pertama kali dilakukan monitoring maka nilai usage nya masih 0*/
+                                                $energyUsageToday   = 0;
+                                            }
+                                            else
+                                            {
+                                                /* jika pengamatan hari kemarin tidak ada maka akan diambil dari pengamatan terakhir sebelum hari ini */
+                                                $energyUsageBeforeToday   = $flowmeter->energyMonitorings->where('monitoring_date','<',$usageAfterToday->usage_date)->sortBy('usage_date');
+                                                if (is_null($energyUsageBeforeToday) || count($energyUsageBeforeToday) < 1) 
+                                                {
+                                                    $energyUsageToday = 0;
+                                                } 
+                                                else 
+                                                {
+                                                    $reset  =   end($energyUsageBeforeToday);
+                                                    $last_key = key($reset);
+                                                    $energyUsageToday = $energyMonitoringToday->monitoring_value - $energyUsageBeforeToday[$last_key]->monitoring_value;
+                                                }
+                                                
+                                            }
+                                        }
+                                        $usageAfterToday->usage_value   = $energyUsageToday;
+                                        $usageAfterToday->save();
+                                    }
+                                }
+
+                            }
                         }
                     }
                 } 
                 else 
                 {
-                    dd('kesini');
                     /*$a  = 10; $b  = 5; $d  = 10; $c  = '$a+$b'; echo $c; eval("\$c = (\"$a\"+\"$b\")*\"$d\";"); echo $c; die();*/
                     $formula_code   = json_decode($flowmeterUsage->flowmeterFormula->flowmeter_formula);
                     $rumus          = "\$rumus =";
@@ -253,17 +308,53 @@ class EnergyUsageController extends ResourceController
                         $energyUsageToday->usage_value  = $rumus;
                         $energyUsageToday->save();
                     }
+                    $real_date                  = Carbon::today()->toDateString();
+                    $usagesAfterToday           = $flowmeterUsage->energyUsages->where('usage_date','>',$today)->where('usage_date','<=',$real_date)->sortBy('usage_date');
+                    if(!is_null($usagesAfterToday))
+                    {
+                        foreach ($usagesAfterToday as $usageAfterToday) 
+                        {
+                            $formula_code   = json_decode($usageAfterToday->flowmeterUsage->flowmeterFormula->flowmeter_formula);
+                            $rumus          = "\$rumus =";
+                            foreach ($formula_code as $formula) 
+                            {
+                                if ($formula == '-' || $formula == '+' || $formula == '/' || $formula == 'x' || $formula == '(' || $formula == ')') 
+                                {
+                                    if ($formula == 'x') 
+                                    {
+                                        $formula = "*";
+                                    }
+                                    $rumus.= $formula;
+
+                                }
+                                else 
+                                {
+                                    if (substr($formula, 0,2) == 'FU') 
+                                    {
+                                        $flowmeterUsageRumus            = FlowmeterUsage::where('flowmeter_code',$formula)->first();
+                                        $energyUsageToday               = $flowmeterUsageRumus->energyUsages->where('usage_date',$usageAfterToday->usage_date)->first();
+                                        if (is_null($energyUsageToday))
+                                        {
+                                            $energyUsageToday  =0;
+                                        } 
+                                        else 
+                                        {
+                                            $energyUsageToday  = $energyUsageToday->usage_value;
+                                        }
+                                        $rumus.=$energyUsageToday;
+                                    }
+                                }
+                            }
+                            $rumus                  .= ';';
+                            eval($rumus); // for usage value 
+                            $usageAfterToday->usage_value       = $rumus;
+                            $usageAfterToday->save();
+                        }
+                    }
                 }
                 
             }
         }
-    }
-
-    public function changeEnergyAfterToday($flowmeterUsage,$change_date)
-    {
-        $real_date      = Carbon::today()->toDateString();
-        $energyUsage    = $flowmeterUsage->energyUsages->where('usage_date','>=',$change_date)->where('usage_date','<=',$real_date)->sortBy('usage_date');
-        dd($energyUsage);
     }
 
     /**
