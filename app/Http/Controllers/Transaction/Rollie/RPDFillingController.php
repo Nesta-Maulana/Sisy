@@ -702,7 +702,6 @@ class RPDFillingController extends ResourceController
         $rpd_filling_detail_pi->volume_kiri           = $volume_kiri;
         $rpd_filling_detail_pi->status_akhir          = $status_akhir;
         $rpd_filling_detail_pi->save();
-        // dd($status_akhir_validasi);
         if ($status_akhir_validasi == 'OK' && $status_akhir == 'OK') 
         {
             /* apabila status akhirnya OK maka dia akan mengecek dulu apakah dia analisa sampel pertama atau bukan */

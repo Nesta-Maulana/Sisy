@@ -29,94 +29,96 @@
                         </thead>
                         <tbody>
                             <?php $__currentLoopData = $wo_numbers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $wo_number): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <?php switch($wo_number->wo_status):
-                                    case ('2'): ?>
-                                        <?php
-                                            $status     = 'WIP Fillpack';
-                                            $style      = 'background-color:#a6e6ff;';
-                                            $button     = 'Proses Filling';
-                                            $classbtn   = 'btn btn-primary';
-                                            $onclick    = 'prosesWoNumber(\''.$wo_number->product->product_name.'\',\''.$wo_number->wo_number.'\',\''.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->id).'\',\'Filling\')';
-                                        ?>
-                                    <?php break; ?>
-                                    <?php case ('3'): ?>
-                                        
-                                        <?php if(is_null($wo_number->cppHead)): ?>
+                                <?php if($wo_number->wo_status < 5): ?>
+                                    <?php switch($wo_number->wo_status):
+                                        case ('2'): ?>
                                             <?php
-                                                $status     = 'On Progress Filling';
-                                                $style      = 'background-color:#a6ffea;';
+                                                $status     = 'WIP Fillpack';
+                                                $style      = 'background-color:#a6e6ff;';
+                                                $button     = 'Proses Filling';
+                                                $classbtn   = 'btn btn-primary';
+                                                $onclick    = 'prosesWoNumber(\''.$wo_number->product->product_name.'\',\''.$wo_number->wo_number.'\',\''.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->id).'\',\'Filling\')';
                                             ?>
-                                        <?php else: ?>
+                                        <?php break; ?>
+                                        <?php case ('3'): ?>
+                                            
+                                            <?php if(is_null($wo_number->cppHead)): ?>
+                                                <?php
+                                                    $status     = 'On Progress Filling';
+                                                    $style      = 'background-color:#a6ffea;';
+                                                ?>
+                                            <?php else: ?>
+                                                <?php
+                                                    $status     = 'On Progress Fillpack';
+                                                    $style      = 'background-color:#00ffb8;';
+                                                ?>
+                                            <?php endif; ?>
                                             <?php
-                                                $status     = 'On Progress Fillpack';
-                                                $style      = 'background-color:#00ffb8;';
-                                            ?>
-                                        <?php endif; ?>
-                                        <?php
-                                            $button     = 'Ke Form RPD Filling';
-                                            $classbtn   = 'btn btn-outline-primary';
-                                            $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
-                                        ?>
-                                        <?php if($wo_number->rpdFillingHead['rpd_status'] == '1'): ?> 
-                                            <?php
-                                                $status     = 'On Progress Packing';
-                                                $style      = 'background-color:#00ff7e;';
-                                                $button     = 'Closed RPD Filling';
-                                                $classbtn   = 'btn btn-outline-secondary';
+                                                $button     = 'Ke Form RPD Filling';
+                                                $classbtn   = 'btn btn-outline-primary';
                                                 $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
                                             ?>
-                                        <?php endif; ?>
-                                    <?php break; ?>
-                                    <?php case ('4'): ?>
-                                        <?php if(is_null($wo_number->cppHead)): ?>
+                                            <?php if($wo_number->rpdFillingHead['rpd_status'] == '1'): ?> 
+                                                <?php
+                                                    $status     = 'On Progress Packing';
+                                                    $style      = 'background-color:#00ff7e;';
+                                                    $button     = 'Closed RPD Filling';
+                                                    $classbtn   = 'btn btn-outline-secondary';
+                                                    $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
+                                                ?>
+                                            <?php endif; ?>
+                                        <?php break; ?>
+                                        <?php case ('4'): ?>
+                                            <?php if(is_null($wo_number->cppHead)): ?>
+                                                <?php
+                                                    $status     = 'On Progress Filling';
+                                                    $style      = 'background-color:#a6ffea;';
+                                                ?>
+                                            <?php else: ?>
+                                                <?php
+                                                    $status     = 'On Progress Fillpack';
+                                                    $style      = 'background-color:#00ffb8;';
+                                                ?>
+                                            <?php endif; ?>
                                             <?php
-                                                $status     = 'On Progress Filling';
-                                                $style      = 'background-color:#a6ffea;';
-                                            ?>
-                                        <?php else: ?>
-                                            <?php
-                                                $status     = 'On Progress Fillpack';
-                                                $style      = 'background-color:#00ffb8;';
-                                            ?>
-                                        <?php endif; ?>
-                                        <?php
-                                            $button     = 'Ke Form RPD Filling';
-                                            $classbtn   = 'btn btn-outline-primary';
-                                            $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
-                                        ?>
-                                        <?php if($wo_number->rpdFillingHead['rpd_status'] == '1'): ?> 
-                                            <?php
-                                                $status     = 'On Progress Packing';
-                                                $style      = 'background-color:#00ff7e;';
-                                                $button     = 'Closed RPD Filling';
-                                                $classbtn   = 'btn btn-outline-secondary';
+                                                $button     = 'Ke Form RPD Filling';
+                                                $classbtn   = 'btn btn-outline-primary';
                                                 $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
                                             ?>
-                                        <?php endif; ?>
-                                    <?php break; ?>
+                                            <?php if($wo_number->rpdFillingHead['rpd_status'] == '1'): ?> 
+                                                <?php
+                                                    $status     = 'On Progress Packing';
+                                                    $style      = 'background-color:#00ff7e;';
+                                                    $button     = 'Closed RPD Filling';
+                                                    $classbtn   = 'btn btn-outline-secondary';
+                                                    $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
+                                                ?>
+                                            <?php endif; ?>
+                                        <?php break; ?>
 
-                                    <?php case ('5'): ?>
-                                        <?php
-                                            $status     = 'Closed Wo';
-                                            $style      = 'background-color:#00ff7e;';
-                                            $button     = 'Closed RPD Filling';
-                                            $classbtn   = 'btn btn-outline-secondary';
-                                            $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
-                                        ?>
-                                    <?php break; ?>
-                                <?php endswitch; ?>
-                                <tr style="<?php echo e($style); ?>">
-                                    <td style="width:120px;" onclick="<?php echo e($onclick); ?>">
-                                        <strong><?php echo e($wo_number->wo_number); ?></strong>
-                                    </td>
-                                    <td style="width:250px;"><?php echo e($wo_number->product->product_name); ?></td>
-                                    <td style="width:150px;"><?php echo e($wo_number->production_realisation_date); ?></td>
-                                    <td><?php echo e($wo_number->formula_revision); ?></td>
-                                    <td style="width:120px;"><?php echo e($status); ?></td>
-                                    <td style="width:150px">
-                                        <button class="<?php echo e($classbtn); ?>" onclick="<?php echo e($onclick); ?>"><?php echo e($button); ?></button>
-                                    </td>
-                                </tr>
+                                        <?php case ('5'): ?>
+                                            <?php
+                                                $status     = 'Closed Wo';
+                                                $style      = 'background-color:#00ff7e;';
+                                                $button     = 'Closed RPD Filling';
+                                                $classbtn   = 'btn btn-outline-secondary';
+                                                $onclick    = 'document.location.href=\'rpd-filling/form/'.app('App\Http\Controllers\ResourceController')->encrypt($wo_number->rpd_filling_head_id).'\'';
+                                            ?>
+                                        <?php break; ?>
+                                    <?php endswitch; ?>
+                                    <tr style="<?php echo e($style); ?>">
+                                        <td style="width:120px;" onclick="<?php echo e($onclick); ?>">
+                                            <strong><?php echo e($wo_number->wo_number); ?></strong>
+                                        </td>
+                                        <td style="width:250px;"><?php echo e($wo_number->product->product_name); ?></td>
+                                        <td style="width:150px;"><?php echo e($wo_number->production_realisation_date); ?></td>
+                                        <td><?php echo e($wo_number->formula_revision); ?></td>
+                                        <td style="width:120px;"><?php echo e($status); ?></td>
+                                        <td style="width:150px">
+                                            <button class="<?php echo e($classbtn); ?>" onclick="<?php echo e($onclick); ?>"><?php echo e($button); ?></button>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>

@@ -949,10 +949,10 @@ function analisa_sampel_pi(kode_sampel,event_sampel,mesin_filling,tanggal_fillin
         {
             /*jika mesin filling TPA maka overlap nya 4.6 - 6.0*/
             if (
-                ( 
+                /* ( 
                     $('#hasil_overlap').val() <= 6.0 && 
                     $('#hasil_overlap').val() >= 4.5
-                ) && 
+                ) && */ 
                 $('#hasil_volume_kanan').val()  >= 198 &&  
                 $('#hasil_volume_kiri').val()   >= 198 && 
                 (
@@ -1001,10 +1001,10 @@ function analisa_sampel_pi(kode_sampel,event_sampel,mesin_filling,tanggal_fillin
         {
             /*jika mesin filling TBA dan A3 maka overlap nya 3.5 - 4.5*/
             if (
-                (
+                /* (
                     $('#hasil_overlap').val() <= 4.5 &&
                     $('#hasil_overlap').val() >= 3.5
-                ) && 
+                ) &&  */
                 $('#hasil_volume_kanan').val()  >= 198 && 
                 $('#hasil_volume_kiri').val()   >= 198 && 
                 (
@@ -1151,11 +1151,11 @@ function analisa_sampel_pi(kode_sampel,event_sampel,mesin_filling,tanggal_fillin
                                             ls_sa_proportion !== '70:30'
                                         ) &&
                                         volume_kanan   >= 198 &&
-                                        volume_kiri    >= 198 &&
+                                        volume_kiri    >= 198 /* &&
                                         (
                                             overlap >= 4.5 &&
                                             overlap <= 6.0
-                                        )
+                                        ) */
                                     ) 
                                 {
                                     status_akhir    = 'OK';
@@ -1191,11 +1191,11 @@ function analisa_sampel_pi(kode_sampel,event_sampel,mesin_filling,tanggal_fillin
                                         ls_sa_proportion !== '70:30'
                                     ) &&
                                     volume_kanan    >= 198 &&
-                                    volume_kiri     >= 198 &&
+                                    volume_kiri     >= 198 /* &&
                                     (
                                         overlap >= 3.5 &&
                                         overlap <= 4.5
-                                    )
+                                    ) */
                                 ) 
                                 {
                                     status_akhir    = 'OK';

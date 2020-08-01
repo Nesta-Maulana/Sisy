@@ -385,7 +385,7 @@
                                             <div class="col-lg-3 col-md-3 col-sm-3">
                                                 <div class="form-group">
                                                     <label for="kode_batch_standar">Kode Batch Standar</label>
-                                                    <input type="text" class="form-control" name="kode_batch_standar" id="kode_batch_standar" value="@if (!is_null($analisaKimia->kode_batch_standar)) {{ $analisaKimia->kode_batch_standar }} @endif" maxlength="7" placeholder="Ex: TC0901C" autocomplete="off" {{ $attribute }}>
+                                                    <input type="text" class="form-control text-uppercase" name="kode_batch_standar" id="kode_batch_standar" value="@if (!is_null($analisaKimia->kode_batch_standar)) {{ $analisaKimia->kode_batch_standar }} @endif" maxlength="7" placeholder="Ex: TC0901C" autocomplete="off" {{ $attribute }}>
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-sm-3">

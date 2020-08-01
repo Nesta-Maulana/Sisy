@@ -73,8 +73,8 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="button-ubah hidden">
-                                                                        <button class="btn btn-primary">
-                                                                            <i class="fas fa-save text-white" onclick="updatePsr('{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}')"></i>
+                                                                        <button class="btn btn-primary" onclick="updatePsr('{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}')">
+                                                                            <i class="fas fa-save text-white" ></i>
                                                                         </button>
                                                                         <button class="btn btn-secondary" onclick="cancelEditPsr('{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}')">
                                                                             <i class="fas fa-window-close"></i>
@@ -92,8 +92,8 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="button-ubah hidden">
-                                                                        <button class="btn btn-primary">
-                                                                            <i class="fas fa-save text-white" onclick="updatePsr('{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}')"></i>
+                                                                        <button class="btn btn-primary" onclick="updatePsr('{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}')">
+                                                                            <i class="fas fa-save text-white" ></i>
                                                                         </button>
                                                                         <button class="btn btn-secondary" onclick="cancelEditPsr('{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}')">
                                                                             <i class="fas fa-window-close"></i>

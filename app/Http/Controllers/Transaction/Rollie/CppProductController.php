@@ -703,7 +703,7 @@ class CppProductController extends ResourceController
                 $wo_number         = WoNumber::find($woNumber->id);
                 if ($wo_number->rpdFillingHead->rpd_status == '1') 
                 {
-                    $wo_number->wo_status = '4';
+                    $wo_number->wo_status = '5';
                     $wo_number->save();
                 }
             }

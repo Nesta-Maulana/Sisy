@@ -193,62 +193,8 @@
                                             <?php if(is_null($palet->cppDetail->cppHead->analisaKimia)): ?>
                                                 <td>Analisa Kimia Belum Dilakukan</td>
                                             <?php else: ?>
-                                                <?php if(is_null($palet->cppDetail->cppHead->analisaKimia->ppq->palets->where('palet_id',$palet->id)->first())): ?>
-                                                    <td class="bg-success">OK</td>
-                                                <?php else: ?>
-                                                    <?php if($palet->cppDetail->cppHead->analisaKimia->progress_status == '0'): ?>
-                                                        <td class="bg-warning">
-                                                            On Progress Analisa
-                                                        </td>
-                                                    <?php else: ?>
-                                                        <?php if($palet->cppDetail->cppHead->analisaKimia->analisa_kimia_status == '0'): ?>
-                                                            <?php switch($palet->cppDetail->cppHead->analisaKimia->ppq->status_akhir):
-                                                                case ('0'): ?>
-                                                                    <?php
-                                                                        $status_mutu_fg = 'On Progress';
-                                                                    ?>
-                                                                    <td class="bg-warning">
-                                                                        Analisa Kimia #OK <?php echo e($palet->cppDetail->cppHead->analisaKimia->ppq->alasan); ?> - Draft PPQ
-                                                                    </td>
-                                                                <?php break; ?>
-                                                                <?php case ('1'): ?>
-                                                                    <?php
-                                                                        $status_mutu_fg = 'On Progress';
-                                                                    ?>
-                                                                    <td class="bg-warning">
-                                                                        Analisa Kimia #OK <?php echo e($palet->cppDetail->cppHead->analisaKimia->ppq->alasan); ?> - On Progress PPQ
-                                                                    </td>
-                                                                <?php break; ?>
-                                                                
-                                                                <?php case ('2'): ?>
-                                                                    <?php switch($palet->cppDetail->cppHead->analisaKimia->ppq->followUpPpq->status_produk):
-                                                                        case ('0'): ?>
-                                                                            <td class="bg-danger">
-                                                                                Analisa Kimia #OK <?php echo e($palet->cppDetail->cppHead->analisaKimia->ppq->alasan); ?> - Reject 
-                                                                            </td>    
-                                                                        <?php break; ?>
-                                                                        <?php case ('1'): ?>
-                                                                            <td class="bg-success">
-                                                                                Analisa Kimia #OK <?php echo e($palet->cppDetail->cppHead->analisaKimia->ppq->alasan); ?> - Release 
-                                                                            </td>    
-                                                                        <?php break; ?>                                                                       
-                                                                        
-                                                                        <?php case ('2'): ?>
-                                                                            <td class="bg-warning">
-                                                                                Analisa Kimia #OK <?php echo e($palet->cppDetail->cppHead->analisaKimia->ppq->alasan); ?> - Release Partial 
-                                                                            </td>    
-                                                                        <?php break; ?>                                                                       
-                                                                    <?php endswitch; ?>
-                                                                <?php break; ?>     
-                                                            <?php endswitch; ?>
-                                                        <?php else: ?>
-                                                            <td class="bg-sucess">
-                                                                OK
-                                                            </td>
-                                                        <?php endif; ?>
-                                                    <?php endif; ?>
-
-                                                <?php endif; ?>
+                                            <td></td>
+                                               
                                             <?php endif; ?>
                                             <td>-</td>
                                             <td>
