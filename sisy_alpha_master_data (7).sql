@@ -1,80 +1,9 @@
--- phpMyAdmin SQL Dump
--- version 4.8.3
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Waktu pembuatan: 03 Agu 2020 pada 03.04
--- Versi server: 10.1.36-MariaDB
--- Versi PHP: 7.2.11
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `sisy_alpha_master_data`
---
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `applications`
---
-
-CREATE TABLE `applications` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `application_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application_description` char(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application_link` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `applications`
---
-
 INSERT INTO `applications` (`id`, `application_name`, `application_description`, `application_link`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Master Apps', 'Aplikasi untuk mengelola seluruh data-data dari aplikasi yang terdapat pada Sentul integrated system', 'master-apps', 1, 1, NULL, NULL, '2020-01-23 08:24:31', '2020-01-23 08:24:31', NULL),
 (2, 'Rollie', 'Aplikasi untuk mengelola seluruh data-data penunjang release produk di plant sentul', 'rollie', 1, 1, NULL, NULL, '2020-01-23 08:24:32', '2020-01-23 08:24:32', NULL),
 (3, 'Rollie - Admin Panel', 'Aplikasi untuk mengelola seluruh data-data yang terdapat pada aplikasi Rollie', 'rollie-admin-panel', 1, 1, NULL, NULL, '2020-01-23 08:24:32', '2020-01-23 08:24:32', NULL),
 (4, 'Energy Monitoring', 'Aplikasi untuk mengelola seluruh data-data penggunaan energy di PT Nutrifood Indonesia Plant Sentul', 'emon', 1, 1, NULL, NULL, '2020-01-23 08:24:32', '2020-01-23 08:24:32', NULL),
 (5, 'Energy Monitoring - Admin Panel', 'Aplikasi untuk mengelola seluruh data-data yang terdapat pada aplikasi Emon', 'emon-admin-panel', 1, 1, 1, NULL, '2020-01-23 08:24:32', '2020-03-30 00:40:00', NULL);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `application_permissions`
---
-
-CREATE TABLE `application_permissions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `application_id` bigint(20) NOT NULL COMMENT 'Connect to applications table',
-  `user_id` bigint(20) NOT NULL COMMENT 'Connect to user table',
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `application_permissions`
---
 
 INSERT INTO `application_permissions` (`id`, `application_id`, `user_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 1, 1, NULL, NULL, '2020-01-23 08:24:34', '2020-01-23 08:24:34', NULL),
@@ -83,82 +12,14 @@ INSERT INTO `application_permissions` (`id`, `application_id`, `user_id`, `is_ac
 (7, 4, 1, 1, 1, NULL, NULL, '2020-01-23 08:24:35', '2020-01-23 08:24:35', NULL),
 (9, 5, 1, 0, 1, 1, NULL, '2020-01-23 08:24:36', '2020-08-01 13:05:54', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `brands`
---
-
-CREATE TABLE `brands` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `company_id` bigint(20) NOT NULL COMMENT 'connect to companies table',
-  `brand_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `brands`
---
-
 INSERT INTO `brands` (`id`, `company_id`, `brand_name`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 'NFI', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (2, 2, 'HNI', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (3, 1, 'WRP', 1, 1, NULL, NULL, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `companies`
---
-
-CREATE TABLE `companies` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `company_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `company_short_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `companies`
---
-
 INSERT INTO `companies` (`id`, `company_name`, `company_short_name`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'PT. Nutrifood Indonesia', 'NFI', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (2, 'PT. Heavenly Nutrition Indonesia', 'HNI', 1, 1, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `departements`
---
-
-CREATE TABLE `departements` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `departement` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `departements`
---
 
 INSERT INTO `departements` (`id`, `departement`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'FQC', 1, 1, NULL, NULL, '2020-01-23 08:24:31', '2020-01-23 08:24:31', NULL),
@@ -168,66 +29,9 @@ INSERT INTO `departements` (`id`, `departement`, `is_active`, `created_by`, `upd
 (5, 'FGS', 1, 1, NULL, NULL, '2020-01-23 08:24:31', '2020-01-23 08:24:31', NULL),
 (6, 'FPD', 1, 1, NULL, NULL, '2020-01-23 08:24:31', '2020-01-23 08:24:31', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `distribution_lists`
---
-
-CREATE TABLE `distribution_lists` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `employee_id` bigint(20) NOT NULL COMMENT 'connected to employee table',
-  `ppq_mail_to` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `ppq_mail_cc` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `rkj_nfi_mail_to` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `rkj_nfi_mail_cc` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `rkj_wrp_mail_to` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `rkj_wrp_mail_cc` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `rkj_hb_mail_to` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `rkj_hb_mail_cc` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `sortasi_mail_to` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `sortasi_mail_cc` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `psr_mail_to` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `psr_mail_cc` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `distribution_lists`
---
-
 INSERT INTO `distribution_lists` (`id`, `employee_id`, `ppq_mail_to`, `ppq_mail_cc`, `rkj_nfi_mail_to`, `rkj_nfi_mail_cc`, `rkj_wrp_mail_to`, `rkj_wrp_mail_cc`, `rkj_hb_mail_to`, `rkj_hb_mail_cc`, `sortasi_mail_to`, `sortasi_mail_cc`, `psr_mail_to`, `psr_mail_cc`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL),
 (2, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `employees`
---
-
-CREATE TABLE `employees` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `fullname` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` char(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `departement_id` int(10) UNSIGNED NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `employees`
---
 
 INSERT INTO `employees` (`id`, `fullname`, `email`, `departement_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Nesta Maulana', 'nestamaulana165@gmail.com', 1, 1, 1, NULL, NULL, '2020-01-23 08:24:33', '2020-01-23 08:24:33', NULL),
@@ -290,136 +94,21 @@ INSERT INTO `employees` (`id`, `fullname`, `email`, `departement_id`, `is_active
 (65, 'Bayu Priasmoro', 'qc.rtd@nutrifood.co.id', 1, 0, 1, NULL, NULL, '2020-01-04 23:48:24', '2020-01-04 23:48:24', NULL),
 (70, 'Jajang Nurjaman', 'nesta.maulana@nutrifood.co.id', 1, 1, 0, NULL, NULL, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `failed_jobs`
---
-
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `filling_machines`
---
-
-CREATE TABLE `filling_machines` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `filling_machine_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `filling_machine_code` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `filling_machines`
---
-
 INSERT INTO `filling_machines` (`id`, `filling_machine_name`, `filling_machine_code`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'TBA', 'TBA C', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (2, 'A3', 'A3CF B', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (3, 'TPA', 'TPA A', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (5, 'Filling Machine D', 'Filling Machine D', 1, 1, 1, NULL, '2020-04-05 05:46:48', '2020-04-06 01:21:05', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `filling_machine_group_details`
---
-
-CREATE TABLE `filling_machine_group_details` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `filling_machine_group_head_id` bigint(20) NOT NULL COMMENT 'connect to filling machine group head table',
-  `filling_machine_id` bigint(20) NOT NULL COMMENT 'connect to filling machine table',
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `filling_machine_group_details`
---
-
 INSERT INTO `filling_machine_group_details` (`id`, `filling_machine_group_head_id`, `filling_machine_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
 (2, 1, 2, 1, 1, NULL, NULL, NULL, NULL, NULL),
 (3, 2, 3, 1, 1, NULL, NULL, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `filling_machine_group_heads`
---
-
-CREATE TABLE `filling_machine_group_heads` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `filling_machine_group_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `filling_machine_group_heads`
---
-
 INSERT INTO `filling_machine_group_heads` (`id`, `filling_machine_group_name`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Brix', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (2, 'Prisma', 1, 1, NULL, NULL, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `filling_sampel_codes`
---
-
-CREATE TABLE `filling_sampel_codes` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `filling_sampel_code` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `filling_sampel_event` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_type_id` bigint(20) NOT NULL COMMENT 'connected to product type table',
-  `filling_machine_id` bigint(20) NOT NULL COMMENT 'connected to filling machine table',
-  `pi` int(11) NOT NULL,
-  `mikro30` int(11) NOT NULL,
-  `mikro55` int(11) NOT NULL,
-  `dissolve` int(11) NOT NULL,
-  `standar` int(11) NOT NULL,
-  `retain` int(11) NOT NULL,
-  `wo` int(11) NOT NULL,
-  `ts_ph` int(11) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `filling_sampel_codes`
---
 
 INSERT INTO `filling_sampel_codes` (`id`, `filling_sampel_code`, `filling_sampel_event`, `product_type_id`, `filling_machine_id`, `pi`, `mikro30`, `mikro55`, `dissolve`, `standar`, `retain`, `wo`, `ts_ph`, `jumlah`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'A', 'Start Filling', 1, 1, 4, 2, 2, 4, 1, 1, 0, 2, 16, 1, NULL, NULL, NULL, NULL, NULL),
@@ -549,36 +238,6 @@ INSERT INTO `filling_sampel_codes` (`id`, `filling_sampel_code`, `filling_sampel
 (125, 'R(P)', 'Random Prod', 2, 3, 3, 2, 0, 0, 0, 0, 0, 0, 5, 1, NULL, NULL, NULL, NULL, NULL),
 (126, 'R(S)', 'Random Resampling', 2, 3, 10, 0, 0, 0, 0, 0, 0, 0, 10, 1, NULL, NULL, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeters`
---
-
-CREATE TABLE `flowmeters` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `flowmeter_workcenter_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter workcenter',
-  `flowmeter_unit_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter unit',
-  `flowmeter_location_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter location',
-  `flowmeter_name` char(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini untuk nama flowmetersnya yang akan muncul di table daily monitoring',
-  `flowmeter_code` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini untuk nama flowmetersnya yang akan muncul di table daily monitoring',
-  `spek_min` double DEFAULT NULL,
-  `spek_max` double DEFAULT NULL,
-  `recording_schedule` enum('0','1','2','3') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0 => perhari, 1 => pershift , 2 => perjam , 3 => tidak ada pengamatan',
-  `usage_formula_id` text COLLATE utf8mb4_unicode_ci,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `flowmeters`
---
-
 INSERT INTO `flowmeters` (`id`, `flowmeter_workcenter_id`, `flowmeter_unit_id`, `flowmeter_location_id`, `flowmeter_name`, `flowmeter_code`, `spek_min`, `spek_max`, `recording_schedule`, `usage_formula_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 1, 'Deepwell 1  ESDM', 'E1', NULL, NULL, '0', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
 (2, 1, 1, 1, 'Deepwell 2 ESDM', 'E2', NULL, NULL, '0', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
@@ -615,107 +274,15 @@ INSERT INTO `flowmeters` (`id`, `flowmeter_workcenter_id`, `flowmeter_unit_id`, 
 (33, 4, 1, 4, 'WWTP Output 1', 'WWO1', NULL, NULL, '0', NULL, 1, 1, 1, NULL, NULL, NULL, NULL),
 (34, 4, 1, 4, 'WWTP Output 2', 'WWO2', NULL, NULL, '0', NULL, 1, 1, 1, NULL, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeter_categories`
---
-
-CREATE TABLE `flowmeter_categories` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `flowmeter_category` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini kaya sejenis flow meternya air , listrik , gas',
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `flowmeter_categories`
---
-
 INSERT INTO `flowmeter_categories` (`id`, `flowmeter_category`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Air', 1, 1, 1, NULL, '2020-05-17 12:54:43', '2020-05-17 13:54:56', NULL),
 (2, 'Gas', 1, 1, NULL, NULL, '2020-05-17 13:58:17', '2020-05-17 13:58:17', NULL),
 (3, 'Listrik', 1, 1, NULL, NULL, '2020-05-17 13:58:23', '2020-05-17 13:58:23', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeter_consumption_realisation_details`
---
-
-CREATE TABLE `flowmeter_consumption_realisation_details` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeter_consumption_realisation_heads`
---
-
-CREATE TABLE `flowmeter_consumption_realisation_heads` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeter_formulas`
---
-
-CREATE TABLE `flowmeter_formulas` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `formula_code` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ini untuk code formulanya',
-  `flowmeter_formula` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'disini disimpan rumus untuk semuanya dalam bentuk json, apabila di isi kosong maka akan merefer ke perhitungan hari sebelumnya.',
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `flowmeter_formulas`
---
-
 INSERT INTO `flowmeter_formulas` (`id`, `formula_code`, `flowmeter_formula`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'DEFAULT', 'Penggunaan Hari Ini = Nilai Pengamatan Hari Ini - Pengamatan Hari Kemarin', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (2, 'NDW1', '[\"FU_DDW1\",\"-\",\"FU_DSC1\",\"-\",\"FU_DDR1\",\"-\",\"FU_DDH1\"]', 1, 1, NULL, NULL, '2020-07-18 22:48:00', '2020-07-18 22:48:00', NULL),
 (3, 'NSW1', '[\"(\",\"FU_DSW1\",\"+\",\"FU_DSW2\",\")\",\"\",\"-\",\"FU_DSR1\",\"-\",\"FU_DSN1\",\"-\",\"FU_DSD1\",\"-\",\"FU_DSH1\",\"-\",\"FU_DSH2\",\"-\",\"FU_DSL1\",\"-\",\"FU_DSC1\",\"-\",\"FU_DSK1\"]', 1, 1, NULL, NULL, '2020-07-18 23:07:19', '2020-07-18 23:07:19', NULL);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeter_locations`
---
-
-CREATE TABLE `flowmeter_locations` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `flowmeter_category_id` bigint(20) NOT NULL,
-  `flowmeter_location` char(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `flowmeter_locations`
---
 
 INSERT INTO `flowmeter_locations` (`id`, `flowmeter_category_id`, `flowmeter_location`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 'Induk', 1, 1, NULL, NULL, '2020-07-17 06:31:04', '2020-07-17 06:31:04', NULL),
@@ -723,84 +290,15 @@ INSERT INTO `flowmeter_locations` (`id`, `flowmeter_category_id`, `flowmeter_loc
 (3, 1, 'Water Distribution', 1, 1, NULL, NULL, '2020-07-17 06:32:55', '2020-07-17 06:32:55', NULL),
 (4, 1, 'Waste Water', 1, 1, NULL, NULL, '2020-07-17 06:33:12', '2020-07-17 06:33:12', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeter_location_permissions`
---
-
-CREATE TABLE `flowmeter_location_permissions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `flowmeter_location_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter location table',
-  `user_id` bigint(20) NOT NULL COMMENT 'connected to user id table',
-  `is_allow` tinyint(1) NOT NULL COMMENT '0 = denied ; 1 = allowed',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `flowmeter_location_permissions`
---
-
 INSERT INTO `flowmeter_location_permissions` (`id`, `flowmeter_location_id`, `user_id`, `is_allow`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 1, 1, 1, NULL, '2020-07-21 02:47:32', '2020-07-21 03:19:22', NULL),
 (2, 3, 1, 0, 1, 1, NULL, '2020-07-21 02:47:32', '2020-07-23 07:28:41', NULL),
 (3, 2, 1, 1, 1, NULL, NULL, '2020-07-23 07:27:24', '2020-07-23 07:27:24', NULL),
 (4, 4, 1, 1, 1, NULL, NULL, '2020-07-23 07:27:24', '2020-07-23 07:27:24', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeter_units`
---
-
-CREATE TABLE `flowmeter_units` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `flowmeter_unit` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini untuk satuan ',
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `flowmeter_units`
---
-
 INSERT INTO `flowmeter_units` (`id`, `flowmeter_unit`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'm3', 1, 1, NULL, NULL, '2020-07-17 06:33:36', '2020-07-17 06:33:36', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeter_usages`
---
-
-CREATE TABLE `flowmeter_usages` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `flowmeter_workcenter_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter workcenter',
-  `flowmeter_formula_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter formula untuk menentukan rumus yang dipakai',
-  `flowmeter_name` char(100) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini untuk nama pada penggunaan bisa saja berbeda dengan yang ada di table usage monitoring.',
-  `flowmeter_code` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Panduan untuk rumus flowmeter',
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `flowmeter_usages`
---
 
 INSERT INTO `flowmeter_usages` (`id`, `flowmeter_workcenter_id`, `flowmeter_formula_id`, `flowmeter_name`, `flowmeter_code`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 'Deepwell 1 ESDM', 'FU_E1', 1, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL),
@@ -840,51 +338,12 @@ INSERT INTO `flowmeter_usages` (`id`, `flowmeter_workcenter_id`, `flowmeter_form
 (37, 3, 2, 'Product Water Produksi NFI', 'FU-NDW1', 1, 1, NULL, NULL, '2020-07-18 22:57:46', '2020-07-18 22:57:46', NULL),
 (38, 3, 3, 'Soft Water Produksi NFI', 'FU-NSW1', 1, 1, NULL, NULL, '2020-07-18 23:08:34', '2020-07-18 23:08:34', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `flowmeter_workcenters`
---
-
-CREATE TABLE `flowmeter_workcenters` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `flowmeter_category_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter category table',
-  `flowmeter_workcenter` char(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `flowmeter_workcenters`
---
-
 INSERT INTO `flowmeter_workcenters` (`id`, `flowmeter_category_id`, `flowmeter_workcenter`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 'Flometer ESDM', 1, 1, NULL, NULL, '2020-07-17 06:26:53', '2020-07-17 06:26:53', NULL),
 (2, 1, 'Process WTP', 1, 1, NULL, NULL, '2020-07-17 06:30:06', '2020-07-17 06:30:06', NULL),
 (3, 1, 'Water Distribution', 1, 1, NULL, NULL, '2020-07-17 06:30:21', '2020-07-17 06:30:21', NULL),
 (4, 1, 'Waste Water', 1, 1, NULL, NULL, '2020-07-17 06:30:34', '2020-07-17 06:30:34', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `icons`
---
-
-CREATE TABLE `icons` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `icons` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `icons`
---
 
 INSERT INTO `icons` (`id`, `icons`, `created_at`, `updated_at`) VALUES
 (1, 'fa-500px', NULL, NULL),
@@ -1674,57 +1133,12 @@ INSERT INTO `icons` (`id`, `icons`, `created_at`, `updated_at`) VALUES
 (785, 'fa-youtube-play', NULL, NULL),
 (786, 'fa-youtube-square', NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `jenis_ppqs`
---
-
-CREATE TABLE `jenis_ppqs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `jenis_ppq` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini digunakan di form ppq',
-  `is_active` tinyint(1) NOT NULL,
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `jenis_ppqs`
---
-
 INSERT INTO `jenis_ppqs` (`id`, `jenis_ppq`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Package Integrity', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (2, 'Kimia', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (3, 'Mikro', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (4, 'Sortasi', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (5, 'Lain-Lainnya', 1, 1, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `kategori_ppqs`
---
-
-CREATE TABLE `kategori_ppqs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `kategori_ppq` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini digunakan di form ppq',
-  `jenis_ppq_id` bigint(20) NOT NULL COMMENT 'connected to jenis_ppq table',
-  `is_active` tinyint(1) NOT NULL,
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `kategori_ppqs`
---
 
 INSERT INTO `kategori_ppqs` (`id`, `kategori_ppq`, `jenis_ppq_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Man', 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
@@ -1751,33 +1165,6 @@ INSERT INTO `kategori_ppqs` (`id`, `kategori_ppq`, `jenis_ppq_id`, `is_active`, 
 (22, 'Sortasi', 3, 1, 1, NULL, NULL, NULL, NULL, NULL),
 (23, 'Miss Handling', 3, 1, 1, NULL, NULL, NULL, NULL, NULL),
 (24, 'Lain-Lainnya', 3, 1, 1, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `menus`
---
-
-CREATE TABLE `menus` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `parent_id` bigint(20) NOT NULL,
-  `application_id` bigint(20) NOT NULL,
-  `menu_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `menu_icon` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `menu_route` char(255) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini digunakan untuk pengecekan akses menu di middleware',
-  `menu_position` int(11) NOT NULL COMMENT 'digunakan untuk urutan menu disetiap akses aplikasi',
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `menus`
---
 
 INSERT INTO `menus` (`id`, `parent_id`, `application_id`, `menu_name`, `menu_icon`, `menu_route`, `menu_position`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 0, 1, 'Home', 'fa-home', 'master_app.show_home', 3, 1, 1, 1, NULL, '2020-01-21 21:24:32', '2020-03-25 18:16:29', NULL),
@@ -1836,31 +1223,6 @@ INSERT INTO `menus` (`id`, `parent_id`, `application_id`, `menu_name`, `menu_ico
 (95, 89, 1, 'Kelola Lokasi Flowmeter', 'fa-map-marker', 'master_app.master_data.manage_flowmeter_locations', 5, 1, 1, NULL, NULL, '2020-08-01 14:35:44', '2020-08-01 14:35:44', NULL),
 (96, 89, 1, 'Kelola Akses Lokasi Flowmeter', 'fa-universal-access', 'master_app.master_data.manage_flowmeter_location_permissions', 6, 1, 1, NULL, NULL, '2020-08-01 14:38:02', '2020-08-01 14:38:02', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `menu_permissions`
---
-
-CREATE TABLE `menu_permissions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `menu_id` bigint(20) NOT NULL COMMENT 'connected to menu table',
-  `view` tinyint(1) NOT NULL COMMENT '0 = denied, 1 = allowed',
-  `create` tinyint(1) NOT NULL COMMENT '0 = denied, 1 = allowed',
-  `edit` tinyint(1) NOT NULL COMMENT '0 = denied, 1 = allowed',
-  `delete` tinyint(1) NOT NULL COMMENT '0 = denied, 1 = allowed',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `menu_permissions`
---
 
 INSERT INTO `menu_permissions` (`id`, `user_id`, `menu_id`, `view`, `create`, `edit`, `delete`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-21 14:24:36', '2020-01-21 14:24:36', NULL),
@@ -1916,100 +1278,7 @@ INSERT INTO `menu_permissions` (`id`, `user_id`, `menu_id`, `view`, `create`, `e
 (4068, 1, 95, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:30', '2020-08-01 14:39:30', NULL),
 (4069, 1, 96, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:30', '2020-08-01 14:39:30', NULL);
 
--- --------------------------------------------------------
 
---
--- Struktur dari tabel `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2019_08_19_000000_create_failed_jobs_table', 1),
-(2, '2020_01_21_072303_create_users_table', 1),
-(3, '2020_01_21_084922_create_employees_table', 1),
-(4, '2020_01_21_085716_create_departements_table', 1),
-(5, '2020_01_25_040937_create_menus_table', 1),
-(6, '2020_01_25_041743_create_applications_table', 1),
-(7, '2020_01_25_042346_create_application_permissions_table', 1),
-(8, '2020_01_25_042624_create_menu_permissions_table', 1),
-(9, '2020_01_26_152535_create_icons_table', 1),
-(10, '2020_01_30_073951_create_products_table', 1),
-(11, '2020_01_30_075805_create_product_types_table', 1),
-(12, '2020_01_30_075835_create_filling_machines_table', 1),
-(13, '2020_01_30_075903_create_brands_table', 1),
-(14, '2020_01_30_075915_create_companies_table', 1),
-(15, '2020_01_30_075926_create_subbrands_table', 1),
-(16, '2020_01_30_075955_create_filling_sampel_codes_table', 1),
-(17, '2020_01_30_080025_create_filling_machine_group_heads_table', 1),
-(18, '2020_01_30_080039_create_filling_machine_group_details_table', 1),
-(19, '2020_01_30_133742_create_wo_numbers_table', 1),
-(20, '2020_01_30_133905_create_plans_table', 1),
-(21, '2020_02_06_111904_create_rpd_filling_heads_table', 1),
-(22, '2020_02_06_112320_create_rpd_filling_detail_pis_table', 1),
-(23, '2020_02_06_112458_create_rpd_filling_detail_at_events_table', 1),
-(24, '2020_02_10_202551_create_cpp_heads_table', 1),
-(25, '2020_02_10_203004_create_cpp_details_table', 1),
-(26, '2020_02_10_203254_create_palets_table', 1),
-(27, '2020_02_10_203326_create_palet_ppqs_table', 1),
-(28, '2020_02_25_212042_create_ppqs_table', 1),
-(29, '2020_03_01_160554_create_distribution_lists_table', 1),
-(30, '2020_03_03_094606_create_analisa_kimias_table', 1),
-(31, '2020_03_14_220041_create_kategori_ppqs_table', 1),
-(32, '2020_03_14_222837_create_jenis_ppqs_table', 1),
-(33, '2020_03_14_233819_create_follow_up_ppqs_table', 1),
-(34, '2020_03_15_230705_create_corrective_actions_table', 1),
-(35, '2020_03_15_231022_create_preventive_actions_table', 1),
-(36, '2020_03_16_083712_create_rkjs_table', 1),
-(37, '2020_03_16_085530_create_follow_up_rkjs_table', 1),
-(38, '2020_04_08_093948_create_flowmeter_categories_table', 1),
-(39, '2020_04_08_101010_create_flowmeter_workcenters_table', 1),
-(40, '2020_04_08_101438_create_flowmeter_units_table', 1),
-(41, '2020_04_08_105534_create_flowmeters_table', 1),
-(42, '2020_04_27_103043_create_analisa_mikros_table', 1),
-(43, '2020_04_27_113757_create_analisa_mikro_details_table', 1),
-(44, '2020_04_29_093641_create_analisa_mikro_resampling_table', 1),
-(45, '2020_05_19_084531_create_flowmeter_locations_table', 1),
-(46, '2020_06_29_102023_create_energy_monitorings_table', 1),
-(47, '2020_06_29_102145_create_energy_usages_table', 1),
-(48, '2020_06_29_185550_create_psrs_table', 1),
-(49, '2020_07_18_120737_create_flowmeter_usages_table', 1),
-(50, '2020_07_18_124151_create_flowmeter_formulas_table', 1),
-(51, '2020_07_18_185846_create_flowmeter_consumption_realisation_heads_table', 1),
-(52, '2020_07_18_185907_create_flowmeter_consumption_realisation_details_table', 1),
-(53, '2020_07_20_110503_create_flowmeter_location_permissions_table', 1);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `plans`
---
-
-CREATE TABLE `plans` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `company_id` bigint(20) NOT NULL COMMENT 'connected to companies table',
-  `plan_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `plans`
---
 
 INSERT INTO `plans` (`id`, `company_id`, `plan_name`, `address`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 'PT. Nutrifood Plant Sentul', 'sentul', 1, 1, NULL, NULL, NULL, NULL, NULL),
@@ -2018,41 +1287,6 @@ INSERT INTO `plans` (`id`, `company_id`, `plan_name`, `address`, `is_active`, `c
 (4, 1, 'PT. Nutrifood Indonesia Head Office', 'jakarta', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (5, 2, 'PT. Heavenly Blush Sentul', 'sentul', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (6, 2, 'PT. Heavenly Nutrition Head Office', 'jakarta', 1, 1, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `products`
---
-
-CREATE TABLE `products` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `subbrand_id` bigint(20) NOT NULL COMMENT 'connected to table subbrand',
-  `product_type_id` bigint(20) NOT NULL COMMENT 'connected to product type table',
-  `filling_machine_group_head_id` bigint(20) NOT NULL COMMENT 'connected to filling machine head',
-  `product_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `oracle_code` char(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `spek_ts_min` double(8,2) NOT NULL,
-  `spek_ts_max` double(8,2) NOT NULL,
-  `spek_ph_min` double(8,2) NOT NULL,
-  `spek_ph_max` double(8,2) NOT NULL,
-  `sla` int(11) NOT NULL COMMENT 'dalam hari',
-  `waktu_analisa_mikro` int(11) NOT NULL COMMENT 'dalam hari',
-  `inkubasi` int(11) DEFAULT NULL COMMENT 'dalam hari',
-  `trial_code` char(50) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini digunakan apabila ada nomor wo trial',
-  `expired_range` int(11) NOT NULL COMMENT 'dalam satuan bulan',
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `products`
---
 
 INSERT INTO `products` (`id`, `subbrand_id`, `product_type_id`, `filling_machine_group_head_id`, `product_name`, `oracle_code`, `spek_ts_min`, `spek_ts_max`, `spek_ph_min`, `spek_ph_max`, `sla`, `waktu_analisa_mikro`, `inkubasi`, `trial_code`, `expired_range`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 2, 1, 1, 'HB YOGURT DRINK BLACKCURRANT 24PX200ML', '7300651', 14.50, 15.30, 4.35, 4.40, 4, 4, 0, 'HB-YD-BC', 12, 1, 1, NULL, NULL, NULL, NULL, NULL),
@@ -2094,54 +1328,10 @@ INSERT INTO `products` (`id`, `subbrand_id`, `product_type_id`, `filling_machine
 (37, 1, 2, 1, 'HILO RTD THAI TEA 24PX200ML', '2101947250', 11.40, 12.00, 6.80, 7.40, 3, 7, 7, 'HL-TH-TE', 12, 1, 1, NULL, NULL, '2020-04-04 03:38:20', '2020-04-04 03:38:20', NULL),
 (38, 1, 1, 1, 'HILO RTD MILKY BROWN SUGAR 24P X 200 ML', '2101941250', 12.10, 12.60, 6.98, 7.10, 3, 3, 0, 'HL-MB-SG', 12, 1, 1, NULL, NULL, '2020-04-04 03:41:16', '2020-04-04 03:41:16', NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `product_types`
---
-
-CREATE TABLE `product_types` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `product_type` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `product_types`
---
-
 INSERT INTO `product_types` (`id`, `product_type`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'Susu', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (2, 'Non Susu', 1, 1, NULL, NULL, NULL, NULL, NULL);
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `subbrands`
---
-
-CREATE TABLE `subbrands` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `brand_id` bigint(20) NOT NULL COMMENT 'connect to brands table ',
-  `subbrand_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `subbrands`
---
 
 INSERT INTO `subbrands` (`id`, `brand_id`, `subbrand_name`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 'HiLo', 1, 1, NULL, NULL, NULL, NULL, NULL),
@@ -2150,33 +1340,6 @@ INSERT INTO `subbrands` (`id`, `brand_id`, `subbrand_name`, `is_active`, `create
 (4, 1, 'L-Men', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (5, 1, 'Nutrisari', 1, 1, NULL, NULL, NULL, NULL, NULL),
 (6, 2, 'Yobase', 1, 1, NULL, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `users`
---
-
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `employee_id` bigint(20) NOT NULL COMMENT 'connected to employee table',
-  `username` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `verified` tinyint(1) NOT NULL COMMENT '0 = unverified , 1 = verified',
-  `verified_by_admin` tinyint(1) NOT NULL COMMENT '0 = unverified , 1 = verified',
-  `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
-  `last_update_password` date NOT NULL COMMENT 'for update password after 3 months',
-  `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
-  `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `users`
---
 
 INSERT INTO `users` (`id`, `employee_id`, `username`, `password`, `verified`, `verified_by_admin`, `is_active`, `last_update_password`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 'nesta_nm', '$2y$10$QV.64VPXbUMbwWzjnjsOLOykXm7VY00q02Hd2bdEzp7GwUVfwbpCC', 1, 1, 1, '2020-06-28', 1, NULL, NULL, '2020-01-23 08:24:34', '2020-03-25 01:51:13', NULL),
@@ -2236,412 +1399,3 @@ INSERT INTO `users` (`id`, `employee_id`, `username`, `password`, `verified`, `v
 (87, 64, 'Naufal', '$2y$10$57FJ.kezU5Mqqo.JVeVMLOqcyT1KatMf7PTuEkhDAdRZ2.PzmO5hW', 1, 0, 0, '2019-12-06', 1, NULL, NULL, '2020-01-02 23:25:21', '2020-01-02 23:25:45', NULL),
 (88, 65, 'bayu.priasmoro', '$2y$10$Xogpq09ywY9wDLX15fokZe8ViE6NSGNLRQKyaIYxBYl6UdyN8ij6a', 1, 1, 1, '2020-02-06', 1, NULL, NULL, '2020-01-04 23:48:24', '2020-02-04 08:10:23', NULL),
 (90, 70, 'jajang.nurjaman', '$2y$10$a3yaPkMqxInwGkFjVWyrOeSN4Oq06/dnhzmuXMuamHv10qaOO39F2', 1, 1, 0, '2020-03-07', 0, NULL, NULL, NULL, '2020-04-04 02:58:01', NULL);
-
---
--- Indexes for dumped tables
---
-
---
--- Indeks untuk tabel `applications`
---
-ALTER TABLE `applications`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `application_permissions`
---
-ALTER TABLE `application_permissions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `brands`
---
-ALTER TABLE `brands`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `companies`
---
-ALTER TABLE `companies`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `departements`
---
-ALTER TABLE `departements`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `distribution_lists`
---
-ALTER TABLE `distribution_lists`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `employees`
---
-ALTER TABLE `employees`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `filling_machines`
---
-ALTER TABLE `filling_machines`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `filling_machine_group_details`
---
-ALTER TABLE `filling_machine_group_details`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `filling_machine_group_heads`
---
-ALTER TABLE `filling_machine_group_heads`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `filling_sampel_codes`
---
-ALTER TABLE `filling_sampel_codes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeters`
---
-ALTER TABLE `flowmeters`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeter_categories`
---
-ALTER TABLE `flowmeter_categories`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeter_consumption_realisation_details`
---
-ALTER TABLE `flowmeter_consumption_realisation_details`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeter_consumption_realisation_heads`
---
-ALTER TABLE `flowmeter_consumption_realisation_heads`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeter_formulas`
---
-ALTER TABLE `flowmeter_formulas`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeter_locations`
---
-ALTER TABLE `flowmeter_locations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeter_location_permissions`
---
-ALTER TABLE `flowmeter_location_permissions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeter_units`
---
-ALTER TABLE `flowmeter_units`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeter_usages`
---
-ALTER TABLE `flowmeter_usages`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `flowmeter_workcenters`
---
-ALTER TABLE `flowmeter_workcenters`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `icons`
---
-ALTER TABLE `icons`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `jenis_ppqs`
---
-ALTER TABLE `jenis_ppqs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `kategori_ppqs`
---
-ALTER TABLE `kategori_ppqs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `menus`
---
-ALTER TABLE `menus`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `menu_permissions`
---
-ALTER TABLE `menu_permissions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `plans`
---
-ALTER TABLE `plans`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `product_types`
---
-ALTER TABLE `product_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `subbrands`
---
-ALTER TABLE `subbrands`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `applications`
---
-ALTER TABLE `applications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT untuk tabel `application_permissions`
---
-ALTER TABLE `application_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
-
---
--- AUTO_INCREMENT untuk tabel `brands`
---
-ALTER TABLE `brands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `companies`
---
-ALTER TABLE `companies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT untuk tabel `departements`
---
-ALTER TABLE `departements`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT untuk tabel `distribution_lists`
---
-ALTER TABLE `distribution_lists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT untuk tabel `employees`
---
-ALTER TABLE `employees`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
-
---
--- AUTO_INCREMENT untuk tabel `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `filling_machines`
---
-ALTER TABLE `filling_machines`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT untuk tabel `filling_machine_group_details`
---
-ALTER TABLE `filling_machine_group_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `filling_machine_group_heads`
---
-ALTER TABLE `filling_machine_group_heads`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT untuk tabel `filling_sampel_codes`
---
-ALTER TABLE `filling_sampel_codes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeters`
---
-ALTER TABLE `flowmeters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeter_categories`
---
-ALTER TABLE `flowmeter_categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeter_consumption_realisation_details`
---
-ALTER TABLE `flowmeter_consumption_realisation_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeter_consumption_realisation_heads`
---
-ALTER TABLE `flowmeter_consumption_realisation_heads`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeter_formulas`
---
-ALTER TABLE `flowmeter_formulas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeter_locations`
---
-ALTER TABLE `flowmeter_locations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeter_location_permissions`
---
-ALTER TABLE `flowmeter_location_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeter_units`
---
-ALTER TABLE `flowmeter_units`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeter_usages`
---
-ALTER TABLE `flowmeter_usages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
--- AUTO_INCREMENT untuk tabel `flowmeter_workcenters`
---
-ALTER TABLE `flowmeter_workcenters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT untuk tabel `icons`
---
-ALTER TABLE `icons`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=787;
-
---
--- AUTO_INCREMENT untuk tabel `jenis_ppqs`
---
-ALTER TABLE `jenis_ppqs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT untuk tabel `kategori_ppqs`
---
-ALTER TABLE `kategori_ppqs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT untuk tabel `menus`
---
-ALTER TABLE `menus`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
-
---
--- AUTO_INCREMENT untuk tabel `menu_permissions`
---
-ALTER TABLE `menu_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4070;
-
---
--- AUTO_INCREMENT untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
-
---
--- AUTO_INCREMENT untuk tabel `plans`
---
-ALTER TABLE `plans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT untuk tabel `products`
---
-ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
-
---
--- AUTO_INCREMENT untuk tabel `product_types`
---
-ALTER TABLE `product_types`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT untuk tabel `subbrands`
---
-ALTER TABLE `subbrands`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT untuk tabel `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

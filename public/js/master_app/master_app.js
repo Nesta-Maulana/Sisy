@@ -725,4 +725,22 @@
             }
         });   
     }
+
+    function changePassword(fullname,email) 
+    {
+        Swal.fire
+        ({
+            title:  'Konfirmasi Reset Password',
+            text :  'Apakah anda yakin akan mereset password '+fullname+'?',
+            type : 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Kirim Notifikasi Ke Penyelia',
+            cancelButtonText: 'Cancel',
+        }).then((result) => 
+        {  
+            git p
+        })
+    }
 /*  */

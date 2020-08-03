@@ -75,7 +75,8 @@ Route::group(['prefix' => 'master-apps','middleware'=>['auth','credential.check'
 	
 	Route::group(['prefix' => 'kelola-pengguna'], function() {
 	    Route::get('','MasterAppController@manageUser')->name('master_app.manage_user');
-	    // Route::get('','Master\MasterApp\UserController@changeApplicationPermission');
+		Route::get('edit-pengguna/{user_id}','MasterAppController@showUserForm');
+		Route::post('edit-pengguna/update','Master\MasterApp\UserController@updateUserData');
 	});
 
 

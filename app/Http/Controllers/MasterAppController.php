@@ -12,6 +12,7 @@ use App\Models\Master\Application;
 use App\Models\Master\ApplicationPermission;
 
 use App\Models\Master\User;
+use App\Models\Master\Departement;
 use App\Models\Master\Icon;
 
 use App\Models\Master\Product;
@@ -144,6 +145,22 @@ class MasterAppController extends ResourceController
 		{
 			$users		= User::all();
 			return view('master_app.manage_user.dashboard',['menus'=>$this->menus,'users'=>$users]);
+		} 
+		else 
+		{
+			return redirect()->back()->with('error',$cekAkses['message']);
+		}
+	}
+
+	
+	public function showUserForm($user_id)
+	{
+		$cekAkses 	= $this->checkAksesUbah(\Request::getRequestUri(),'master_app.manage_user');
+		if ($cekAkses['success']) 
+		{
+			$user 			= User::find($this->decrypt($user_id));
+			$departements 	= Departement::all();
+			return view('master_app.manage_user.form',['menus'=>$this->menus,'user'=>$user,'departements'=>$departements]);
 		} 
 		else 
 		{

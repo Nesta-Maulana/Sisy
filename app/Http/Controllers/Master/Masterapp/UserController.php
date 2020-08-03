@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\ResourceController;
 use App\Models\Master\User;
 use App\Models\Master\Employee;
+use App\Models\Master\DistributionList;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -101,9 +102,8 @@ class UserController extends ResourceController
                     $resetPassword          = Hash::make('sentulappuser');
                     $userData->password     = $resetPassword;
                     $userData->save();
-                    Mail::to($userData->employee->email)->bcc('nesta.maulana@nutrifood.co.id')->send(new ChangePassword($userData,gethostbyaddr($_SERVER['REMOTE_ADDR']),$resetPassword));
+                    Mail::to($userData->employee->email)->bcc('nesta.maulana@nutrifood.co.id')->send(new ChangePassword($userData,gethostbyaddr($_SERVER['REMOTE_ADDR']),'sentulappuser'));
                     return redirect(route('face.page'))->with('success','Password berhasil diubah, informasi perubahan password telah berhasil dikirim melalui email anda yang terdaftar : '.$userData->employee->email);
-
                 }
             }
         }
@@ -119,8 +119,65 @@ class UserController extends ResourceController
 
         Mail::to($user->employee->email)->send(new VerifiedUser($user));
         return  redirect()->route('face.page')->with('success','Verifikasi akun berhasil, kami telah mengirimkan data akses aplikasi ke email anda. ');
-        
 
+    }
+    public function updateUserData(Request $request)
+    {
+        $cekAkses   = $this->checkAksesUbah(\Request::getRequestUri(),'master_app.manage_user');
+
+        if ($cekAkses['success'])
+        {
+            $distributionlist   = array();
+            if (isset($request->mail)) 
+            {
+                foreach ($request->mail as $key => $value) 
+                {
+                    if ($value == 'off') 
+                    {
+                        $distributionlist[$key] = '0';
+                    }
+                    else if($value == 'on')
+                    {
+                        $distributionlist[$key] = '1';
+                    }
+                }
+            } 
+            $user_id                                = $this->decrypt($request->user_id);
+            $distribution_list_id                   = $request->distribution_list_id;
+            $fullname                               = $request->fullname;
+            $email                                  = $request->email;
+            $departement_id                         = $this->decrypt($request->departement_id);
+            $username                               = $request->username;
+            $user                                   = User::find($user_id);
+            $user->employee->fullname               = $fullname;
+            $user->employee->email                  = $email;
+            $user->employee->departement_id         = $departement_id;
+            $user->employee->save();
+            $user->username                         = $username;
+            $user->save();
+            if (count($distributionlist) > 0) 
+            {
+                if (is_null($distribution_list_id)) 
+                {
+                    /* disini akan di create baru */
+                    $distributionlist['employee_id'] = $user->employee->id;
+                    $distributionListCreate   = DistributionList::create($distributionlist);
+                }
+                else 
+                {
+                    $user->employee->distributionList->update($distributionlist);
+                    // dd($user->employee->distributionList);
+                }
+            } 
+            
+            return redirect()->route('master_app.manage_user')->with('success','Data '.$user->employee->fullname.' berhasil di update');
+
+        } 
+        else 
+        {
+            return redirect()->route('master_app.manage_user')->with('error',$cekAkses['message']);
+        }
+        
     }
     // public function editUserData($user_id)
     // {

@@ -18,10 +18,10 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                            <table class="table table-bordered" id="manage-user-table" style="min-width:100%">
+                            <table class="table table-bordered nowrap" id="manage-user-table" style="min-width:100%">
                                 <thead>
-                                    <tr>
-                                        <th style="width: 50px">#</th>
+                                    <tr >
+                                        <th>#</th>
                                         <th  style="width: 130px">Fullname</th>
                                         <th >Username</th>
                                         <th >Email</th>
@@ -34,8 +34,11 @@
                                     @foreach ($users as $user)
                                     <tr>
                                         <td>
-                                            <button class="btn btn-outline-primary">
+                                            <button class="btn btn-outline-primary" onclick="document.location.href='kelola-pengguna/edit-pengguna/{{ app('App\Http\Controllers\ResourceController')->encrypt($user->id) }}'">
                                                 <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-outline-warning" onclick="changePasswordUser('{{$user->employee->fullname}}','{{$user->employee->email}}')">
+                                                <i class="fas fa-magic"></i>&nbsp;<i class="fas fa-key"></i>
                                             </button>
                                         </td>
                                         <td>{{ $user->employee->fullname }}</td>
