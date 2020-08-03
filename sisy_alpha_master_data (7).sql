@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Jul 2020 pada 10.48
--- Versi server: 10.4.13-MariaDB
--- Versi PHP: 7.4.8
+-- Waktu pembuatan: 03 Agu 2020 pada 03.04
+-- Versi server: 10.1.36-MariaDB
+-- Versi PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -27,7 +28,7 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `applications`
 --
 
-CREATE TABLE IF NOT EXISTS `applications` (
+CREATE TABLE `applications` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `application_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application_description` char(150) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -58,7 +59,7 @@ INSERT INTO `applications` (`id`, `application_name`, `application_description`,
 -- Struktur dari tabel `application_permissions`
 --
 
-CREATE TABLE IF NOT EXISTS `application_permissions` (
+CREATE TABLE `application_permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `application_id` bigint(20) NOT NULL COMMENT 'Connect to applications table',
   `user_id` bigint(20) NOT NULL COMMENT 'Connect to user table',
@@ -77,24 +78,10 @@ CREATE TABLE IF NOT EXISTS `application_permissions` (
 
 INSERT INTO `application_permissions` (`id`, `application_id`, `user_id`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 1, 1, NULL, NULL, '2020-01-23 08:24:34', '2020-01-23 08:24:34', NULL),
-(2, 1, 2, 1, 1, NULL, NULL, '2020-01-23 08:24:34', '2020-01-23 08:24:34', NULL),
 (3, 2, 1, 1, 1, NULL, NULL, '2020-01-23 08:24:35', '2020-01-23 08:24:35', NULL),
-(4, 2, 2, 1, 1, NULL, NULL, '2020-01-23 08:24:35', '2020-01-23 08:24:35', NULL),
 (5, 3, 1, 1, 1, NULL, NULL, '2020-01-23 08:24:35', '2020-01-23 08:24:35', NULL),
-(6, 3, 2, 1, 1, NULL, NULL, '2020-01-23 08:24:35', '2020-01-23 08:24:35', NULL),
 (7, 4, 1, 1, 1, NULL, NULL, '2020-01-23 08:24:35', '2020-01-23 08:24:35', NULL),
-(8, 4, 2, 1, 1, NULL, NULL, '2020-01-23 08:24:36', '2020-01-23 08:24:36', NULL),
-(9, 5, 1, 1, 1, NULL, NULL, '2020-01-23 08:24:36', '2020-01-23 08:24:36', NULL),
-(10, 5, 2, 1, 1, NULL, NULL, '2020-01-23 08:24:36', '2020-01-23 08:24:36', NULL),
-(11, 2, 87, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(12, 2, 88, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(13, 1, 30, 2, 1, NULL, NULL, '2020-03-31 07:09:59', '2020-03-31 07:09:59', NULL),
-(14, 2, 30, 1, 1, NULL, NULL, '2020-03-31 07:09:59', '2020-03-31 07:09:59', NULL),
-(15, 3, 30, 2, 1, NULL, NULL, '2020-03-31 07:09:59', '2020-03-31 07:09:59', NULL),
-(16, 4, 30, 2, 1, NULL, NULL, '2020-03-31 07:09:59', '2020-03-31 07:09:59', NULL),
-(17, 5, 30, 2, 1, NULL, NULL, '2020-03-31 07:09:59', '2020-03-31 07:09:59', NULL),
-(18, 2, 36, 1, 1, NULL, NULL, '2020-03-31 07:10:55', '2020-03-31 07:10:55', NULL),
-(19, 2, 32, 1, 1, NULL, NULL, '2020-03-31 07:11:55', '2020-03-31 07:11:55', NULL);
+(9, 5, 1, 0, 1, 1, NULL, '2020-01-23 08:24:36', '2020-08-01 13:05:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -102,7 +89,7 @@ INSERT INTO `application_permissions` (`id`, `application_id`, `user_id`, `is_ac
 -- Struktur dari tabel `brands`
 --
 
-CREATE TABLE IF NOT EXISTS `brands` (
+CREATE TABLE `brands` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `company_id` bigint(20) NOT NULL COMMENT 'connect to companies table',
   `brand_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -130,7 +117,7 @@ INSERT INTO `brands` (`id`, `company_id`, `brand_name`, `is_active`, `created_by
 -- Struktur dari tabel `companies`
 --
 
-CREATE TABLE IF NOT EXISTS `companies` (
+CREATE TABLE `companies` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `company_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `company_short_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -157,7 +144,7 @@ INSERT INTO `companies` (`id`, `company_name`, `company_short_name`, `is_active`
 -- Struktur dari tabel `departements`
 --
 
-CREATE TABLE IF NOT EXISTS `departements` (
+CREATE TABLE `departements` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `departement` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL,
@@ -187,7 +174,7 @@ INSERT INTO `departements` (`id`, `departement`, `is_active`, `created_by`, `upd
 -- Struktur dari tabel `distribution_lists`
 --
 
-CREATE TABLE IF NOT EXISTS `distribution_lists` (
+CREATE TABLE `distribution_lists` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `employee_id` bigint(20) NOT NULL COMMENT 'connected to employee table',
   `ppq_mail_to` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
@@ -224,7 +211,7 @@ INSERT INTO `distribution_lists` (`id`, `employee_id`, `ppq_mail_to`, `ppq_mail_
 -- Struktur dari tabel `employees`
 --
 
-CREATE TABLE IF NOT EXISTS `employees` (
+CREATE TABLE `employees` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `fullname` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` char(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -309,13 +296,13 @@ INSERT INTO `employees` (`id`, `fullname`, `email`, `departement_id`, `is_active
 -- Struktur dari tabel `failed_jobs`
 --
 
-CREATE TABLE IF NOT EXISTS `failed_jobs` (
+CREATE TABLE `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -324,7 +311,7 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 -- Struktur dari tabel `filling_machines`
 --
 
-CREATE TABLE IF NOT EXISTS `filling_machines` (
+CREATE TABLE `filling_machines` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `filling_machine_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `filling_machine_code` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -353,7 +340,7 @@ INSERT INTO `filling_machines` (`id`, `filling_machine_name`, `filling_machine_c
 -- Struktur dari tabel `filling_machine_group_details`
 --
 
-CREATE TABLE IF NOT EXISTS `filling_machine_group_details` (
+CREATE TABLE `filling_machine_group_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `filling_machine_group_head_id` bigint(20) NOT NULL COMMENT 'connect to filling machine group head table',
   `filling_machine_id` bigint(20) NOT NULL COMMENT 'connect to filling machine table',
@@ -381,7 +368,7 @@ INSERT INTO `filling_machine_group_details` (`id`, `filling_machine_group_head_i
 -- Struktur dari tabel `filling_machine_group_heads`
 --
 
-CREATE TABLE IF NOT EXISTS `filling_machine_group_heads` (
+CREATE TABLE `filling_machine_group_heads` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `filling_machine_group_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
@@ -407,7 +394,7 @@ INSERT INTO `filling_machine_group_heads` (`id`, `filling_machine_group_name`, `
 -- Struktur dari tabel `filling_sampel_codes`
 --
 
-CREATE TABLE IF NOT EXISTS `filling_sampel_codes` (
+CREATE TABLE `filling_sampel_codes` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `filling_sampel_code` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `filling_sampel_event` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -568,7 +555,7 @@ INSERT INTO `filling_sampel_codes` (`id`, `filling_sampel_code`, `filling_sampel
 -- Struktur dari tabel `flowmeters`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeters` (
+CREATE TABLE `flowmeters` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_workcenter_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter workcenter',
   `flowmeter_unit_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter unit',
@@ -578,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `flowmeters` (
   `spek_min` double DEFAULT NULL,
   `spek_max` double DEFAULT NULL,
   `recording_schedule` enum('0','1','2','3') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0 => perhari, 1 => pershift , 2 => perjam , 3 => tidak ada pengamatan',
-  `usage_formula_id` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `usage_formula_id` text COLLATE utf8mb4_unicode_ci,
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
   `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
   `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
@@ -634,7 +621,7 @@ INSERT INTO `flowmeters` (`id`, `flowmeter_workcenter_id`, `flowmeter_unit_id`, 
 -- Struktur dari tabel `flowmeter_categories`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeter_categories` (
+CREATE TABLE `flowmeter_categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_category` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini kaya sejenis flow meternya air , listrik , gas',
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
@@ -661,7 +648,7 @@ INSERT INTO `flowmeter_categories` (`id`, `flowmeter_category`, `is_active`, `cr
 -- Struktur dari tabel `flowmeter_consumption_realisation_details`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeter_consumption_realisation_details` (
+CREATE TABLE `flowmeter_consumption_realisation_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -673,7 +660,7 @@ CREATE TABLE IF NOT EXISTS `flowmeter_consumption_realisation_details` (
 -- Struktur dari tabel `flowmeter_consumption_realisation_heads`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeter_consumption_realisation_heads` (
+CREATE TABLE `flowmeter_consumption_realisation_heads` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -685,7 +672,7 @@ CREATE TABLE IF NOT EXISTS `flowmeter_consumption_realisation_heads` (
 -- Struktur dari tabel `flowmeter_formulas`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeter_formulas` (
+CREATE TABLE `flowmeter_formulas` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `formula_code` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ini untuk code formulanya',
   `flowmeter_formula` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'disini disimpan rumus untuk semuanya dalam bentuk json, apabila di isi kosong maka akan merefer ke perhitungan hari sebelumnya.',
@@ -713,7 +700,7 @@ INSERT INTO `flowmeter_formulas` (`id`, `formula_code`, `flowmeter_formula`, `is
 -- Struktur dari tabel `flowmeter_locations`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeter_locations` (
+CREATE TABLE `flowmeter_locations` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_category_id` bigint(20) NOT NULL,
   `flowmeter_location` char(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -742,7 +729,7 @@ INSERT INTO `flowmeter_locations` (`id`, `flowmeter_category_id`, `flowmeter_loc
 -- Struktur dari tabel `flowmeter_location_permissions`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeter_location_permissions` (
+CREATE TABLE `flowmeter_location_permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_location_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter location table',
   `user_id` bigint(20) NOT NULL COMMENT 'connected to user id table',
@@ -771,7 +758,7 @@ INSERT INTO `flowmeter_location_permissions` (`id`, `flowmeter_location_id`, `us
 -- Struktur dari tabel `flowmeter_units`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeter_units` (
+CREATE TABLE `flowmeter_units` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_unit` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini untuk satuan ',
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
@@ -796,7 +783,7 @@ INSERT INTO `flowmeter_units` (`id`, `flowmeter_unit`, `is_active`, `created_by`
 -- Struktur dari tabel `flowmeter_usages`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeter_usages` (
+CREATE TABLE `flowmeter_usages` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_workcenter_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter workcenter',
   `flowmeter_formula_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter formula untuk menentukan rumus yang dipakai',
@@ -859,7 +846,7 @@ INSERT INTO `flowmeter_usages` (`id`, `flowmeter_workcenter_id`, `flowmeter_form
 -- Struktur dari tabel `flowmeter_workcenters`
 --
 
-CREATE TABLE IF NOT EXISTS `flowmeter_workcenters` (
+CREATE TABLE `flowmeter_workcenters` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_category_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter category table',
   `flowmeter_workcenter` char(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -888,7 +875,7 @@ INSERT INTO `flowmeter_workcenters` (`id`, `flowmeter_category_id`, `flowmeter_w
 -- Struktur dari tabel `icons`
 --
 
-CREATE TABLE IF NOT EXISTS `icons` (
+CREATE TABLE `icons` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `icons` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1693,7 +1680,7 @@ INSERT INTO `icons` (`id`, `icons`, `created_at`, `updated_at`) VALUES
 -- Struktur dari tabel `jenis_ppqs`
 --
 
-CREATE TABLE IF NOT EXISTS `jenis_ppqs` (
+CREATE TABLE `jenis_ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `jenis_ppq` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini digunakan di form ppq',
   `is_active` tinyint(1) NOT NULL,
@@ -1722,7 +1709,7 @@ INSERT INTO `jenis_ppqs` (`id`, `jenis_ppq`, `is_active`, `created_by`, `updated
 -- Struktur dari tabel `kategori_ppqs`
 --
 
-CREATE TABLE IF NOT EXISTS `kategori_ppqs` (
+CREATE TABLE `kategori_ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `kategori_ppq` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini digunakan di form ppq',
   `jenis_ppq_id` bigint(20) NOT NULL COMMENT 'connected to jenis_ppq table',
@@ -1771,7 +1758,7 @@ INSERT INTO `kategori_ppqs` (`id`, `kategori_ppq`, `jenis_ppq_id`, `is_active`, 
 -- Struktur dari tabel `menus`
 --
 
-CREATE TABLE IF NOT EXISTS `menus` (
+CREATE TABLE `menus` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `parent_id` bigint(20) NOT NULL,
   `application_id` bigint(20) NOT NULL,
@@ -1794,11 +1781,10 @@ CREATE TABLE IF NOT EXISTS `menus` (
 
 INSERT INTO `menus` (`id`, `parent_id`, `application_id`, `menu_name`, `menu_icon`, `menu_route`, `menu_position`, `is_active`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 0, 1, 'Home', 'fa-home', 'master_app.show_home', 3, 1, 1, 1, NULL, '2020-01-21 21:24:32', '2020-03-25 18:16:29', NULL),
-(2, 0, 1, 'Pengaturan Aplikasi', 'fa-cog fa-spin', '-', 1, 1, 1, NULL, NULL, '2020-01-21 21:24:32', '2020-01-21 21:24:32', NULL),
+(2, 0, 1, 'General Setting', 'fa-cog fa-spin', '-', 1, 1, 1, NULL, NULL, '2020-01-21 21:24:32', '2020-01-21 21:24:32', NULL),
 (3, 2, 1, 'Kelola Menu', 'fa-bars', 'master_app.manage_menu', 0, 1, 1, NULL, NULL, '2020-01-21 21:24:32', '2020-01-21 21:24:32', NULL),
 (4, 0, 2, 'Home', 'fa-home', 'rollie.show_home', 0, 1, 1, NULL, NULL, '2020-01-21 21:24:32', '2020-01-21 21:24:32', NULL),
 (5, 0, 5, 'Home', 'fa-home', 'show_home_emon', 0, 1, 1, NULL, NULL, '2020-01-21 21:24:33', '2020-01-21 21:24:33', NULL),
-(8, 2, 1, 'Menu Permission', 'fa-universal-access', 'master_app.menu_permissions', 1, 1, 1, NULL, NULL, '2020-01-24 12:28:28', '2020-01-24 12:28:28', NULL),
 (10, 0, 2, 'Jadwal Produksi', 'fa-calendar', 'rollie.production_schedules', 1, 1, 1, NULL, NULL, '2020-01-26 18:30:18', '2020-01-26 18:30:18', NULL),
 (11, 0, 2, 'Data Proses', 'fa-database', '-', 2, 1, 1, NULL, NULL, '2020-02-07 15:22:29', '2020-02-07 15:22:29', NULL),
 (12, 11, 2, 'Rpd Filling', 'fa-file-excel', 'rollie.process_data.rpds', 0, 1, 1, NULL, NULL, '2020-02-07 15:22:48', '2020-02-07 15:22:48', NULL),
@@ -1818,18 +1804,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `application_id`, `menu_name`, `menu_ico
 (49, 46, 2, 'FU PPQ Engineering', 'fa-file', 'rollie.rkol.ppq_engineering', 2, 1, 1, NULL, NULL, '2020-03-10 09:53:17', '2020-03-10 09:53:17', NULL),
 (50, 46, 2, 'FU RKJ NFI', 'fa-list-ol', 'rollie.rkol.rkj_rnd_produk_nfi', 3, 1, 1, NULL, NULL, '2020-03-13 18:24:14', '2020-03-13 18:24:14', NULL),
 (51, 46, 2, 'FU RKJ QA', 'fa-calendar-check', 'rollie.rkol.rkj_qa', 4, 1, 1, NULL, NULL, '2020-03-13 22:04:38', '2020-03-13 22:04:38', NULL),
-(52, 2, 1, 'Kelola Aplikasi', 'fa-calculator', 'master_app.manage_applications', 2, 1, 1, NULL, NULL, '2020-03-25 18:20:29', '2020-03-25 18:20:29', NULL),
-(53, 2, 1, 'Application Permission', 'fa-user-md', 'master_app.application_permissions', 3, 1, 1, NULL, NULL, '2020-03-29 17:43:50', '2020-03-29 17:43:50', NULL),
-(54, 0, 1, 'Master Data', 'fa-database', '-', 5, 1, 1, 1, NULL, '2020-04-03 20:06:08', '2020-04-04 17:55:04', NULL),
-(55, 54, 1, 'Kelola Produk', 'fa-gift', 'master_app.master_data.manage_products', 1, 1, 1, 1, NULL, '2020-04-03 20:06:48', '2020-04-04 17:55:25', NULL),
-(56, 54, 1, 'Kelola Mesin Filling', 'fa-gavel', 'master_app.master_data.manage_filling_machines', 2, 1, 1, NULL, NULL, '2020-04-04 18:47:09', '2020-04-04 18:47:09', NULL),
 (57, 14, 2, 'Analisa Mikro Produk', 'fa-microchip', 'rollie.analysis_data.analisa_mikro_produk', 3, 1, 1, 1, NULL, '2020-04-24 17:43:59', '2020-04-24 17:52:10', NULL),
-(58, 54, 1, 'Kategori Flowmeter', 'fa-universal-access', 'master_app.master_data.manage_flowmeter_categories', 6, 1, 1, 1, NULL, '2020-05-17 09:02:59', '2020-05-17 13:57:35', NULL),
-(59, 54, 1, 'Flowmeter Workcenter', 'fa-search-location', 'master_app.master_data.manage_flowmeter_workcenters', 7, 1, 1, NULL, NULL, '2020-05-17 14:16:31', '2020-05-17 14:16:31', NULL),
-(60, 0, 1, 'Coba Aja', 'fa-500px', 'coba', 7, 1, 1, 1, NULL, '2020-06-18 23:00:33', '2020-06-18 23:04:41', NULL),
-(61, 54, 1, 'Flowmeter Unit', 'fa-unity', 'master_app.master_data.manage_flowmeter_units', 8, 1, 1, NULL, NULL, '2020-06-19 07:11:20', '2020-06-19 07:11:20', NULL),
-(62, 54, 1, 'Kelola Flowmeter', 'fa-tachometer-alt', 'master_app.master_data.manage_flowmeters', 9, 1, 1, NULL, NULL, '2020-06-19 07:14:27', '2020-06-19 07:14:27', NULL),
-(63, 54, 1, 'Flowmeter Location', 'fa-map-marker-alt', 'master_app.master_data.manage_flowmeter_locations', 10, 1, 1, NULL, NULL, '2020-06-19 09:58:39', '2020-06-19 09:58:39', NULL),
 (64, 14, 2, 'Analisa Ph Produk', 'fa-tint', 'rollie.analysis_data.analisa_ph_produk', 4, 1, 1, NULL, NULL, '2020-06-21 16:25:15', '2020-06-21 16:25:15', NULL),
 (65, 14, 2, 'Analisa Mikro Produk', 'fa-glass-martini-alt', 'rollie.analysis_data.analisa_mikro_release', 5, 1, 1, NULL, NULL, '2020-06-22 02:21:35', '2020-06-22 02:21:35', NULL),
 (66, 0, 2, 'Report', 'fa-clipboard', '-', 6, 1, 1, 1, NULL, '2020-06-22 04:11:03', '2020-06-22 04:11:43', NULL),
@@ -1840,13 +1815,26 @@ INSERT INTO `menus` (`id`, `parent_id`, `application_id`, `menu_name`, `menu_ico
 (71, 70, 4, 'Monitoring Air', 'fa-tint', 'emon.monitoring.water', 0, 1, 1, NULL, NULL, '2020-06-27 15:38:11', '2020-06-27 15:38:11', NULL),
 (72, 70, 4, 'Monitoring Listrik', 'fa-bolt', 'emon.monitoring.listrik', 1, 1, 1, NULL, NULL, '2020-06-27 15:39:59', '2020-06-27 15:39:59', NULL),
 (73, 70, 4, 'Monitoring Gas', 'fa-fire', 'emon.monitoring.gas', 2, 1, 1, NULL, NULL, '2020-06-27 15:40:58', '2020-06-27 15:40:58', NULL),
-(74, 54, 1, 'Flowmeter Usage', 'fa-battery-full', 'master_app.master_data.manage_flowmeter_usages', 12, 1, 1, 1, NULL, '2020-07-17 22:14:07', '2020-07-17 22:18:05', NULL),
-(75, 54, 1, 'Kelola Rumus', 'fa-calculator', 'master_app.master_data.manage_flowmeter_formulas', 13, 1, 1, NULL, NULL, '2020-07-17 22:42:13', '2020-07-17 22:42:13', NULL),
-(76, 54, 1, 'Flowmeter Location Permissions', 'fa-universal-access', 'master_app.master_data.manage_flowmeter_location_permissions', 14, 1, 1, NULL, NULL, '2020-07-20 04:17:43', '2020-07-20 04:17:43', NULL),
 (77, 70, 4, 'Riwayat Pengamatan', 'fa-database', 'emon.monitoring.histories', 3, 1, 1, NULL, NULL, '2020-07-21 03:42:56', '2020-07-21 03:42:56', NULL),
 (78, 0, 4, 'Energy Usage Report', 'fa-book', '-', 3, 1, 1, 1, NULL, '2020-07-23 08:50:12', '2020-07-23 08:54:06', NULL),
 (79, 78, 4, 'Water Usage', 'fa-tint', 'emon.energy_usage_report.water', 2, 1, 1, 1, NULL, '2020-07-23 08:51:44', '2020-07-23 08:55:22', NULL),
-(80, 11, 2, 'Psr', 'fa-money-bill', 'rollie.process_data.psr', 2, 1, 1, NULL, NULL, '2020-07-28 03:07:31', '2020-07-28 03:07:31', NULL);
+(80, 11, 2, 'Psr', 'fa-money-bill', 'rollie.process_data.psr', 2, 1, 1, NULL, NULL, '2020-07-28 03:07:31', '2020-07-28 03:07:31', NULL),
+(81, 2, 1, 'Kelola Aplikasi', 'fa-paper-plane', 'master_app.manage_applications', 1, 1, 1, NULL, NULL, '2020-08-01 12:48:07', '2020-08-01 12:48:07', NULL),
+(82, 2, 1, 'Kelola Hak Akses Menu', 'fa-universal-access', 'master_app.menu_permissions', 2, 1, 1, NULL, NULL, '2020-08-01 12:49:05', '2020-08-01 12:49:05', NULL),
+(83, 2, 1, 'Kelola Hak Akses Aplikasi', 'fa-universal-access', 'master_app.application_permissions', 3, 1, 1, NULL, NULL, '2020-08-01 12:50:18', '2020-08-01 12:50:18', NULL),
+(84, 2, 1, 'Manage User', 'fa-users', 'master_app.manage_user', 4, 1, 1, NULL, NULL, '2020-08-01 13:09:14', '2020-08-01 13:09:14', NULL),
+(85, 0, 1, 'Master Data', 'fa-database', '-', 4, 1, 1, NULL, NULL, '2020-08-01 14:08:35', '2020-08-01 14:08:35', NULL),
+(86, 85, 1, 'Rollie', 'fa-phone', '-', 0, 1, 1, NULL, NULL, '2020-08-01 14:09:23', '2020-08-01 14:09:23', NULL),
+(87, 86, 1, 'Kelola Produk', 'fa-address-book', 'master_app.master_data.manage_products', 0, 1, 1, NULL, NULL, '2020-08-01 14:10:09', '2020-08-01 14:10:09', NULL),
+(88, 86, 1, 'Kelola Mesin Filling', 'fa-industry', 'master_app.master_data.manage_filling_machines', 1, 1, 1, NULL, NULL, '2020-08-01 14:14:32', '2020-08-01 14:14:32', NULL),
+(89, 85, 1, 'Emon', 'fa-tachometer', '-', 1, 1, 1, NULL, NULL, '2020-08-01 14:16:57', '2020-08-01 14:16:57', NULL),
+(90, 89, 1, 'Kelola Flowmeter Monitoring', 'fa-list', 'master_app.master_data.manage_flowmeters', 0, 1, 1, NULL, NULL, '2020-08-01 14:18:18', '2020-08-01 14:18:18', NULL),
+(91, 89, 1, 'Kelola Flowmeter Usage', 'fa-calendar-check-o', 'master_app.master_data.manage_flowmeter_usages', 1, 1, 1, NULL, NULL, '2020-08-01 14:19:58', '2020-08-01 14:19:58', NULL),
+(92, 89, 1, 'Kelola Kategori Flowmeter', 'fa-address-card', 'master_app.master_data.manage_flowmeter_categories', 2, 1, 1, NULL, NULL, '2020-08-01 14:21:47', '2020-08-01 14:21:47', NULL),
+(93, 89, 1, 'Kelola Workcenter Flowmeter', 'fa-bookmark', 'master_app.master_data.manage_flowmeter_workcenters', 3, 1, 1, NULL, NULL, '2020-08-01 14:23:17', '2020-08-01 14:23:17', NULL),
+(94, 89, 1, 'Kelola Satuan Flowmeter', 'fa-american-sign-lan', 'master_app.master_data.manage_flowmeter_units', 4, 1, 1, NULL, NULL, '2020-08-01 14:24:48', '2020-08-01 14:24:48', NULL),
+(95, 89, 1, 'Kelola Lokasi Flowmeter', 'fa-map-marker', 'master_app.master_data.manage_flowmeter_locations', 5, 1, 1, NULL, NULL, '2020-08-01 14:35:44', '2020-08-01 14:35:44', NULL),
+(96, 89, 1, 'Kelola Akses Lokasi Flowmeter', 'fa-universal-access', 'master_app.master_data.manage_flowmeter_location_permissions', 6, 1, 1, NULL, NULL, '2020-08-01 14:38:02', '2020-08-01 14:38:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -1854,7 +1842,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `application_id`, `menu_name`, `menu_ico
 -- Struktur dari tabel `menu_permissions`
 --
 
-CREATE TABLE IF NOT EXISTS `menu_permissions` (
+CREATE TABLE `menu_permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) NOT NULL COMMENT 'connected to user table',
   `menu_id` bigint(20) NOT NULL COMMENT 'connected to menu table',
@@ -1876,17 +1864,10 @@ CREATE TABLE IF NOT EXISTS `menu_permissions` (
 
 INSERT INTO `menu_permissions` (`id`, `user_id`, `menu_id`, `view`, `create`, `edit`, `delete`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-21 14:24:36', '2020-01-21 14:24:36', NULL),
-(2, 2, 1, 1, 1, 1, 1, 1, 1, NULL, '2020-01-21 14:24:36', '2020-01-24 10:11:37', NULL),
 (3, 1, 2, 1, 1, 1, 1, 1, 1, NULL, '2020-01-21 14:24:36', '2020-01-24 09:32:37', NULL),
-(4, 2, 2, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-21 14:24:37', '2020-01-21 14:24:37', NULL),
 (5, 1, 3, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-21 14:24:37', '2020-01-21 14:24:37', NULL),
-(6, 2, 3, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-21 14:24:37', '2020-01-21 14:24:37', NULL),
 (7, 1, 4, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-21 14:24:37', '2020-01-21 14:24:37', NULL),
-(8, 2, 4, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-21 14:24:37', '2020-01-21 14:24:37', NULL),
 (9, 1, 5, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-21 14:24:37', '2020-01-21 14:24:37', NULL),
-(10, 2, 5, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-21 14:24:37', '2020-01-21 14:24:37', NULL),
-(11, 1, 8, 1, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
-(12, 2, 8, 1, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
 (13, 1, 10, 1, 1, 1, 1, 1, NULL, NULL, '2020-01-26 11:30:50', '2020-01-26 11:30:50', NULL),
 (14, 1, 11, 1, 1, 1, 1, 1, NULL, NULL, '2020-02-07 08:23:46', '2020-02-07 08:23:46', NULL),
 (15, 1, 12, 1, 1, 1, 1, 1, NULL, NULL, '2020-02-07 08:23:46', '2020-02-07 08:23:46', NULL),
@@ -1894,348 +1875,6 @@ INSERT INTO `menu_permissions` (`id`, `user_id`, `menu_id`, `view`, `create`, `e
 (17, 1, 14, 1, 1, 1, 1, 1, NULL, NULL, '2020-02-28 14:16:59', '2020-02-28 14:16:59', NULL),
 (18, 1, 15, 1, 1, 1, 1, 1, NULL, NULL, '2020-02-28 14:19:46', '2020-02-28 14:19:46', NULL),
 (19, 1, 16, 1, 1, 1, 1, 1, NULL, NULL, '2020-03-05 09:07:49', '2020-03-05 09:07:49', NULL),
-(1675, 22, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1676, 23, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1677, 24, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:39:21', NULL),
-(1678, 29, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1679, 30, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1680, 31, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1681, 32, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1682, 33, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1683, 34, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1684, 35, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1685, 36, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1686, 37, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1687, 38, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1688, 39, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1689, 40, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1690, 41, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1691, 42, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1692, 43, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1693, 44, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1694, 45, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1695, 46, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1696, 47, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1697, 48, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1698, 49, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1699, 50, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1700, 51, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1701, 52, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1702, 53, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1703, 54, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1704, 55, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1705, 56, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1706, 57, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1707, 58, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1708, 59, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1709, 66, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1710, 67, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1711, 68, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
-(1712, 69, 40, 0, 0, 0, 0, 0, 1, NULL, '2019-12-12 12:34:14', '2020-06-18 23:42:18', NULL),
-(1713, 22, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1714, 23, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1715, 24, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:39:24', NULL),
-(1716, 29, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1717, 30, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1718, 31, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1719, 32, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1720, 33, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1721, 34, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1722, 35, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1723, 36, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1724, 37, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1725, 38, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1726, 39, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1727, 40, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1728, 41, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1729, 42, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1730, 43, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1731, 44, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1732, 45, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1733, 46, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1734, 47, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1735, 48, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1736, 49, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1737, 50, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1738, 51, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1739, 52, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1740, 53, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1741, 54, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1742, 55, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1743, 56, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1744, 57, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1745, 58, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1746, 59, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1747, 66, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1748, 67, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1749, 68, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1750, 69, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
-(1751, 22, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1752, 23, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1753, 24, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:39:27', NULL),
-(1754, 29, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1755, 30, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1756, 31, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1757, 32, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1758, 33, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1759, 34, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1760, 35, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1761, 36, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1762, 37, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1763, 38, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1764, 39, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1765, 40, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1766, 41, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1767, 42, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1768, 43, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1769, 44, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1770, 45, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1771, 46, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1772, 47, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1773, 48, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1774, 49, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1775, 50, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1776, 51, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1777, 52, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1778, 53, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1779, 54, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1780, 55, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1781, 56, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1782, 57, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1783, 58, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1784, 59, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1785, 66, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1786, 67, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1787, 68, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1788, 69, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:36:07', NULL),
-(1789, 22, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1790, 23, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1791, 24, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:39:30', NULL),
-(1792, 29, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1793, 30, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1794, 31, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1795, 32, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1796, 33, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1797, 34, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1798, 35, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1799, 36, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1800, 37, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1801, 38, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1802, 39, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1803, 40, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1804, 41, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1805, 42, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1806, 43, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1807, 44, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1808, 45, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1809, 46, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1810, 47, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1811, 48, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1812, 49, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1813, 50, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1814, 51, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1815, 52, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1816, 53, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1817, 54, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1818, 55, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1819, 56, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1820, 57, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1821, 58, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1822, 59, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1823, 66, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1824, 67, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1825, 68, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1826, 69, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:36:41', '2019-12-12 12:36:41', NULL),
-(1827, 22, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1828, 23, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1829, 24, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:39:34', NULL),
-(1830, 29, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1831, 30, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1832, 31, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1833, 32, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1834, 33, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1835, 34, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1836, 35, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1837, 36, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1838, 37, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1839, 38, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1840, 39, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1841, 40, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1842, 41, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1843, 42, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1844, 43, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1845, 44, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1846, 45, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1847, 46, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1848, 47, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1849, 48, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1850, 49, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1851, 50, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1852, 51, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1853, 52, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1854, 53, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1855, 54, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1856, 55, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1857, 56, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1858, 57, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1859, 58, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1860, 59, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1861, 66, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1862, 67, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1863, 68, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1864, 69, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:37:12', '2019-12-12 12:37:12', NULL),
-(1865, 22, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1866, 23, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1867, 24, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:39:37', NULL),
-(1868, 29, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1869, 30, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1870, 31, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1871, 32, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1872, 33, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1873, 34, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1874, 35, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1875, 36, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1876, 37, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1877, 38, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1878, 39, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1879, 40, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1880, 41, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1881, 42, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1882, 43, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1883, 44, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1884, 45, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1885, 46, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1886, 47, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1887, 48, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1888, 49, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1889, 50, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1890, 51, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1891, 52, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1892, 53, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1893, 54, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1894, 55, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1895, 56, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1896, 57, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1897, 58, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1898, 59, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1899, 66, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1900, 67, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1901, 68, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1902, 69, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-12 12:38:12', '2019-12-12 12:38:12', NULL),
-(1942, 70, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:04:23', '2019-12-12 13:04:23', NULL),
-(1943, 70, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:04:23', '2019-12-12 13:04:23', NULL),
-(1944, 70, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:04:23', '2019-12-12 13:04:23', NULL),
-(1945, 70, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:04:23', '2019-12-12 13:04:23', NULL),
-(1946, 70, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:04:23', '2019-12-12 13:04:23', NULL),
-(1947, 70, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:04:23', '2019-12-12 13:04:23', NULL),
-(1987, 71, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:05:12', '2019-12-12 13:05:12', NULL),
-(1988, 71, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:05:12', '2019-12-12 13:05:12', NULL),
-(1989, 71, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:05:12', '2019-12-12 13:05:12', NULL),
-(1990, 71, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:05:12', '2019-12-12 13:05:12', NULL),
-(1991, 71, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:05:12', '2019-12-12 13:05:12', NULL),
-(1992, 71, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:05:12', '2019-12-12 13:05:12', NULL),
-(2032, 72, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:08', '2019-12-12 13:08:08', NULL),
-(2033, 72, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:08', '2019-12-12 13:08:08', NULL),
-(2034, 72, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:08', '2019-12-12 13:08:08', NULL),
-(2035, 72, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:08', '2019-12-12 13:08:08', NULL),
-(2036, 72, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:08', '2019-12-12 13:08:08', NULL),
-(2037, 72, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:08', '2019-12-12 13:08:08', NULL),
-(2077, 73, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:48', '2019-12-12 13:08:48', NULL),
-(2078, 73, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:48', '2019-12-12 13:08:48', NULL),
-(2079, 73, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:48', '2019-12-12 13:08:48', NULL),
-(2080, 73, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:48', '2019-12-12 13:08:48', NULL),
-(2081, 73, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:48', '2019-12-12 13:08:48', NULL),
-(2082, 73, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:08:48', '2019-12-12 13:08:48', NULL),
-(2122, 74, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:10:49', '2019-12-12 13:10:49', NULL),
-(2123, 74, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:10:49', '2019-12-12 13:10:49', NULL),
-(2124, 74, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:10:49', '2019-12-12 13:10:49', NULL),
-(2125, 74, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:10:49', '2019-12-12 13:10:49', NULL),
-(2126, 74, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:10:49', '2019-12-12 13:10:49', NULL),
-(2127, 74, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:10:49', '2019-12-12 13:10:49', NULL),
-(2167, 75, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:11:31', '2019-12-12 13:11:31', NULL),
-(2168, 75, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:11:31', '2019-12-12 13:11:31', NULL),
-(2169, 75, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:11:31', '2019-12-12 13:11:31', NULL),
-(2170, 75, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:11:31', '2019-12-12 13:11:31', NULL),
-(2171, 75, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:11:31', '2019-12-12 13:11:31', NULL),
-(2172, 75, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:11:31', '2019-12-12 13:11:31', NULL),
-(2212, 76, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:12:32', '2019-12-12 13:12:32', NULL),
-(2213, 76, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:12:32', '2019-12-12 13:12:32', NULL),
-(2214, 76, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:12:32', '2019-12-12 13:12:32', NULL),
-(2215, 76, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:12:32', '2019-12-12 13:12:32', NULL),
-(2216, 76, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:12:32', '2019-12-12 13:12:32', NULL),
-(2217, 76, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:12:32', '2019-12-12 13:12:32', NULL),
-(2257, 77, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:15', '2019-12-12 13:13:15', NULL),
-(2258, 77, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:15', '2019-12-12 13:13:15', NULL),
-(2259, 77, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:15', '2019-12-12 13:13:15', NULL),
-(2260, 77, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:15', '2019-12-12 13:13:15', NULL),
-(2261, 77, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:15', '2019-12-12 13:13:15', NULL),
-(2262, 77, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:15', '2019-12-12 13:13:15', NULL),
-(2302, 78, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:52', '2019-12-12 13:13:52', NULL),
-(2303, 78, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:52', '2019-12-12 13:13:52', NULL),
-(2304, 78, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:52', '2019-12-12 13:13:52', NULL),
-(2305, 78, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:52', '2019-12-12 13:13:52', NULL),
-(2306, 78, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:52', '2019-12-12 13:13:52', NULL),
-(2307, 78, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:13:52', '2019-12-12 13:13:52', NULL),
-(2347, 79, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:14:32', '2019-12-12 13:14:32', NULL),
-(2348, 79, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:14:32', '2019-12-12 13:14:32', NULL),
-(2349, 79, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:14:32', '2019-12-12 13:14:32', NULL),
-(2350, 79, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:14:32', '2019-12-12 13:14:32', NULL),
-(2351, 79, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:14:32', '2019-12-12 13:14:32', NULL),
-(2352, 79, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:14:32', '2019-12-12 13:14:32', NULL),
-(2392, 80, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:16', '2019-12-12 13:15:16', NULL),
-(2393, 80, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:16', '2019-12-12 13:15:16', NULL),
-(2394, 80, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:16', '2019-12-12 13:15:16', NULL),
-(2395, 80, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:16', '2019-12-12 13:15:16', NULL),
-(2396, 80, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:16', '2019-12-12 13:15:16', NULL),
-(2397, 80, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:16', '2019-12-12 13:15:16', NULL),
-(2437, 81, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:46', '2019-12-12 13:15:46', NULL),
-(2438, 81, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:46', '2019-12-12 13:15:46', NULL),
-(2439, 81, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:46', '2019-12-12 13:15:46', NULL),
-(2440, 81, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:46', '2019-12-12 13:15:46', NULL),
-(2441, 81, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:46', '2019-12-12 13:15:46', NULL),
-(2442, 81, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:15:46', '2019-12-12 13:15:46', NULL),
-(2482, 82, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:16:22', '2019-12-12 13:16:22', NULL),
-(2483, 82, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:16:22', '2019-12-12 13:16:22', NULL),
-(2484, 82, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:16:22', '2019-12-12 13:16:22', NULL),
-(2485, 82, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:16:22', '2019-12-12 13:16:22', NULL),
-(2486, 82, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:16:22', '2019-12-12 13:16:22', NULL),
-(2487, 82, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:16:22', '2019-12-12 13:16:22', NULL),
-(2527, 83, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:04', '2019-12-12 13:18:04', NULL),
-(2528, 83, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:04', '2019-12-12 13:18:04', NULL),
-(2529, 83, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:04', '2019-12-12 13:18:04', NULL),
-(2530, 83, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:04', '2019-12-12 13:18:04', NULL),
-(2531, 83, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:04', '2019-12-12 13:18:04', NULL),
-(2532, 83, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:04', '2019-12-12 13:18:04', NULL),
-(2572, 84, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:56', '2019-12-12 13:18:56', NULL),
-(2573, 84, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:56', '2019-12-12 13:18:56', NULL),
-(2574, 84, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:56', '2019-12-12 13:18:56', NULL),
-(2575, 84, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:56', '2019-12-12 13:18:56', NULL),
-(2576, 84, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:56', '2019-12-12 13:18:56', NULL),
-(2577, 84, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:18:56', '2019-12-12 13:18:56', NULL),
-(2617, 85, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:31:47', '2019-12-12 13:31:47', NULL),
-(2618, 85, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:31:47', '2019-12-12 13:31:47', NULL),
-(2619, 85, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:31:47', '2019-12-12 13:31:47', NULL),
-(2620, 85, 43, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:31:47', '2019-12-12 13:31:47', NULL),
-(2621, 85, 44, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:31:47', '2019-12-12 13:31:47', NULL),
-(2622, 85, 45, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 13:31:47', '2019-12-12 13:31:47', NULL),
-(2662, 86, 40, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-25 03:33:13', '2019-12-25 03:33:13', NULL),
-(2663, 86, 41, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-25 03:33:13', '2019-12-25 03:33:13', NULL),
-(2664, 86, 42, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-25 03:33:13', '2019-12-25 03:33:13', NULL),
-(2665, 86, 43, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-25 03:33:13', '2019-12-25 03:33:13', NULL),
-(2666, 86, 44, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-25 03:33:13', '2019-12-25 03:33:13', NULL),
-(2667, 86, 45, 0, 0, 0, 0, 0, NULL, NULL, '2019-12-25 03:33:13', '2019-12-25 03:33:13', NULL),
-(2707, 87, 40, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-02 02:25:21', '2020-01-02 02:25:21', NULL),
-(2708, 87, 41, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-02 02:25:21', '2020-01-02 02:25:21', NULL),
-(2709, 87, 42, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-02 02:25:21', '2020-01-02 02:25:21', NULL),
-(2710, 87, 43, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-02 02:25:21', '2020-01-02 02:25:21', NULL),
-(2711, 87, 44, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-02 02:25:21', '2020-01-02 02:25:21', NULL),
-(2712, 87, 45, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-02 02:25:21', '2020-01-02 02:25:21', NULL),
-(2752, 88, 40, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-04 02:48:24', '2020-01-04 02:48:24', NULL),
-(2753, 88, 41, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-04 02:48:24', '2020-01-04 02:48:24', NULL),
-(2754, 88, 42, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-04 02:48:24', '2020-01-04 02:48:24', NULL),
-(2755, 88, 43, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-04 02:48:24', '2020-01-04 02:48:24', NULL),
-(2756, 88, 44, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-04 02:48:24', '2020-01-04 02:48:24', NULL),
-(2757, 88, 45, 0, 0, 0, 0, 0, NULL, NULL, '2020-01-04 02:48:24', '2020-01-04 02:48:24', NULL),
 (4000, 1, 40, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 12:34:14', '2019-12-12 12:34:14', NULL),
 (4001, 1, 41, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 12:35:15', '2019-12-12 12:35:15', NULL),
 (4005, 1, 42, 1, 1, 1, 1, 0, NULL, NULL, '2019-12-12 12:36:07', '2019-12-12 12:39:27', NULL),
@@ -2245,31 +1884,7 @@ INSERT INTO `menu_permissions` (`id`, `user_id`, `menu_id`, `view`, `create`, `e
 (4009, 1, 49, 1, 1, 1, 1, 1, NULL, NULL, '2020-03-10 02:53:38', '2020-03-10 02:53:38', NULL),
 (4010, 1, 50, 1, 1, 1, 1, 1, NULL, NULL, '2020-03-13 11:24:29', '2020-03-13 11:24:29', NULL),
 (4011, 1, 51, 1, 1, 1, 1, 1, NULL, NULL, '2020-03-13 15:05:32', '2020-03-13 15:05:32', NULL),
-(4012, 2, 10, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4013, 2, 11, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4014, 2, 12, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4015, 2, 13, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4016, 2, 14, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4017, 2, 15, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4018, 2, 16, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4019, 2, 46, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4020, 2, 47, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4021, 2, 48, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4022, 2, 49, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4023, 2, 50, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4024, 2, 51, 0, 0, 0, 0, 1, NULL, NULL, '2020-03-25 10:32:07', '2020-03-25 10:32:07', NULL),
-(4025, 1, 52, 1, 1, 1, 1, 1, NULL, NULL, '2020-03-25 11:21:01', '2020-03-25 11:21:01', NULL),
-(4026, 1, 53, 1, 1, 1, 1, 1, NULL, NULL, '2020-03-29 10:44:07', '2020-03-29 10:44:07', NULL),
-(4027, 1, 54, 1, 1, 1, 1, 1, NULL, NULL, '2020-04-03 13:07:08', '2020-04-03 13:07:08', NULL),
-(4028, 1, 55, 1, 1, 1, 1, 1, NULL, NULL, '2020-04-03 13:07:08', '2020-04-03 13:07:08', NULL),
-(4029, 1, 56, 1, 1, 1, 1, 1, NULL, NULL, '2020-04-04 11:48:12', '2020-04-04 11:48:12', NULL),
 (4030, 1, 57, 1, 1, 1, 1, 1, NULL, NULL, '2020-04-24 10:44:20', '2020-04-24 10:44:20', NULL),
-(4031, 1, 58, 1, 1, 1, 1, 1, NULL, NULL, '2020-05-17 02:03:27', '2020-05-17 02:03:27', NULL),
-(4032, 1, 59, 1, 1, 1, 1, 1, NULL, NULL, '2020-05-17 07:16:48', '2020-05-17 07:16:48', NULL),
-(4033, 1, 60, 0, 0, 0, 0, 1, NULL, NULL, '2020-06-19 00:16:57', '2020-06-19 00:16:57', NULL),
-(4034, 1, 61, 1, 1, 1, 1, 1, NULL, NULL, '2020-06-19 00:16:57', '2020-06-19 00:16:57', NULL),
-(4035, 1, 62, 1, 1, 1, 1, 1, 1, NULL, '2020-06-19 00:16:57', '2020-07-17 22:24:41', NULL),
-(4036, 1, 63, 1, 1, 1, 1, 1, NULL, NULL, '2020-06-19 02:59:40', '2020-06-19 02:59:40', NULL),
 (4037, 1, 64, 1, 1, 1, 1, 1, NULL, NULL, '2020-06-21 18:29:12', '2020-06-21 18:29:12', NULL),
 (4038, 1, 65, 1, 1, 1, 1, 1, NULL, NULL, '2020-06-21 19:23:46', '2020-06-21 19:23:46', NULL),
 (4039, 1, 66, 1, 1, 1, 1, 1, NULL, NULL, '2020-06-21 21:20:12', '2020-06-21 21:20:12', NULL),
@@ -2280,13 +1895,26 @@ INSERT INTO `menu_permissions` (`id`, `user_id`, `menu_id`, `view`, `create`, `e
 (4044, 1, 71, 1, 1, 1, 1, 1, NULL, NULL, '2020-06-27 15:41:51', '2020-06-27 15:41:51', NULL),
 (4045, 1, 72, 1, 1, 1, 1, 1, NULL, NULL, '2020-06-27 15:41:51', '2020-06-27 15:41:51', NULL),
 (4046, 1, 73, 1, 1, 1, 1, 1, NULL, NULL, '2020-06-27 15:41:51', '2020-06-27 15:41:51', NULL),
-(4047, 1, 74, 1, 1, 1, 1, 1, NULL, NULL, '2020-07-17 22:24:41', '2020-07-17 22:24:41', NULL),
-(4048, 1, 75, 1, 1, 1, 1, 1, NULL, NULL, '2020-07-17 22:43:59', '2020-07-17 22:43:59', NULL),
-(4049, 1, 76, 1, 1, 1, 1, 1, NULL, NULL, '2020-07-20 04:17:58', '2020-07-20 04:17:58', NULL),
 (4050, 1, 77, 1, 1, 1, 1, 1, NULL, NULL, '2020-07-21 03:43:11', '2020-07-21 03:43:11', NULL),
 (4051, 1, 78, 1, 1, 1, 1, 1, NULL, NULL, '2020-07-23 08:56:20', '2020-07-23 08:56:20', NULL),
 (4052, 1, 79, 1, 1, 1, 1, 1, NULL, NULL, '2020-07-23 08:56:20', '2020-07-23 08:56:20', NULL),
-(4053, 1, 80, 1, 1, 1, 1, 1, NULL, NULL, '2020-07-28 03:13:24', '2020-07-28 03:13:24', NULL);
+(4053, 1, 80, 1, 1, 1, 1, 1, NULL, NULL, '2020-07-28 03:13:24', '2020-07-28 03:13:24', NULL),
+(4054, 1, 81, 1, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(4055, 1, 82, 1, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(4056, 1, 83, 1, 1, 1, 1, 1, NULL, NULL, NULL, NULL, NULL),
+(4057, 1, 84, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 13:09:40', '2020-08-01 13:09:40', NULL),
+(4058, 1, 85, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:10:36', '2020-08-01 14:10:36', NULL),
+(4059, 1, 86, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:10:36', '2020-08-01 14:10:36', NULL),
+(4060, 1, 87, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:10:36', '2020-08-01 14:10:36', NULL),
+(4061, 1, 88, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:14:56', '2020-08-01 14:14:56', NULL),
+(4062, 1, 89, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:29', '2020-08-01 14:39:29', NULL),
+(4063, 1, 90, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:29', '2020-08-01 14:39:29', NULL),
+(4064, 1, 91, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:29', '2020-08-01 14:39:29', NULL),
+(4065, 1, 92, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:29', '2020-08-01 14:39:29', NULL),
+(4066, 1, 93, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:29', '2020-08-01 14:39:29', NULL),
+(4067, 1, 94, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:29', '2020-08-01 14:39:29', NULL),
+(4068, 1, 95, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:30', '2020-08-01 14:39:30', NULL),
+(4069, 1, 96, 1, 1, 1, 1, 1, NULL, NULL, '2020-08-01 14:39:30', '2020-08-01 14:39:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -2294,11 +1922,82 @@ INSERT INTO `menu_permissions` (`id`, `user_id`, `menu_id`, `view`, `create`, `e
 -- Struktur dari tabel `migrations`
 --
 
-CREATE TABLE IF NOT EXISTS `plans` (
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2019_08_19_000000_create_failed_jobs_table', 1),
+(2, '2020_01_21_072303_create_users_table', 1),
+(3, '2020_01_21_084922_create_employees_table', 1),
+(4, '2020_01_21_085716_create_departements_table', 1),
+(5, '2020_01_25_040937_create_menus_table', 1),
+(6, '2020_01_25_041743_create_applications_table', 1),
+(7, '2020_01_25_042346_create_application_permissions_table', 1),
+(8, '2020_01_25_042624_create_menu_permissions_table', 1),
+(9, '2020_01_26_152535_create_icons_table', 1),
+(10, '2020_01_30_073951_create_products_table', 1),
+(11, '2020_01_30_075805_create_product_types_table', 1),
+(12, '2020_01_30_075835_create_filling_machines_table', 1),
+(13, '2020_01_30_075903_create_brands_table', 1),
+(14, '2020_01_30_075915_create_companies_table', 1),
+(15, '2020_01_30_075926_create_subbrands_table', 1),
+(16, '2020_01_30_075955_create_filling_sampel_codes_table', 1),
+(17, '2020_01_30_080025_create_filling_machine_group_heads_table', 1),
+(18, '2020_01_30_080039_create_filling_machine_group_details_table', 1),
+(19, '2020_01_30_133742_create_wo_numbers_table', 1),
+(20, '2020_01_30_133905_create_plans_table', 1),
+(21, '2020_02_06_111904_create_rpd_filling_heads_table', 1),
+(22, '2020_02_06_112320_create_rpd_filling_detail_pis_table', 1),
+(23, '2020_02_06_112458_create_rpd_filling_detail_at_events_table', 1),
+(24, '2020_02_10_202551_create_cpp_heads_table', 1),
+(25, '2020_02_10_203004_create_cpp_details_table', 1),
+(26, '2020_02_10_203254_create_palets_table', 1),
+(27, '2020_02_10_203326_create_palet_ppqs_table', 1),
+(28, '2020_02_25_212042_create_ppqs_table', 1),
+(29, '2020_03_01_160554_create_distribution_lists_table', 1),
+(30, '2020_03_03_094606_create_analisa_kimias_table', 1),
+(31, '2020_03_14_220041_create_kategori_ppqs_table', 1),
+(32, '2020_03_14_222837_create_jenis_ppqs_table', 1),
+(33, '2020_03_14_233819_create_follow_up_ppqs_table', 1),
+(34, '2020_03_15_230705_create_corrective_actions_table', 1),
+(35, '2020_03_15_231022_create_preventive_actions_table', 1),
+(36, '2020_03_16_083712_create_rkjs_table', 1),
+(37, '2020_03_16_085530_create_follow_up_rkjs_table', 1),
+(38, '2020_04_08_093948_create_flowmeter_categories_table', 1),
+(39, '2020_04_08_101010_create_flowmeter_workcenters_table', 1),
+(40, '2020_04_08_101438_create_flowmeter_units_table', 1),
+(41, '2020_04_08_105534_create_flowmeters_table', 1),
+(42, '2020_04_27_103043_create_analisa_mikros_table', 1),
+(43, '2020_04_27_113757_create_analisa_mikro_details_table', 1),
+(44, '2020_04_29_093641_create_analisa_mikro_resampling_table', 1),
+(45, '2020_05_19_084531_create_flowmeter_locations_table', 1),
+(46, '2020_06_29_102023_create_energy_monitorings_table', 1),
+(47, '2020_06_29_102145_create_energy_usages_table', 1),
+(48, '2020_06_29_185550_create_psrs_table', 1),
+(49, '2020_07_18_120737_create_flowmeter_usages_table', 1),
+(50, '2020_07_18_124151_create_flowmeter_formulas_table', 1),
+(51, '2020_07_18_185846_create_flowmeter_consumption_realisation_heads_table', 1),
+(52, '2020_07_18_185907_create_flowmeter_consumption_realisation_details_table', 1),
+(53, '2020_07_20_110503_create_flowmeter_location_permissions_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `plans`
+--
+
+CREATE TABLE `plans` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `company_id` bigint(20) NOT NULL COMMENT 'connected to companies table',
   `plan_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci,
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
   `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
   `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
@@ -2326,7 +2025,7 @@ INSERT INTO `plans` (`id`, `company_id`, `plan_name`, `address`, `is_active`, `c
 -- Struktur dari tabel `products`
 --
 
-CREATE TABLE IF NOT EXISTS `products` (
+CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `subbrand_id` bigint(20) NOT NULL COMMENT 'connected to table subbrand',
   `product_type_id` bigint(20) NOT NULL COMMENT 'connected to product type table',
@@ -2401,7 +2100,7 @@ INSERT INTO `products` (`id`, `subbrand_id`, `product_type_id`, `filling_machine
 -- Struktur dari tabel `product_types`
 --
 
-CREATE TABLE IF NOT EXISTS `product_types` (
+CREATE TABLE `product_types` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `product_type` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
@@ -2427,7 +2126,7 @@ INSERT INTO `product_types` (`id`, `product_type`, `is_active`, `created_by`, `u
 -- Struktur dari tabel `subbrands`
 --
 
-CREATE TABLE IF NOT EXISTS `subbrands` (
+CREATE TABLE `subbrands` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `brand_id` bigint(20) NOT NULL COMMENT 'connect to brands table ',
   `subbrand_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2458,7 +2157,7 @@ INSERT INTO `subbrands` (`id`, `brand_id`, `subbrand_name`, `is_active`, `create
 -- Struktur dari tabel `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
+CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `employee_id` bigint(20) NOT NULL COMMENT 'connected to employee table',
   `username` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2898,19 +2597,19 @@ ALTER TABLE `kategori_ppqs`
 -- AUTO_INCREMENT untuk tabel `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT untuk tabel `menu_permissions`
 --
 ALTER TABLE `menu_permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4054;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4070;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=210;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT untuk tabel `plans`

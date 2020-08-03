@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 28 Jul 2020 pada 10.48
--- Versi server: 10.4.13-MariaDB
--- Versi PHP: 7.4.8
+-- Waktu pembuatan: 03 Agu 2020 pada 03.04
+-- Versi server: 10.1.36-MariaDB
+-- Versi PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -27,7 +28,7 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `analisa_kimias`
 --
 
-CREATE TABLE IF NOT EXISTS `analisa_kimias` (
+CREATE TABLE `analisa_kimias` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `cpp_head_id` bigint(20) NOT NULL COMMENT 'connected to cpphead table',
   `ppq_id` bigint(20) DEFAULT NULL COMMENT 'connected to ppq table',
@@ -71,7 +72,8 @@ CREATE TABLE IF NOT EXISTS `analisa_kimias` (
 --
 
 INSERT INTO `analisa_kimias` (`id`, `cpp_head_id`, `ppq_id`, `ts_awal_1`, `ts_awal_2`, `ts_tengah_1`, `ts_tengah_2`, `ts_akhir_1`, `ts_akhir_2`, `ts_awal_avg`, `ts_tengah_avg`, `ts_akhir_avg`, `ph_awal`, `ph_tengah`, `ph_akhir`, `visko_awal`, `visko_tengah`, `visko_akhir`, `sensori_awal`, `sensori_tengah`, `sensori_akhir`, `jam_filling_awal`, `jam_filling_tengah`, `jam_filling_akhir`, `ts_oven_awal`, `ts_oven_tengah`, `ts_oven_akhir`, `kode_batch_standar`, `progress_status`, `analisa_kimia_status`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, NULL, 15.99, 15.99, 15.99, 16.00, 16.00, 16.00, 15.990, 16.000, 16.000, 6.79, 6.79, 6.79, '6.16', '6', '5.72', 'OK', 'OK', 'OK', '2020-07-27 18:17:25', '2020-07-27 21:16:54', '2020-07-28 01:40:38', NULL, NULL, NULL, 'tc0109a', 1, 1, 1, 1, NULL, '2020-07-28 06:06:48', '2020-07-28 06:38:02', NULL);
+(1, 1, NULL, 15.99, 15.99, 15.99, 16.00, 16.00, 16.00, 15.990, 16.000, 16.000, 6.79, 6.79, 6.79, '6.16', '6', '5.72', 'OK', 'OK', 'OK', '2020-07-27 18:17:25', '2020-07-27 21:16:54', '2020-07-28 01:40:38', NULL, NULL, NULL, 'tc0109a', 1, 1, 1, 1, NULL, '2020-07-28 06:06:48', '2020-07-28 06:38:02', NULL),
+(2, 2, NULL, 19.09, 12.90, 15.00, 15.00, 15.00, 15.00, 16.000, 15.000, 15.000, 6.80, 6.80, 6.80, '12109', '12109', '12091', 'OK', '#OK', '#OK', '2020-04-19 15:04:51', '2020-04-19 16:11:50', '2020-04-19 17:13:21', NULL, NULL, NULL, 'TC0401B', 1, 0, 1, 1, NULL, '2020-08-02 03:58:21', '2020-08-02 04:08:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -79,7 +81,7 @@ INSERT INTO `analisa_kimias` (`id`, `cpp_head_id`, `ppq_id`, `ts_awal_1`, `ts_aw
 -- Struktur dari tabel `analisa_mikro`
 --
 
-CREATE TABLE IF NOT EXISTS `analisa_mikro` (
+CREATE TABLE `analisa_mikro` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `cpp_head_id` bigint(20) DEFAULT NULL COMMENT 'connected to cpp head table',
   `tanggal_analisa` date DEFAULT NULL,
@@ -96,13 +98,20 @@ CREATE TABLE IF NOT EXISTS `analisa_mikro` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `analisa_mikro`
+--
+
+INSERT INTO `analisa_mikro` (`id`, `cpp_head_id`, `tanggal_analisa`, `progress_status`, `progress_status_30`, `progress_status_55`, `verifikasi_qc_release`, `analisa_mikro_status`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, '2020-08-02', 0, 0, 0, NULL, NULL, 1, 1, NULL, '2020-08-02 07:30:01', '2020-08-02 07:30:02', NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Struktur dari tabel `analisa_mikro_details`
 --
 
-CREATE TABLE IF NOT EXISTS `analisa_mikro_details` (
+CREATE TABLE `analisa_mikro_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `analisa_mikro_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa mikro table',
   `analisa_mikro_resampling_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa mikro table',
@@ -124,13 +133,97 @@ CREATE TABLE IF NOT EXISTS `analisa_mikro_details` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `analisa_mikro_details`
+--
+
+INSERT INTO `analisa_mikro_details` (`id`, `analisa_mikro_id`, `analisa_mikro_resampling_id`, `filling_machine_id`, `ppq_id`, `kode_sampel`, `jam_filling`, `suhu_preinkubasi`, `tpc`, `yeast`, `mold`, `ph`, `status`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, NULL, 1, NULL, 'A1', '2020-07-27 18:19:39', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:03', '2020-08-02 07:30:03', NULL),
+(2, 1, NULL, 1, NULL, 'A2', '2020-07-27 18:19:39', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:03', '2020-08-02 07:30:03', NULL),
+(3, 1, NULL, 1, NULL, 'G3', '2020-07-27 18:30:18', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:03', '2020-08-02 07:30:03', NULL),
+(4, 1, NULL, 1, NULL, 'G4', '2020-07-27 18:30:18', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:04', '2020-08-02 07:30:04', NULL),
+(5, 1, NULL, 1, NULL, 'G5', '2020-07-27 18:33:24', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:04', '2020-08-02 07:30:04', NULL),
+(6, 1, NULL, 1, NULL, 'G6', '2020-07-27 18:33:24', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:04', '2020-08-02 07:30:04', NULL),
+(7, 1, NULL, 1, NULL, 'G7', '2020-07-27 18:56:20', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:04', '2020-08-02 07:30:04', NULL),
+(8, 1, NULL, 1, NULL, 'G8', '2020-07-27 18:56:20', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:04', '2020-08-02 07:30:04', NULL),
+(9, 1, NULL, 1, NULL, 'G9', '2020-07-27 19:16:48', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:05', '2020-08-02 07:30:05', NULL),
+(10, 1, NULL, 1, NULL, 'G10', '2020-07-27 19:16:48', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:06', '2020-08-02 07:30:06', NULL),
+(11, 1, NULL, 2, NULL, 'A1', '2020-07-27 18:17:24', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:06', '2020-08-02 07:30:06', NULL),
+(12, 1, NULL, 2, NULL, 'A2', '2020-07-27 18:17:24', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:07', '2020-08-02 07:30:07', NULL),
+(13, 1, NULL, 2, NULL, 'R1', '2020-07-27 18:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:07', '2020-08-02 07:30:07', NULL),
+(14, 1, NULL, 2, NULL, 'R2', '2020-07-27 18:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:08', '2020-08-02 07:30:08', NULL),
+(15, 1, NULL, 2, NULL, 'B3', '2020-07-27 18:53:09', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:09', '2020-08-02 07:30:09', NULL),
+(16, 1, NULL, 2, NULL, 'B4', '2020-07-27 18:53:09', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:09', '2020-08-02 07:30:09', NULL),
+(17, 1, NULL, 2, NULL, 'C5', '2020-07-27 18:53:15', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:09', '2020-08-02 07:30:09', NULL),
+(18, 1, NULL, 2, NULL, 'C6', '2020-07-27 18:53:15', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:09', '2020-08-02 07:30:09', NULL),
+(19, 1, NULL, 2, NULL, 'R3', '2020-07-27 19:15:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:10', '2020-08-02 07:30:10', NULL),
+(20, 1, NULL, 2, NULL, 'R4', '2020-07-27 19:15:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:10', '2020-08-02 07:30:10', NULL),
+(21, 1, NULL, 2, NULL, 'G7', '2020-07-27 19:22:24', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:10', '2020-08-02 07:30:10', NULL),
+(22, 1, NULL, 2, NULL, 'G8', '2020-07-27 19:22:24', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:11', '2020-08-02 07:30:11', NULL),
+(23, 1, NULL, 2, NULL, 'R5', '2020-07-27 19:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:11', '2020-08-02 07:30:11', NULL),
+(24, 1, NULL, 2, NULL, 'R6', '2020-07-27 19:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:11', '2020-08-02 07:30:11', NULL),
+(25, 1, NULL, 2, NULL, 'G9', '2020-07-27 20:20:05', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:11', '2020-08-02 07:30:11', NULL),
+(26, 1, NULL, 2, NULL, 'G10', '2020-07-27 20:20:05', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:11', '2020-08-02 07:30:11', NULL),
+(27, 1, NULL, 2, NULL, 'R7', '2020-07-27 20:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:12', '2020-08-02 07:30:12', NULL),
+(28, 1, NULL, 2, NULL, 'R8', '2020-07-27 20:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:12', '2020-08-02 07:30:12', NULL),
+(29, 1, NULL, 2, NULL, 'G11', '2020-07-27 21:01:58', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:12', '2020-08-02 07:30:12', NULL),
+(30, 1, NULL, 2, NULL, 'G12', '2020-07-27 21:01:58', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:13', '2020-08-02 07:30:13', NULL),
+(31, 1, NULL, 2, NULL, 'B13', '2020-07-27 21:08:50', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:13', '2020-08-02 07:30:13', NULL),
+(32, 1, NULL, 2, NULL, 'B14', '2020-07-27 21:08:50', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:13', '2020-08-02 07:30:13', NULL),
+(33, 1, NULL, 2, NULL, 'C15', '2020-07-27 21:08:56', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:13', '2020-08-02 07:30:13', NULL),
+(34, 1, NULL, 2, NULL, 'C16', '2020-07-27 21:08:56', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:14', '2020-08-02 07:30:14', NULL),
+(35, 1, NULL, 2, NULL, 'R9', '2020-07-27 21:15:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:14', '2020-08-02 07:30:14', NULL),
+(36, 1, NULL, 2, NULL, 'R10', '2020-07-27 21:15:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:14', '2020-08-02 07:30:14', NULL),
+(37, 1, NULL, 2, NULL, 'D17', '2020-07-27 21:20:02', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:14', '2020-08-02 07:30:14', NULL),
+(38, 1, NULL, 2, NULL, 'D18', '2020-07-27 21:20:02', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:15', '2020-08-02 07:30:15', NULL),
+(39, 1, NULL, 2, NULL, 'E19', '2020-07-27 21:20:07', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:15', '2020-08-02 07:30:15', NULL),
+(40, 1, NULL, 2, NULL, 'E20', '2020-07-27 21:20:07', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:15', '2020-08-02 07:30:15', NULL),
+(41, 1, NULL, 2, NULL, 'G21', '2020-07-27 21:55:52', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:16', '2020-08-02 07:30:16', NULL),
+(42, 1, NULL, 2, NULL, 'G22', '2020-07-27 21:55:52', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:17', '2020-08-02 07:30:17', NULL),
+(43, 1, NULL, 2, NULL, 'G23', '2020-07-27 22:09:20', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:17', '2020-08-02 07:30:17', NULL),
+(44, 1, NULL, 2, NULL, 'G24', '2020-07-27 22:09:20', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:17', '2020-08-02 07:30:17', NULL),
+(45, 1, NULL, 2, NULL, 'R11', '2020-07-27 22:15:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:18', '2020-08-02 07:30:18', NULL),
+(46, 1, NULL, 2, NULL, 'R12', '2020-07-27 22:15:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:19', '2020-08-02 07:30:19', NULL),
+(47, 1, NULL, 2, NULL, 'R13', '2020-07-27 22:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:20', '2020-08-02 07:30:20', NULL),
+(48, 1, NULL, 2, NULL, 'R14', '2020-07-27 22:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:20', '2020-08-02 07:30:20', NULL),
+(49, 1, NULL, 2, NULL, 'R15', '2020-07-27 23:15:04', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:21', '2020-08-02 07:30:21', NULL),
+(50, 1, NULL, 2, NULL, 'R16', '2020-07-27 23:15:04', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:22', '2020-08-02 07:30:22', NULL),
+(51, 1, NULL, 2, NULL, 'B25', '2020-07-27 23:24:02', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:22', '2020-08-02 07:30:22', NULL),
+(52, 1, NULL, 2, NULL, 'B26', '2020-07-27 23:24:02', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:22', '2020-08-02 07:30:22', NULL),
+(53, 1, NULL, 2, NULL, 'C27', '2020-07-27 23:24:10', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:23', '2020-08-02 07:30:23', NULL),
+(54, 1, NULL, 2, NULL, 'C28', '2020-07-27 23:24:10', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:23', '2020-08-02 07:30:23', NULL),
+(55, 1, NULL, 2, NULL, 'R17', '2020-07-27 23:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:23', '2020-08-02 07:30:23', NULL),
+(56, 1, NULL, 2, NULL, 'R18', '2020-07-27 23:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:24', '2020-08-02 07:30:24', NULL),
+(57, 1, NULL, 2, NULL, 'D29', '2020-07-28 00:01:22', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:24', '2020-08-02 07:30:24', NULL),
+(58, 1, NULL, 2, NULL, 'D30', '2020-07-28 00:01:22', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:24', '2020-08-02 07:30:24', NULL),
+(59, 1, NULL, 2, NULL, 'E31', '2020-07-28 00:02:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:24', '2020-08-02 07:30:24', NULL),
+(60, 1, NULL, 2, NULL, 'E32', '2020-07-28 00:02:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:24', '2020-08-02 07:30:24', NULL),
+(61, 1, NULL, 2, NULL, 'R19', '2020-07-28 00:15:01', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:25', '2020-08-02 07:30:25', NULL),
+(62, 1, NULL, 2, NULL, 'R20', '2020-07-28 00:15:01', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:25', '2020-08-02 07:30:25', NULL),
+(63, 1, NULL, 2, NULL, 'R21', '2020-07-28 00:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:25', '2020-08-02 07:30:25', NULL),
+(64, 1, NULL, 2, NULL, 'R22', '2020-07-28 00:45:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:25', '2020-08-02 07:30:25', NULL),
+(65, 1, NULL, 2, NULL, 'R23', '2020-07-28 01:15:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:26', '2020-08-02 07:30:26', NULL),
+(66, 1, NULL, 2, NULL, 'R24', '2020-07-28 01:15:00', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:26', '2020-08-02 07:30:26', NULL),
+(67, 1, NULL, 2, NULL, 'B33', '2020-07-28 01:17:35', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:26', '2020-08-02 07:30:26', NULL),
+(68, 1, NULL, 2, NULL, 'B34', '2020-07-28 01:17:35', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:26', '2020-08-02 07:30:26', NULL),
+(69, 1, NULL, 2, NULL, 'C35', '2020-07-28 01:17:42', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:26', '2020-08-02 07:30:26', NULL),
+(70, 1, NULL, 2, NULL, 'C36', '2020-07-28 01:17:42', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:26', '2020-08-02 07:30:26', NULL),
+(71, 1, NULL, 2, NULL, 'H37', '2020-07-28 01:40:37', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:26', '2020-08-02 07:30:26', NULL),
+(72, 1, NULL, 2, NULL, 'H38', '2020-07-28 01:40:37', '30', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:27', '2020-08-02 07:30:27', NULL),
+(73, 1, NULL, 2, NULL, 'S1', '2020-07-27 18:17:25', '55', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:27', '2020-08-02 07:30:27', NULL),
+(74, 1, NULL, 2, NULL, 'S2', '2020-07-27 21:16:54', '55', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:27', '2020-08-02 07:30:27', NULL),
+(75, 1, NULL, 2, NULL, 'S3', '2020-07-28 01:40:38', '55', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:27', '2020-08-02 07:30:27', NULL),
+(76, 1, NULL, 1, NULL, 'S1', '2020-07-27 18:17:25', '55', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:28', '2020-08-02 07:30:28', NULL),
+(77, 1, NULL, 1, NULL, 'S2', '2020-07-27 21:16:54', '55', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:29', '2020-08-02 07:30:29', NULL),
+(78, 1, NULL, 1, NULL, 'S3', '2020-07-28 01:40:38', '55', NULL, NULL, NULL, NULL, '0', 1, NULL, NULL, '2020-08-02 07:30:30', '2020-08-02 07:30:30', NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Struktur dari tabel `analisa_mikro_resampling`
 --
 
-CREATE TABLE IF NOT EXISTS `analisa_mikro_resampling` (
+CREATE TABLE `analisa_mikro_resampling` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `analisa_mikro_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa mikro table',
   `ppq_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa mikro table',
@@ -152,15 +245,15 @@ CREATE TABLE IF NOT EXISTS `analisa_mikro_resampling` (
 -- Struktur dari tabel `corrective_actions`
 --
 
-CREATE TABLE IF NOT EXISTS `corrective_actions` (
+CREATE TABLE `corrective_actions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `follow_up_ppq_id` bigint(20) DEFAULT NULL COMMENT 'connected to table follow up ppq',
   `follow_up_rkj_id` bigint(20) DEFAULT NULL COMMENT 'connected to table follow up rkj',
-  `corrective_action` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ini diinput oleh qc tahanan dan engineering',
+  `corrective_action` text COLLATE utf8mb4_unicode_ci COMMENT 'ini diinput oleh qc tahanan dan engineering',
   `due_date_corrective_action` date DEFAULT NULL COMMENT 'ini diinput oleh qc tahanan dan engineering',
   `pic_corrective_action` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'diinput oleh qc tahanan dan enginerring',
   `status_corrective_action` enum('0','1') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '0 = on progress , 1 = done | diinput oleh qc tahanan or enginerring',
-  `verifikasi_corrective_action` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ini diinput oleh qc tahanan dan engineering',
+  `verifikasi_corrective_action` text COLLATE utf8mb4_unicode_ci COMMENT 'ini diinput oleh qc tahanan dan engineering',
   `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
   `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
   `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
@@ -175,7 +268,7 @@ CREATE TABLE IF NOT EXISTS `corrective_actions` (
 -- Struktur dari tabel `cpp_details`
 --
 
-CREATE TABLE IF NOT EXISTS `cpp_details` (
+CREATE TABLE `cpp_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `cpp_head_id` bigint(20) NOT NULL COMMENT 'connected to cpp_heads table',
   `wo_number_id` bigint(20) NOT NULL COMMENT 'connected to wo_numbers table',
@@ -204,7 +297,7 @@ INSERT INTO `cpp_details` (`id`, `cpp_head_id`, `wo_number_id`, `filling_machine
 -- Struktur dari tabel `cpp_heads`
 --
 
-CREATE TABLE IF NOT EXISTS `cpp_heads` (
+CREATE TABLE `cpp_heads` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) NOT NULL COMMENT 'connected to product table',
   `analisa_kimia_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa kimia table',
@@ -224,8 +317,8 @@ CREATE TABLE IF NOT EXISTS `cpp_heads` (
 --
 
 INSERT INTO `cpp_heads` (`id`, `product_id`, `analisa_kimia_id`, `analisa_mikro_id`, `packing_date`, `cpp_status`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 20, 1, NULL, '2020-07-28', '1', 1, 1, NULL, '2020-07-28 04:11:49', '2020-07-28 06:06:48', NULL),
-(2, 13, NULL, NULL, '2020-07-28', '0', 1, NULL, NULL, '2020-07-28 07:56:44', '2020-07-28 07:56:44', NULL);
+(1, 20, 1, 1, '2020-07-28', '1', 1, 1, NULL, '2020-07-28 04:11:49', '2020-08-02 07:30:02', NULL),
+(2, 13, 2, NULL, '2020-07-28', '1', 1, 1, NULL, '2020-07-28 07:56:44', '2020-08-02 03:58:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -233,7 +326,7 @@ INSERT INTO `cpp_heads` (`id`, `product_id`, `analisa_kimia_id`, `analisa_mikro_
 -- Struktur dari tabel `energy_monitorings`
 --
 
-CREATE TABLE IF NOT EXISTS `energy_monitorings` (
+CREATE TABLE `energy_monitorings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter table',
   `monitoring_value` double NOT NULL COMMENT 'angka meterannya',
@@ -252,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `energy_monitorings` (
 -- Struktur dari tabel `energy_usages`
 --
 
-CREATE TABLE IF NOT EXISTS `energy_usages` (
+CREATE TABLE `energy_usages` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_usage_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter usage table',
   `flowmeter_formula_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter table',
@@ -272,15 +365,15 @@ CREATE TABLE IF NOT EXISTS `energy_usages` (
 -- Struktur dari tabel `follow_up_ppqs`
 --
 
-CREATE TABLE IF NOT EXISTS `follow_up_ppqs` (
+CREATE TABLE `follow_up_ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `ppq_id` bigint(20) NOT NULL,
-  `jumlah_metode_sampling` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'column yang diinput oleh params Qc Release',
-  `hasil_analisa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'column yang diinput qc release jika status PI | diinput oleh qc tahanan as hasil evaluasi',
+  `jumlah_metode_sampling` text COLLATE utf8mb4_unicode_ci COMMENT 'column yang diinput oleh params Qc Release',
+  `hasil_analisa` text COLLATE utf8mb4_unicode_ci COMMENT 'column yang diinput qc release jika status PI | diinput oleh qc tahanan as hasil evaluasi',
   `status_produk` enum('0','1','2') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '0 = reject , 1 = release , 2 = relase partial | diinput oleh qc release or qc tahanan || status_produk',
   `tanggal_status_ppq` date DEFAULT NULL,
   `nomor_lbd` char(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'column yang diinput qc release jika status PI',
-  `root_cause` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ini diinput oleh tim engineering',
+  `root_cause` text COLLATE utf8mb4_unicode_ci COMMENT 'ini diinput oleh tim engineering',
   `kategori_case` enum('0','1') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '0 = case lama , 1 = case baru | diinput oleh tim engineering',
   `status_case` enum('0','1') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '0 = on progress , 1 = close | diinput oleh tim engineering',
   `status_follow_up_ppq` enum('0','1') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '0 = on progress , 1 = close ',
@@ -298,16 +391,16 @@ CREATE TABLE IF NOT EXISTS `follow_up_ppqs` (
 -- Struktur dari tabel `follow_up_rkjs`
 --
 
-CREATE TABLE IF NOT EXISTS `follow_up_rkjs` (
+CREATE TABLE `follow_up_rkjs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rkj_id` bigint(20) DEFAULT NULL COMMENT 'ini connect ke rkj table',
-  `dugaan_penyebab` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'column yang  diisi oleh RnD',
-  `hasil_analisa` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'column yang  diisi oleh RnD',
+  `dugaan_penyebab` text COLLATE utf8mb4_unicode_ci COMMENT 'column yang  diisi oleh RnD',
+  `hasil_analisa` text COLLATE utf8mb4_unicode_ci COMMENT 'column yang  diisi oleh RnD',
   `status_produk` enum('0','1','2') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '0 = reject , 1 = release , 2 = relase partial ',
   `tanggal_status_produk` date DEFAULT NULL,
   `status_follow_up_rkj` enum('0','1') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '0 = on progress , 1 = close ',
   `nomor_rkp` char(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'diinput oleh tim QA',
-  `hasil_investigasi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'diisi oleh tim QA',
+  `hasil_investigasi` text COLLATE utf8mb4_unicode_ci COMMENT 'diisi oleh tim QA',
   `tanggal_loi` date DEFAULT NULL COMMENT 'diisi oleh tim QA',
   `status_case` enum('0','1') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '0 = On progress , 1 = Done',
   `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
@@ -324,7 +417,7 @@ CREATE TABLE IF NOT EXISTS `follow_up_rkjs` (
 -- Struktur dari tabel `palets`
 --
 
-CREATE TABLE IF NOT EXISTS `palets` (
+CREATE TABLE `palets` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `cpp_detail_id` bigint(20) NOT NULL COMMENT 'connected to cpp detail tabel',
   `palet` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -336,7 +429,7 @@ CREATE TABLE IF NOT EXISTS `palets` (
   `analisa_mikro_55_status` enum('0','1','2','3') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bar_number` char(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bar_status` char(5) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bar_note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bar_note` text COLLATE utf8mb4_unicode_ci,
   `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
   `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
   `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
@@ -411,7 +504,7 @@ INSERT INTO `palets` (`id`, `cpp_detail_id`, `palet`, `start`, `end`, `jumlah_bo
 -- Struktur dari tabel `palet_ppqs`
 --
 
-CREATE TABLE IF NOT EXISTS `palet_ppqs` (
+CREATE TABLE `palet_ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `ppq_id` bigint(20) NOT NULL COMMENT 'connected to ppq table',
   `palet_id` bigint(20) NOT NULL COMMENT 'connected to palet table',
@@ -423,13 +516,76 @@ CREATE TABLE IF NOT EXISTS `palet_ppqs` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `palet_ppqs`
+--
+
+INSERT INTO `palet_ppqs` (`id`, `ppq_id`, `palet_id`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 3, 332, 1, NULL, NULL, '2020-08-02 07:24:32', '2020-08-02 07:24:32', NULL),
+(2, 3, 333, 1, NULL, NULL, '2020-08-02 07:24:33', '2020-08-02 07:24:33', NULL),
+(3, 3, 334, 1, NULL, NULL, '2020-08-02 07:24:33', '2020-08-02 07:24:33', NULL),
+(4, 3, 335, 1, NULL, NULL, '2020-08-02 07:24:33', '2020-08-02 07:24:33', NULL),
+(5, 3, 336, 1, NULL, NULL, '2020-08-02 07:24:34', '2020-08-02 07:24:34', NULL),
+(6, 3, 338, 1, NULL, NULL, '2020-08-02 07:24:34', '2020-08-02 07:24:34', NULL),
+(7, 3, 339, 1, NULL, NULL, '2020-08-02 07:24:35', '2020-08-02 07:24:35', NULL),
+(8, 3, 340, 1, NULL, NULL, '2020-08-02 07:24:35', '2020-08-02 07:24:35', NULL),
+(9, 3, 342, 1, NULL, NULL, '2020-08-02 07:24:35', '2020-08-02 07:24:35', NULL),
+(10, 3, 343, 1, NULL, NULL, '2020-08-02 07:24:36', '2020-08-02 07:24:36', NULL),
+(11, 3, 344, 1, NULL, NULL, '2020-08-02 07:24:36', '2020-08-02 07:24:36', NULL),
+(12, 3, 345, 1, NULL, NULL, '2020-08-02 07:24:36', '2020-08-02 07:24:36', NULL),
+(13, 3, 346, 1, NULL, NULL, '2020-08-02 07:24:36', '2020-08-02 07:24:36', NULL),
+(14, 3, 349, 1, NULL, NULL, '2020-08-02 07:24:36', '2020-08-02 07:24:36', NULL),
+(15, 3, 350, 1, NULL, NULL, '2020-08-02 07:24:37', '2020-08-02 07:24:37', NULL),
+(16, 3, 351, 1, NULL, NULL, '2020-08-02 07:24:37', '2020-08-02 07:24:37', NULL),
+(17, 3, 352, 1, NULL, NULL, '2020-08-02 07:24:37', '2020-08-02 07:24:37', NULL),
+(18, 3, 353, 1, NULL, NULL, '2020-08-02 07:24:37', '2020-08-02 07:24:37', NULL),
+(19, 3, 354, 1, NULL, NULL, '2020-08-02 07:24:37', '2020-08-02 07:24:37', NULL),
+(20, 4, 332, 1, NULL, NULL, '2020-08-02 07:24:46', '2020-08-02 07:24:46', NULL),
+(21, 4, 333, 1, NULL, NULL, '2020-08-02 07:24:46', '2020-08-02 07:24:46', NULL),
+(22, 4, 334, 1, NULL, NULL, '2020-08-02 07:24:46', '2020-08-02 07:24:46', NULL),
+(23, 4, 335, 1, NULL, NULL, '2020-08-02 07:24:46', '2020-08-02 07:24:46', NULL),
+(24, 4, 336, 1, NULL, NULL, '2020-08-02 07:24:47', '2020-08-02 07:24:47', NULL),
+(25, 4, 338, 1, NULL, NULL, '2020-08-02 07:24:47', '2020-08-02 07:24:47', NULL),
+(26, 4, 339, 1, NULL, NULL, '2020-08-02 07:24:47', '2020-08-02 07:24:47', NULL),
+(27, 4, 340, 1, NULL, NULL, '2020-08-02 07:24:47', '2020-08-02 07:24:47', NULL),
+(28, 4, 342, 1, NULL, NULL, '2020-08-02 07:24:47', '2020-08-02 07:24:47', NULL),
+(29, 4, 343, 1, NULL, NULL, '2020-08-02 07:24:47', '2020-08-02 07:24:47', NULL),
+(30, 4, 344, 1, NULL, NULL, '2020-08-02 07:24:47', '2020-08-02 07:24:47', NULL),
+(31, 4, 345, 1, NULL, NULL, '2020-08-02 07:24:48', '2020-08-02 07:24:48', NULL),
+(32, 4, 346, 1, NULL, NULL, '2020-08-02 07:24:48', '2020-08-02 07:24:48', NULL),
+(33, 4, 349, 1, NULL, NULL, '2020-08-02 07:24:48', '2020-08-02 07:24:48', NULL),
+(34, 4, 350, 1, NULL, NULL, '2020-08-02 07:24:48', '2020-08-02 07:24:48', NULL),
+(35, 4, 351, 1, NULL, NULL, '2020-08-02 07:24:48', '2020-08-02 07:24:48', NULL),
+(36, 4, 352, 1, NULL, NULL, '2020-08-02 07:24:48', '2020-08-02 07:24:48', NULL),
+(37, 4, 353, 1, NULL, NULL, '2020-08-02 07:24:48', '2020-08-02 07:24:48', NULL),
+(38, 4, 354, 1, NULL, NULL, '2020-08-02 07:24:48', '2020-08-02 07:24:48', NULL),
+(39, 5, 332, 1, NULL, NULL, '2020-08-02 07:28:03', '2020-08-02 07:28:03', NULL),
+(40, 5, 333, 1, NULL, NULL, '2020-08-02 07:28:03', '2020-08-02 07:28:03', NULL),
+(41, 5, 334, 1, NULL, NULL, '2020-08-02 07:28:03', '2020-08-02 07:28:03', NULL),
+(42, 5, 335, 1, NULL, NULL, '2020-08-02 07:28:04', '2020-08-02 07:28:04', NULL),
+(43, 5, 336, 1, NULL, NULL, '2020-08-02 07:28:04', '2020-08-02 07:28:04', NULL),
+(44, 5, 338, 1, NULL, NULL, '2020-08-02 07:28:04', '2020-08-02 07:28:04', NULL),
+(45, 5, 339, 1, NULL, NULL, '2020-08-02 07:28:04', '2020-08-02 07:28:04', NULL),
+(46, 5, 340, 1, NULL, NULL, '2020-08-02 07:28:04', '2020-08-02 07:28:04', NULL),
+(47, 5, 342, 1, NULL, NULL, '2020-08-02 07:28:05', '2020-08-02 07:28:05', NULL),
+(48, 5, 343, 1, NULL, NULL, '2020-08-02 07:28:05', '2020-08-02 07:28:05', NULL),
+(49, 5, 344, 1, NULL, NULL, '2020-08-02 07:28:05', '2020-08-02 07:28:05', NULL),
+(50, 5, 345, 1, NULL, NULL, '2020-08-02 07:28:05', '2020-08-02 07:28:05', NULL),
+(51, 5, 346, 1, NULL, NULL, '2020-08-02 07:28:05', '2020-08-02 07:28:05', NULL),
+(52, 5, 349, 1, NULL, NULL, '2020-08-02 07:28:06', '2020-08-02 07:28:06', NULL),
+(53, 5, 350, 1, NULL, NULL, '2020-08-02 07:28:06', '2020-08-02 07:28:06', NULL),
+(54, 5, 351, 1, NULL, NULL, '2020-08-02 07:28:06', '2020-08-02 07:28:06', NULL),
+(55, 5, 352, 1, NULL, NULL, '2020-08-02 07:28:06', '2020-08-02 07:28:06', NULL),
+(56, 5, 353, 1, NULL, NULL, '2020-08-02 07:28:06', '2020-08-02 07:28:06', NULL),
+(57, 5, 354, 1, NULL, NULL, '2020-08-02 07:28:06', '2020-08-02 07:28:06', NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Struktur dari tabel `ppqs`
 --
 
-CREATE TABLE IF NOT EXISTS `ppqs` (
+CREATE TABLE `ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rpd_filling_detail_pi_id` bigint(20) DEFAULT NULL COMMENT 'connected to table rpd filling detail pi untuk patokan trigger pembuatan PPQ pada event OK setelah #OK',
   `cpp_head_id` bigint(20) DEFAULT NULL COMMENT 'connected to table cpphead',
@@ -450,21 +606,32 @@ CREATE TABLE IF NOT EXISTS `ppqs` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `ppqs`
+--
+
+INSERT INTO `ppqs` (`id`, `rpd_filling_detail_pi_id`, `cpp_head_id`, `kategori_ppq_id`, `nomor_ppq`, `ppq_date`, `jam_awal_ppq`, `jam_akhir_ppq`, `jumlah_pack`, `alasan`, `detail_titik_ppq`, `status_akhir`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 838, NULL, 1, '001/PPQ/VIII/2020', '2020-08-01', '2020-08-01 18:34:02', '2020-08-01 18:42:08', 0, 'alasannya adalah disini', 'dimana coba', '5', 1, NULL, NULL, '2020-08-01 11:51:14', '2020-08-01 11:51:14', NULL),
+(2, NULL, 2, 9, '002/PPQ/VIII/2020', '2020-08-02', '2020-04-19 15:04:51', '2020-04-19 17:13:21', 63840, 'Palet Awal : OK, Palet Tengah :  Sensori Tengah #OK , Palet Akhir :  Sensori Akhir #OK', 'PPQ Disana', '0', 1, NULL, NULL, '2020-08-02 07:22:19', '2020-08-02 07:22:19', NULL),
+(3, NULL, 2, 9, '002/PPQ/VIII/2020', '2020-08-02', '2020-04-19 15:04:51', '2020-04-19 17:13:21', 63840, 'Palet Awal : OK, Palet Tengah :  Sensori Tengah #OK , Palet Akhir :  Sensori Akhir #OK', 'PPQ Disana', '0', 1, NULL, NULL, '2020-08-02 07:24:32', '2020-08-02 07:24:32', NULL),
+(4, NULL, 2, 9, '002/PPQ/VIII/2020', '2020-08-02', '2020-04-19 15:04:51', '2020-04-19 17:13:21', 63840, 'Palet Awal : OK, Palet Tengah :  Sensori Tengah #OK , Palet Akhir :  Sensori Akhir #OK', 'PPQ Disana', '0', 1, NULL, NULL, '2020-08-02 07:24:46', '2020-08-02 07:24:46', NULL),
+(5, NULL, 2, 9, '003/PPQ/VIII/2020', '2020-08-02', '2020-04-19 15:04:51', '2020-04-19 17:13:21', 63840, 'Palet Awal : OK, Palet Tengah :  Sensori Tengah #OK , Palet Akhir :  Sensori Akhir #OK', 'OK', '0', 1, NULL, NULL, '2020-08-02 07:28:03', '2020-08-02 07:28:03', NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Struktur dari tabel `preventive_actions`
 --
 
-CREATE TABLE IF NOT EXISTS `preventive_actions` (
+CREATE TABLE `preventive_actions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `follow_up_ppq_id` bigint(20) DEFAULT NULL COMMENT 'connected to table follow up ppq',
   `follow_up_rkj_id` bigint(20) DEFAULT NULL COMMENT 'connected to table follow up rkj',
-  `preventive_action` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'diisi oleh tim eng atau qc tahanan',
+  `preventive_action` text COLLATE utf8mb4_unicode_ci COMMENT 'diisi oleh tim eng atau qc tahanan',
   `due_date_preventive_action` date DEFAULT NULL COMMENT 'ini diinput oleh qc tahanan dan engineering',
   `pic_preventive_action` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'diinput oleh qc tahanan dan enginerring dan QA',
   `status_preventive_action` enum('0','1') COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '0 = on progress , 1 = done | diinput oleh qc tahanan or enginerring',
-  `verifikasi_preventive_action` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'diisi oleh tim eng atau qc tahanan',
+  `verifikasi_preventive_action` text COLLATE utf8mb4_unicode_ci COMMENT 'diisi oleh tim eng atau qc tahanan',
   `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
   `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
   `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
@@ -479,12 +646,12 @@ CREATE TABLE IF NOT EXISTS `preventive_actions` (
 -- Struktur dari tabel `psrs`
 --
 
-CREATE TABLE IF NOT EXISTS `psrs` (
+CREATE TABLE `psrs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `wo_number_id` bigint(20) NOT NULL COMMENT 'connected to wo_number table',
   `psr_number` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `psr_qty` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `note` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text COLLATE utf8mb4_unicode_ci,
   `psr_status` enum('0','1','2','3') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '  0 = draft psr, 1 = ready to print, 2 = On Progress Penyelia, 3 = Closed By penyelia ',
   `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
   `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
@@ -499,7 +666,8 @@ CREATE TABLE IF NOT EXISTS `psrs` (
 --
 
 INSERT INTO `psrs` (`id`, `wo_number_id`, `psr_number`, `psr_qty`, `note`, `psr_status`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(2, 1, '001/PSR/FQC/VII/2020', '277', 'Sampel PSR QC', '2', 1, 1, NULL, '2020-07-28 04:48:11', '2020-07-28 04:59:42', NULL);
+(2, 1, '001/PSR/FQC/VII/2020', '277', 'Sampel PSR QC', '2', 1, 1, NULL, '2020-07-28 04:48:11', '2020-07-28 04:59:42', NULL),
+(3, 2, '002/PSR/FQC/VIII/2020', '412', NULL, '0', 1, NULL, NULL, '2020-08-01 11:40:26', '2020-08-01 11:40:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -507,7 +675,7 @@ INSERT INTO `psrs` (`id`, `wo_number_id`, `psr_number`, `psr_qty`, `note`, `psr_
 -- Struktur dari tabel `rkjs`
 --
 
-CREATE TABLE IF NOT EXISTS `rkjs` (
+CREATE TABLE `rkjs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `ppq_id` bigint(20) DEFAULT NULL COMMENT 'connect to ppq_table',
   `nomor_rkj` char(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -527,7 +695,7 @@ CREATE TABLE IF NOT EXISTS `rkjs` (
 -- Struktur dari tabel `rpd_filling_detail_at_events`
 --
 
-CREATE TABLE IF NOT EXISTS `rpd_filling_detail_at_events` (
+CREATE TABLE `rpd_filling_detail_at_events` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rpd_filling_head_id` bigint(20) NOT NULL COMMENT 'Connected to rpd filling head table',
   `wo_number_id` bigint(20) NOT NULL COMMENT 'Connected to Wo Number table',
@@ -548,10 +716,10 @@ CREATE TABLE IF NOT EXISTS `rpd_filling_detail_at_events` (
   `ls_sa_sealing_quality_strip` enum('OK','#OK','-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ls_short_stop_quality` enum('OK','#OK','-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sa_short_stop_quality` enum('OK','#OK','-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `keterangan` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan` text COLLATE utf8mb4_unicode_ci,
   `status_akhir` enum('OK','#OK','-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `verifikasi` enum('0','1') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `keterangan_verifikasi` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keterangan_verifikasi` text COLLATE utf8mb4_unicode_ci,
   `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
   `updated_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
   `deleted_by` bigint(20) DEFAULT NULL COMMENT 'connected to user table',
@@ -567,7 +735,9 @@ CREATE TABLE IF NOT EXISTS `rpd_filling_detail_at_events` (
 INSERT INTO `rpd_filling_detail_at_events` (`id`, `rpd_filling_head_id`, `wo_number_id`, `filling_machine_id`, `filling_sampel_code_id`, `verifier_id`, `palet_id`, `filling_date`, `filling_time`, `ls_sa_sealing_quality`, `ls_sa_proportion`, `sideway_sealing_alignment`, `overlap`, `package_length`, `paper_splice_sealing_quality`, `no_kk`, `no_md`, `ls_sa_sealing_quality_strip`, `ls_short_stop_quality`, `sa_short_stop_quality`, `keterangan`, `status_akhir`, `verifikasi`, `keterangan_verifikasi`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (30, 1, 1, 2, 23, NULL, 0, '2020-07-27', '23:24:02', 'OK', '40:60', 0.70, 16.00, 14.48, 'OK', NULL, NULL, NULL, NULL, NULL, NULL, '#OK', NULL, NULL, 88, 88, NULL, '2020-07-27 02:32:53', '2020-07-27 02:39:18', NULL),
 (31, 1, 1, 2, 27, NULL, 316, '2020-07-28', '00:01:22', 'OK', '40:60', NULL, NULL, NULL, NULL, NULL, NULL, 'OK', NULL, NULL, NULL, 'OK', NULL, NULL, 88, 88, NULL, '2020-07-27 03:19:20', '2020-07-27 03:22:08', NULL),
-(32, 1, 1, 2, 23, NULL, 316, '2020-07-28', '01:17:35', 'OK', '40:60', 0.20, 14.36, 115.30, 'OK', NULL, NULL, NULL, NULL, NULL, NULL, '#OK', NULL, NULL, 88, 88, NULL, '2020-07-27 04:24:17', '2020-07-27 04:31:37', NULL);
+(32, 1, 1, 2, 23, NULL, 316, '2020-07-28', '01:17:35', 'OK', '40:60', 0.20, 14.36, 115.30, 'OK', NULL, NULL, NULL, NULL, NULL, NULL, '#OK', NULL, NULL, 88, 88, NULL, '2020-07-27 04:24:17', '2020-07-27 04:31:37', NULL),
+(33, 2, 2, 1, 2, NULL, 0, '2020-08-01', '18:25:59', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, '2020-08-01 11:26:16', '2020-08-01 11:29:35', '2020-08-01 11:29:35'),
+(34, 2, 2, 1, 2, NULL, 0, '2020-08-01', '18:29:38', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, '2020-08-01 11:29:52', '2020-08-01 11:29:59', '2020-08-01 11:29:59');
 
 -- --------------------------------------------------------
 
@@ -575,7 +745,7 @@ INSERT INTO `rpd_filling_detail_at_events` (`id`, `rpd_filling_head_id`, `wo_num
 -- Struktur dari tabel `rpd_filling_detail_pis`
 --
 
-CREATE TABLE IF NOT EXISTS `rpd_filling_detail_pis` (
+CREATE TABLE `rpd_filling_detail_pis` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rpd_filling_head_id` bigint(20) NOT NULL COMMENT 'Connected to rpd filling head table',
   `wo_number_id` bigint(20) NOT NULL COMMENT 'Connected to Wo Number table',
@@ -604,7 +774,7 @@ CREATE TABLE IF NOT EXISTS `rpd_filling_detail_pis` (
   `dye_test` enum('OK','#OK','-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `residu_h2o2` enum('OK','#OK','-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `prod_code_and_no_md` enum('OK','#OK','-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `correction` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `correction` text COLLATE utf8mb4_unicode_ci,
   `dissolving_test` enum('OK','#OK','-') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status_akhir` enum('OK','#OK') COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_by` bigint(20) NOT NULL COMMENT 'connected to user table',
@@ -769,7 +939,9 @@ INSERT INTO `rpd_filling_detail_pis` (`id`, `rpd_filling_head_id`, `wo_number_id
 (830, 2, 2, 2, 41, '2020-07-28', '12:30:00', 221.43, 222.56, 4.11, '40:60', 202, 200, 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', '-', NULL, 'OK', 38, 38, NULL, '2020-07-27 15:32:51', '2020-07-27 15:34:48', NULL),
 (831, 2, 2, 2, 40, '2020-07-28', '12:45:00', 221.84, 223.24, 4.28, '40:60', 200, 200, 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', '-', NULL, 'OK', 38, 38, NULL, '2020-07-27 15:45:41', '2020-07-27 15:45:57', NULL),
 (832, 2, 2, 2, 41, '2020-07-28', '13:00:00', 222.70, 221.29, 4.30, '40:60', 202, 200, 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', '-', NULL, 'OK', 38, 38, NULL, '2020-07-27 16:12:55', '2020-07-27 16:13:32', NULL),
-(833, 2, 2, 2, 39, '2020-07-28', '13:05:43', 221.18, 223.24, 4.34, '40:60', 200, 202, 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', '-', NULL, 'OK', 38, 38, NULL, '2020-07-27 16:13:10', '2020-07-27 16:14:20', NULL);
+(833, 2, 2, 2, 39, '2020-07-28', '13:05:43', 221.18, 223.24, 4.34, '40:60', 200, 202, 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', 'OK', '-', NULL, 'OK', 38, 38, NULL, '2020-07-27 16:13:10', '2020-07-27 16:14:20', NULL),
+(834, 2, 2, 1, 2, '2020-08-01', '18:25:59', 0.00, 0.00, 0.00, '-', 0, 0, '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', NULL, 'OK', 1, 1, 1, '2020-08-01 11:26:16', '2020-08-01 11:29:35', '2020-08-01 11:29:35'),
+(835, 2, 2, 1, 2, '2020-08-01', '18:29:38', 220.09, 200.90, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, '2020-08-01 11:29:52', '2020-08-01 11:30:00', '2020-08-01 11:30:00');
 
 -- --------------------------------------------------------
 
@@ -777,7 +949,7 @@ INSERT INTO `rpd_filling_detail_pis` (`id`, `rpd_filling_head_id`, `wo_number_id
 -- Struktur dari tabel `rpd_filling_heads`
 --
 
-CREATE TABLE IF NOT EXISTS `rpd_filling_heads` (
+CREATE TABLE `rpd_filling_heads` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) NOT NULL COMMENT 'connected to product table',
   `start_filling_date` date NOT NULL,
@@ -796,7 +968,8 @@ CREATE TABLE IF NOT EXISTS `rpd_filling_heads` (
 
 INSERT INTO `rpd_filling_heads` (`id`, `product_id`, `start_filling_date`, `rpd_status`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 20, '2020-07-28', '1', 1, 1, NULL, '2020-07-28 02:51:20', '2020-07-28 04:48:11', NULL),
-(2, 13, '2020-07-28', '0', 1, NULL, NULL, '2020-07-28 07:11:57', '2020-07-28 07:11:57', NULL);
+(2, 13, '2020-07-28', '1', 1, 1, NULL, '2020-07-28 07:11:57', '2020-08-01 11:40:26', NULL),
+(4, 13, '2020-08-01', '0', 1, NULL, NULL, '2020-08-01 12:37:54', '2020-08-01 12:37:54', NULL);
 
 -- --------------------------------------------------------
 
@@ -804,7 +977,7 @@ INSERT INTO `rpd_filling_heads` (`id`, `product_id`, `start_filling_date`, `rpd_
 -- Struktur dari tabel `wo_numbers`
 --
 
-CREATE TABLE IF NOT EXISTS `wo_numbers` (
+CREATE TABLE `wo_numbers` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `plan_id` bigint(20) NOT NULL COMMENT 'connected to plan table',
   `product_id` bigint(20) NOT NULL COMMENT 'connected to product table',
@@ -818,9 +991,9 @@ CREATE TABLE IF NOT EXISTS `wo_numbers` (
   `plan_batch_size` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `actual_batch_size` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `completion_date` date DEFAULT NULL,
-  `explanation_1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `explanation_2` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `explanation_3` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `explanation_1` text COLLATE utf8mb4_unicode_ci,
+  `explanation_2` text COLLATE utf8mb4_unicode_ci,
+  `explanation_3` text COLLATE utf8mb4_unicode_ci,
   `formula_revision` char(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `wo_status` enum('0','1','2','3','4','5','6') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0' COMMENT '	0 = Pending ( WIP Mixing ), 1 = On Progress Mixing , 2 = WIP Fillpack , 3 = In Progress Fillpack , 4 = Done Fillpack ( Waiting For Close ) , 5 = Closed, 6 = Canceled',
   `upload_status` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '0 = Draft, 1 = close',
@@ -838,8 +1011,8 @@ CREATE TABLE IF NOT EXISTS `wo_numbers` (
 
 INSERT INTO `wo_numbers` (`id`, `plan_id`, `product_id`, `rpd_filling_head_id`, `cpp_head_id`, `wo_number`, `production_plan_date`, `production_realisation_date`, `expired_date`, `fillpack_date`, `plan_batch_size`, `actual_batch_size`, `completion_date`, `explanation_1`, `explanation_2`, `explanation_3`, `formula_revision`, `wo_status`, `upload_status`, `created_by`, `updated_by`, `deleted_by`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 3, 20, 1, 1, 'G2007214005', '2020-07-23', '2020-07-27', '2021-07-27', '2020-07-28', '9969.25', NULL, NULL, '-', '-', '-', '-', '5', '1', 1, 1, NULL, NULL, '2020-07-28 07:17:55', NULL),
-(2, 3, 13, 2, 2, 'G2007214007', '2020-07-23', '2020-07-27', '2021-07-27', '2020-07-28', '9956.565', NULL, NULL, '-', '-', '-', 'FORMULA PHANTOM HILO RTD SCHOOL CHOCOLATE 200ML ( AR/34.44)', '3', '1', 1, 1, NULL, NULL, '2020-07-28 07:56:44', NULL),
-(3, 3, 13, NULL, NULL, 'G2007214008', '2020-07-23', '2020-07-27', NULL, NULL, '9956.565', NULL, NULL, '-', '-', '-', 'FORMULA PHANTOM HILO RTD SCHOOL CHOCOLATE 200ML ( AR/34.44)', '2', '1', 1, 1, NULL, NULL, '2020-07-28 07:11:41', NULL),
+(2, 3, 13, 2, 2, 'G2007214007', '2020-07-23', '2020-07-27', '2021-07-27', '2020-07-28', '9956.565', NULL, NULL, '-', '-', '-', 'FORMULA PHANTOM HILO RTD SCHOOL CHOCOLATE 200ML ( AR/34.44)', '5', '1', 1, 1, NULL, NULL, '2020-08-02 03:56:48', NULL),
+(3, 3, 13, 4, NULL, 'G2007214008', '2020-07-23', '2020-07-27', NULL, '2020-08-01', '9956.565', NULL, NULL, '-', '-', '-', 'FORMULA PHANTOM HILO RTD SCHOOL CHOCOLATE 200ML ( AR/34.44)', '3', '1', 1, 1, NULL, NULL, '2020-08-01 12:37:55', NULL),
 (4, 3, 4, NULL, NULL, 'G2007708011', '2020-07-28', NULL, NULL, NULL, '5887.26', NULL, NULL, '-', '-', '-', 'FORMULA PHANTOM HB GREEK CLASSIC 24X200ML (SENTUL) ( 0.5/FGHB09)', '0', '1', 1, 1, NULL, NULL, '2020-07-28 02:43:00', NULL),
 (5, 3, 4, NULL, NULL, 'G2007708006', '2020-07-28', NULL, NULL, NULL, '5887.26', NULL, NULL, '-', '-', '-', 'FORMULA PHANTOM HB GREEK CLASSIC 24X200ML (SENTUL) ( 0.5/FGHB09)', '0', '1', 1, 1, NULL, NULL, '2020-07-28 02:43:00', NULL),
 (6, 3, 17, NULL, NULL, 'G2008216001', '2020-07-29', NULL, NULL, NULL, '14026.986', NULL, NULL, '-', '-', '-', 'FORMULA PHANTOM HILO TEEN RTD COFFEE TIRAMISU ( AM/34.48)', '0', '1', 1, 1, NULL, NULL, '2020-07-28 02:43:00', NULL);
@@ -982,19 +1155,19 @@ ALTER TABLE `wo_numbers`
 -- AUTO_INCREMENT untuk tabel `analisa_kimias`
 --
 ALTER TABLE `analisa_kimias`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `analisa_mikro`
 --
 ALTER TABLE `analisa_mikro`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `analisa_mikro_details`
 --
 ALTER TABLE `analisa_mikro_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT untuk tabel `analisa_mikro_resampling`
@@ -1054,13 +1227,13 @@ ALTER TABLE `palets`
 -- AUTO_INCREMENT untuk tabel `palet_ppqs`
 --
 ALTER TABLE `palet_ppqs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT untuk tabel `ppqs`
 --
 ALTER TABLE `ppqs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `preventive_actions`
@@ -1072,7 +1245,7 @@ ALTER TABLE `preventive_actions`
 -- AUTO_INCREMENT untuk tabel `psrs`
 --
 ALTER TABLE `psrs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `rkjs`
@@ -1084,19 +1257,19 @@ ALTER TABLE `rkjs`
 -- AUTO_INCREMENT untuk tabel `rpd_filling_detail_at_events`
 --
 ALTER TABLE `rpd_filling_detail_at_events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT untuk tabel `rpd_filling_detail_pis`
 --
 ALTER TABLE `rpd_filling_detail_pis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=834;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=839;
 
 --
 -- AUTO_INCREMENT untuk tabel `rpd_filling_heads`
 --
 ALTER TABLE `rpd_filling_heads`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `wo_numbers`
