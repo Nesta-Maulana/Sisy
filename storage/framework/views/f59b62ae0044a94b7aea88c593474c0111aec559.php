@@ -2,7 +2,7 @@
 <?php $__env->startSection('title'); ?>
     Kelola Menu
 <?php $__env->stopSection(); ?>
-<?php $__env->startSection('menu-open-pengaturan-aplikasi'); ?> 
+<?php $__env->startSection('menu-open-general-setting'); ?> 
     active menu-open
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('active-master-app-manage-menu'); ?> 

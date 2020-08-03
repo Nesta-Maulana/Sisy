@@ -5,6 +5,10 @@
 @section('menu-open-master-data') 
     active menu-open
 @endsection
+
+@section('menu-open-emon') 
+    active menu-open
+@endsection
 @section('active-master-app-master-data-manage-flowmeter-location-permissions') 
     active 
 @endsection

@@ -5,6 +5,10 @@
 @section('menu-open-master-data') 
     active menu-open
 @endsection
+
+@section('menu-open-rollie') 
+    active menu-open
+@endsection
 @section('active-master-app-master-data-manage-filling-machines') 
     active 
 @endsection
@@ -92,7 +96,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button class="btn btn-outline-primary" onclick="editFillingMachineData('{{ app('App\Http\Controllers\ResourceController')->encrypt($fillingMachine->id) }}')"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-outline-primary" onclick="editFillingMachineData('{{ app('App\Http\Controllers\ResourceController')->encrypt($fillingMachine->id) }}')"><i class="fas fa-edit"></i></button>
                                     </td>
                                 </tr>
                                 @php

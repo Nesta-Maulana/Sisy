@@ -5,6 +5,10 @@
 <?php $__env->startSection('menu-open-master-data'); ?> 
     active menu-open
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('menu-open-rollie'); ?> 
+    active menu-open
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('active-master-app-master-data-manage-filling-machines'); ?> 
     active 
 <?php $__env->stopSection(); ?>
@@ -93,7 +97,7 @@
                                         <?php endif; ?>
                                     </td>
                                     <td>
-                                        <button class="btn btn-outline-primary" onclick="editFillingMachineData('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($fillingMachine->id)); ?>')"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-outline-primary" onclick="editFillingMachineData('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($fillingMachine->id)); ?>')"><i class="fas fa-edit"></i></button>
                                     </td>
                                 </tr>
                                 <?php

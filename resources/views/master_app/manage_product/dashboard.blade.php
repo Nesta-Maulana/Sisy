@@ -1,8 +1,12 @@
 @extends('layouts.app')
 @section('title')
-    Data Produk
+    Data Master | Data Produk
 @endsection
 @section('menu-open-master-data') 
+    active menu-open
+@endsection
+
+@section('menu-open-rollie') 
     active menu-open
 @endsection
 @section('active-master-app-master-data-manage-products') 
@@ -171,7 +175,7 @@
                                     @foreach ($products as $product)
                                         <tr>
                                             <td>
-                                                <button class="form-control btn btn-outline-primary" onclick="editProductData('{{ app('App\Http\Controllers\ResourceController')->encrypt($product->id) }}')"><i class="fa fa-pencil"></i></button>
+                                                <button class="form-control btn btn-outline-primary" onclick="editProductData('{{ app('App\Http\Controllers\ResourceController')->encrypt($product->id) }}')"><i class="fas fa-edit"></i></button>
                                             </td>
                                             <td>{{ $product->subbrand->subbrand_name }}</td>
                                             <td>{{ $product->productType->product_type }}</td>

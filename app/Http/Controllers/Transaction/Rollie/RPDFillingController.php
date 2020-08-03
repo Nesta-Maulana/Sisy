@@ -323,7 +323,7 @@ class RPDFillingController extends ResourceController
                     $filling_sampel_code        = FillingSampelCode::find($filling_sampel_code_id);
                     $filling_machine    = FillingMachine::find($filling_machine_id);
                     /*  disini dilakukan pengecekan apakah sampel tsb adalah sampel F dan diambil dari Mesin filling TBA atau A3 bukan */
-                    if ($filling_sampel_code->pi && ($filling_machine->filling_machine_name == 'TBA' || $filling_machine->filling_machine_name == 'A3') ) 
+                    if ($filling_sampel_code->pi < 1 && ($filling_machine->filling_machine_name == 'TBA' || $filling_machine->filling_machine_name == 'A3') ) 
                     {
                         /*  jika iya maka analisa PInya akan otomatis terisi oleh ssistem by default */
                         $insertPi                       = RpdFillingDetailPi::create([

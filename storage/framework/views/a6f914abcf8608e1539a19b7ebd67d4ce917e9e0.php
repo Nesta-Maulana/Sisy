@@ -2,7 +2,7 @@
 <?php $__env->startSection('title'); ?>
     Kelola Menu
 <?php $__env->stopSection(); ?>
-<?php $__env->startSection('menu-open-pengaturan-aplikasi'); ?> 
+<?php $__env->startSection('menu-open-general-setting'); ?> 
     active menu-open
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('active-master-app-menu-permissions'); ?> 
@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-dark">
                 Hak Akses Menu
                 <div class="float-right <?php echo e(Session::get('tambah')); ?>">
                     <button class="btn btn-outline-primary" onclick="document.location.href='kelola-hak-akses-menu/tambah-akses'">Tambah Akses Menu</button>

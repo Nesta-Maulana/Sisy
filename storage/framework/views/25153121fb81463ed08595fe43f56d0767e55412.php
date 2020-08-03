@@ -5,6 +5,10 @@
 <?php $__env->startSection('menu-open-master-data'); ?> 
     active menu-open
 <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('menu-open-emon'); ?> 
+    active menu-open
+<?php $__env->stopSection(); ?>
 <?php $__env->startSection('active-master-app-master-data-manage-flowmeter-workcenters'); ?> 
     active 
 <?php $__env->stopSection(); ?>

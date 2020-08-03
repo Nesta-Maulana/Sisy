@@ -15,6 +15,6 @@ class Departement extends ResourceModel
     }
     public function employees()
     {
-        return $this->hasMany('App\Models\Master\Employee', 'user_id', 'id');
+        return $this->hasMany('App\Models\Master\Employee', 'departement_id', 'id');
     }
 }

@@ -73,6 +73,14 @@ Route::group(['prefix' => 'master-apps','middleware'=>['auth','credential.check'
 		Route::post('/ubah-akses', 'Master\MasterApp\ApplicationPermissionController@changeApplicationPermission');
 	});
 	
+	Route::group(['prefix' => 'kelola-pengguna'], function() {
+	    Route::get('','MasterAppController@manageUser')->name('master_app.manage_user');
+	    // Route::get('','Master\MasterApp\UserController@changeApplicationPermission');
+	});
+
+
+
+
 	Route::group(['prefix' => 'kelola-produk'], function () {
 		Route::get('', 'MasterAppController@manageProduct')->name('master_app.master_data.manage_products');
 		Route::post('', 'Master\Rollie\ProductController@manageProduct');

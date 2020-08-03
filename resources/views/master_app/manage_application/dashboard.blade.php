@@ -2,7 +2,7 @@
 @section('title')
     Kelola Aplikasi
 @endsection
-@section('menu-open-pengaturan-aplikasi') 
+@section('menu-open-general-setting') 
     active menu-open
 @endsection
 @section('active-master-app-manage-applications') 
@@ -75,7 +75,6 @@
                                                         <th style="width:300px;">Deskripsi Aplikasi</th>
                                                         <th style="width:200px;">Link Aplikasi</th>
                                                         <th style="width:200px;">Status Aplikasi</th>
-                                                        <th style="width:200px;">#</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -84,7 +83,9 @@
                                                     @endphp
                                                     @foreach ($applications as $application)
                                                         <tr>
-                                                            <td>{{ $a }}</td>
+                                                            <td>
+                                                                <button type="submit" class="btn btn-outline-primary form-control" onclick="editApplication('{{ app('App\Http\Controllers\ResourceController')->encrypt($application->id) }}')"><i class="fa fa-edit"></i></button>
+                                                            </td>
                                                             <td> {{ $application->application_name }} </td>
                                                             <td> {{ $application->application_description }} </td>
                                                             <td> {{ $application->application_link }} </td>
@@ -94,9 +95,6 @@
                                                                 @else
                                                                     Active
                                                                 @endif 
-                                                            </td>
-                                                            <td>
-                                                                <button type="submit" class="btn btn-outline-primary form-control" onclick="editApplication('{{ app('App\Http\Controllers\ResourceController')->encrypt($application->id) }}')"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
                                                             </td>
                                                         </tr>
                                                         @php

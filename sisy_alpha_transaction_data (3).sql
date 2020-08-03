@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `analisa_kimias`
 --
 
-CREATE TABLE `analisa_kimias` (
+CREATE TABLE IF NOT EXISTS `analisa_kimias` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `cpp_head_id` bigint(20) NOT NULL COMMENT 'connected to cpphead table',
   `ppq_id` bigint(20) DEFAULT NULL COMMENT 'connected to ppq table',
@@ -79,7 +79,7 @@ INSERT INTO `analisa_kimias` (`id`, `cpp_head_id`, `ppq_id`, `ts_awal_1`, `ts_aw
 -- Struktur dari tabel `analisa_mikro`
 --
 
-CREATE TABLE `analisa_mikro` (
+CREATE TABLE IF NOT EXISTS `analisa_mikro` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `cpp_head_id` bigint(20) DEFAULT NULL COMMENT 'connected to cpp head table',
   `tanggal_analisa` date DEFAULT NULL,
@@ -102,7 +102,7 @@ CREATE TABLE `analisa_mikro` (
 -- Struktur dari tabel `analisa_mikro_details`
 --
 
-CREATE TABLE `analisa_mikro_details` (
+CREATE TABLE IF NOT EXISTS `analisa_mikro_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `analisa_mikro_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa mikro table',
   `analisa_mikro_resampling_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa mikro table',
@@ -130,7 +130,7 @@ CREATE TABLE `analisa_mikro_details` (
 -- Struktur dari tabel `analisa_mikro_resampling`
 --
 
-CREATE TABLE `analisa_mikro_resampling` (
+CREATE TABLE IF NOT EXISTS `analisa_mikro_resampling` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `analisa_mikro_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa mikro table',
   `ppq_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa mikro table',
@@ -152,7 +152,7 @@ CREATE TABLE `analisa_mikro_resampling` (
 -- Struktur dari tabel `corrective_actions`
 --
 
-CREATE TABLE `corrective_actions` (
+CREATE TABLE IF NOT EXISTS `corrective_actions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `follow_up_ppq_id` bigint(20) DEFAULT NULL COMMENT 'connected to table follow up ppq',
   `follow_up_rkj_id` bigint(20) DEFAULT NULL COMMENT 'connected to table follow up rkj',
@@ -175,7 +175,7 @@ CREATE TABLE `corrective_actions` (
 -- Struktur dari tabel `cpp_details`
 --
 
-CREATE TABLE `cpp_details` (
+CREATE TABLE IF NOT EXISTS `cpp_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `cpp_head_id` bigint(20) NOT NULL COMMENT 'connected to cpp_heads table',
   `wo_number_id` bigint(20) NOT NULL COMMENT 'connected to wo_numbers table',
@@ -204,7 +204,7 @@ INSERT INTO `cpp_details` (`id`, `cpp_head_id`, `wo_number_id`, `filling_machine
 -- Struktur dari tabel `cpp_heads`
 --
 
-CREATE TABLE `cpp_heads` (
+CREATE TABLE IF NOT EXISTS `cpp_heads` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) NOT NULL COMMENT 'connected to product table',
   `analisa_kimia_id` bigint(20) DEFAULT NULL COMMENT 'connected to analisa kimia table',
@@ -233,7 +233,7 @@ INSERT INTO `cpp_heads` (`id`, `product_id`, `analisa_kimia_id`, `analisa_mikro_
 -- Struktur dari tabel `energy_monitorings`
 --
 
-CREATE TABLE `energy_monitorings` (
+CREATE TABLE IF NOT EXISTS `energy_monitorings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter table',
   `monitoring_value` double NOT NULL COMMENT 'angka meterannya',
@@ -252,7 +252,7 @@ CREATE TABLE `energy_monitorings` (
 -- Struktur dari tabel `energy_usages`
 --
 
-CREATE TABLE `energy_usages` (
+CREATE TABLE IF NOT EXISTS `energy_usages` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_usage_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter usage table',
   `flowmeter_formula_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter table',
@@ -272,7 +272,7 @@ CREATE TABLE `energy_usages` (
 -- Struktur dari tabel `follow_up_ppqs`
 --
 
-CREATE TABLE `follow_up_ppqs` (
+CREATE TABLE IF NOT EXISTS `follow_up_ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `ppq_id` bigint(20) NOT NULL,
   `jumlah_metode_sampling` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'column yang diinput oleh params Qc Release',
@@ -298,7 +298,7 @@ CREATE TABLE `follow_up_ppqs` (
 -- Struktur dari tabel `follow_up_rkjs`
 --
 
-CREATE TABLE `follow_up_rkjs` (
+CREATE TABLE IF NOT EXISTS `follow_up_rkjs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rkj_id` bigint(20) DEFAULT NULL COMMENT 'ini connect ke rkj table',
   `dugaan_penyebab` text COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'column yang  diisi oleh RnD',
@@ -324,7 +324,7 @@ CREATE TABLE `follow_up_rkjs` (
 -- Struktur dari tabel `palets`
 --
 
-CREATE TABLE `palets` (
+CREATE TABLE IF NOT EXISTS `palets` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `cpp_detail_id` bigint(20) NOT NULL COMMENT 'connected to cpp detail tabel',
   `palet` char(10) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -411,7 +411,7 @@ INSERT INTO `palets` (`id`, `cpp_detail_id`, `palet`, `start`, `end`, `jumlah_bo
 -- Struktur dari tabel `palet_ppqs`
 --
 
-CREATE TABLE `palet_ppqs` (
+CREATE TABLE IF NOT EXISTS `palet_ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `ppq_id` bigint(20) NOT NULL COMMENT 'connected to ppq table',
   `palet_id` bigint(20) NOT NULL COMMENT 'connected to palet table',
@@ -429,7 +429,7 @@ CREATE TABLE `palet_ppqs` (
 -- Struktur dari tabel `ppqs`
 --
 
-CREATE TABLE `ppqs` (
+CREATE TABLE IF NOT EXISTS `ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rpd_filling_detail_pi_id` bigint(20) DEFAULT NULL COMMENT 'connected to table rpd filling detail pi untuk patokan trigger pembuatan PPQ pada event OK setelah #OK',
   `cpp_head_id` bigint(20) DEFAULT NULL COMMENT 'connected to table cpphead',
@@ -456,7 +456,7 @@ CREATE TABLE `ppqs` (
 -- Struktur dari tabel `preventive_actions`
 --
 
-CREATE TABLE `preventive_actions` (
+CREATE TABLE IF NOT EXISTS `preventive_actions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `follow_up_ppq_id` bigint(20) DEFAULT NULL COMMENT 'connected to table follow up ppq',
   `follow_up_rkj_id` bigint(20) DEFAULT NULL COMMENT 'connected to table follow up rkj',
@@ -479,7 +479,7 @@ CREATE TABLE `preventive_actions` (
 -- Struktur dari tabel `psrs`
 --
 
-CREATE TABLE `psrs` (
+CREATE TABLE IF NOT EXISTS `psrs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `wo_number_id` bigint(20) NOT NULL COMMENT 'connected to wo_number table',
   `psr_number` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -507,7 +507,7 @@ INSERT INTO `psrs` (`id`, `wo_number_id`, `psr_number`, `psr_qty`, `note`, `psr_
 -- Struktur dari tabel `rkjs`
 --
 
-CREATE TABLE `rkjs` (
+CREATE TABLE IF NOT EXISTS `rkjs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `ppq_id` bigint(20) DEFAULT NULL COMMENT 'connect to ppq_table',
   `nomor_rkj` char(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -527,7 +527,7 @@ CREATE TABLE `rkjs` (
 -- Struktur dari tabel `rpd_filling_detail_at_events`
 --
 
-CREATE TABLE `rpd_filling_detail_at_events` (
+CREATE TABLE IF NOT EXISTS `rpd_filling_detail_at_events` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rpd_filling_head_id` bigint(20) NOT NULL COMMENT 'Connected to rpd filling head table',
   `wo_number_id` bigint(20) NOT NULL COMMENT 'Connected to Wo Number table',
@@ -575,7 +575,7 @@ INSERT INTO `rpd_filling_detail_at_events` (`id`, `rpd_filling_head_id`, `wo_num
 -- Struktur dari tabel `rpd_filling_detail_pis`
 --
 
-CREATE TABLE `rpd_filling_detail_pis` (
+CREATE TABLE IF NOT EXISTS `rpd_filling_detail_pis` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `rpd_filling_head_id` bigint(20) NOT NULL COMMENT 'Connected to rpd filling head table',
   `wo_number_id` bigint(20) NOT NULL COMMENT 'Connected to Wo Number table',
@@ -777,7 +777,7 @@ INSERT INTO `rpd_filling_detail_pis` (`id`, `rpd_filling_head_id`, `wo_number_id
 -- Struktur dari tabel `rpd_filling_heads`
 --
 
-CREATE TABLE `rpd_filling_heads` (
+CREATE TABLE IF NOT EXISTS `rpd_filling_heads` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `product_id` bigint(20) NOT NULL COMMENT 'connected to product table',
   `start_filling_date` date NOT NULL,
@@ -804,7 +804,7 @@ INSERT INTO `rpd_filling_heads` (`id`, `product_id`, `start_filling_date`, `rpd_
 -- Struktur dari tabel `wo_numbers`
 --
 
-CREATE TABLE `wo_numbers` (
+CREATE TABLE IF NOT EXISTS `wo_numbers` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `plan_id` bigint(20) NOT NULL COMMENT 'connected to plan table',
   `product_id` bigint(20) NOT NULL COMMENT 'connected to product table',

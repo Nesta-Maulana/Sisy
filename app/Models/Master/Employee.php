@@ -19,6 +19,11 @@ class Employee extends ResourceModel
     }
     public function departement()
     {
-        return $this->belongsTo('App\Models\Master\Departement', 'employee_id', 'id');
+        return $this->belongsTo('App\Models\Master\Departement', 'departement_id', 'id');
+    }
+
+    public function distributionList()
+    {
+        return $this->hasOne('App\Models\Master\DistributionList', 'employee_id', 'id');
     }
 }

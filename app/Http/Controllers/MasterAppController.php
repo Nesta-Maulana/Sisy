@@ -134,8 +134,21 @@ class MasterAppController extends ResourceController
 		else 
 		{
 			return redirect()->back()->with('error',$cekAkses['message']);
+		}		
+	}
+
+	public function manageUser()
+	{
+		$cekAkses 	= $this->checkAksesTambah(\Request::getRequestUri(),'master_app.manage_user');
+		if ($cekAkses['success']) 
+		{
+			$users		= User::all();
+			return view('master_app.manage_user.dashboard',['menus'=>$this->menus,'users'=>$users]);
+		} 
+		else 
+		{
+			return redirect()->back()->with('error',$cekAkses['message']);
 		}
-		
 	}
 
 	public function manageProduct()

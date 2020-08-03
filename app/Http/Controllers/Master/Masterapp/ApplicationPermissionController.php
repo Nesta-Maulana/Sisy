@@ -148,6 +148,20 @@ class ApplicationPermissionController extends ResourceController
 
     public function changeApplicationPermission(Request $request)
     {
+        $cekAkses       = $this->checkAksesUbah(\Request::getRequestUri(),'master_app.application_permissions');
+        if ($cekAkses['success'] == true) 
+        {
+            $applicationPermission  = ApplicationPermission::find($this->decrypt($request->application_permission_id));
+            $applicationPermission->is_active   = $request->application_permission;
+            $applicationPermission->save();
+            return ['success'=>true,'message'=>'Hak akses aplikasi berhasil diubah'];
+        } 
+        else 
+        {
+            return $cekAkses;
+        }
+        
+        dd($request->all());
     }
 
     /**

@@ -136,8 +136,8 @@ class PpqController extends ResourceController
                     'kategori_ppq_id'   => $kategori_ppq,
                     'status_akhir'      => $status_akhir
                 ]);
-                $cppHead->ppq_id        = $ppq->id;
-                $cppHead->save();
+                // $cppHead->ppq_id        = $ppq->id;
+                // $cppHead->save();
                 foreach ($lot_number_id as $lot_number) 
                 {
                     if ($lot_number !== "") 

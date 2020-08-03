@@ -377,7 +377,7 @@
             data: 
             {
                 'application_permission_id'     : applicaton_permission_id,
-                'application_permission'        : $('#application_permission_'+application_permission_id).val()
+                'application_permission'        : $('#application_permission_'+applicaton_permission_id).val()
             },
             success: function (data) {
                 if (data.success) 

@@ -1,8 +1,12 @@
 
 <?php $__env->startSection('title'); ?>
-    Data Produk
+    Data Master | Data Produk
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('menu-open-master-data'); ?> 
+    active menu-open
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('menu-open-rollie'); ?> 
     active menu-open
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('active-master-app-master-data-manage-products'); ?> 
@@ -172,7 +176,7 @@
                                     <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
                                             <td>
-                                                <button class="form-control btn btn-outline-primary" onclick="editProductData('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($product->id)); ?>')"><i class="fa fa-pencil"></i></button>
+                                                <button class="form-control btn btn-outline-primary" onclick="editProductData('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($product->id)); ?>')"><i class="fas fa-edit"></i></button>
                                             </td>
                                             <td><?php echo e($product->subbrand->subbrand_name); ?></td>
                                             <td><?php echo e($product->productType->product_type); ?></td>

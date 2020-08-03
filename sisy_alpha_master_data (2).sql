@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `applications`
 --
 
-CREATE TABLE `applications` (
+CREATE TABLE IF NOT EXISTS `applications` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `application_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application_description` char(150) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -58,7 +58,7 @@ INSERT INTO `applications` (`id`, `application_name`, `application_description`,
 -- Struktur dari tabel `application_permissions`
 --
 
-CREATE TABLE `application_permissions` (
+CREATE TABLE IF NOT EXISTS `application_permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `application_id` bigint(20) NOT NULL COMMENT 'Connect to applications table',
   `user_id` bigint(20) NOT NULL COMMENT 'Connect to user table',
@@ -102,7 +102,7 @@ INSERT INTO `application_permissions` (`id`, `application_id`, `user_id`, `is_ac
 -- Struktur dari tabel `brands`
 --
 
-CREATE TABLE `brands` (
+CREATE TABLE IF NOT EXISTS `brands` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `company_id` bigint(20) NOT NULL COMMENT 'connect to companies table',
   `brand_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -130,7 +130,7 @@ INSERT INTO `brands` (`id`, `company_id`, `brand_name`, `is_active`, `created_by
 -- Struktur dari tabel `companies`
 --
 
-CREATE TABLE `companies` (
+CREATE TABLE IF NOT EXISTS `companies` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `company_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `company_short_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -157,7 +157,7 @@ INSERT INTO `companies` (`id`, `company_name`, `company_short_name`, `is_active`
 -- Struktur dari tabel `departements`
 --
 
-CREATE TABLE `departements` (
+CREATE TABLE IF NOT EXISTS `departements` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `departement` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL,
@@ -187,7 +187,7 @@ INSERT INTO `departements` (`id`, `departement`, `is_active`, `created_by`, `upd
 -- Struktur dari tabel `distribution_lists`
 --
 
-CREATE TABLE `distribution_lists` (
+CREATE TABLE IF NOT EXISTS `distribution_lists` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `employee_id` bigint(20) NOT NULL COMMENT 'connected to employee table',
   `ppq_mail_to` tinyint(1) NOT NULL COMMENT '0 = inactive , 1 = active',
@@ -224,7 +224,7 @@ INSERT INTO `distribution_lists` (`id`, `employee_id`, `ppq_mail_to`, `ppq_mail_
 -- Struktur dari tabel `employees`
 --
 
-CREATE TABLE `employees` (
+CREATE TABLE IF NOT EXISTS `employees` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `fullname` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` char(60) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -309,7 +309,7 @@ INSERT INTO `employees` (`id`, `fullname`, `email`, `departement_id`, `is_active
 -- Struktur dari tabel `failed_jobs`
 --
 
-CREATE TABLE `failed_jobs` (
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -324,7 +324,7 @@ CREATE TABLE `failed_jobs` (
 -- Struktur dari tabel `filling_machines`
 --
 
-CREATE TABLE `filling_machines` (
+CREATE TABLE IF NOT EXISTS `filling_machines` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `filling_machine_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `filling_machine_code` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -353,7 +353,7 @@ INSERT INTO `filling_machines` (`id`, `filling_machine_name`, `filling_machine_c
 -- Struktur dari tabel `filling_machine_group_details`
 --
 
-CREATE TABLE `filling_machine_group_details` (
+CREATE TABLE IF NOT EXISTS `filling_machine_group_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `filling_machine_group_head_id` bigint(20) NOT NULL COMMENT 'connect to filling machine group head table',
   `filling_machine_id` bigint(20) NOT NULL COMMENT 'connect to filling machine table',
@@ -381,7 +381,7 @@ INSERT INTO `filling_machine_group_details` (`id`, `filling_machine_group_head_i
 -- Struktur dari tabel `filling_machine_group_heads`
 --
 
-CREATE TABLE `filling_machine_group_heads` (
+CREATE TABLE IF NOT EXISTS `filling_machine_group_heads` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `filling_machine_group_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
@@ -407,7 +407,7 @@ INSERT INTO `filling_machine_group_heads` (`id`, `filling_machine_group_name`, `
 -- Struktur dari tabel `filling_sampel_codes`
 --
 
-CREATE TABLE `filling_sampel_codes` (
+CREATE TABLE IF NOT EXISTS `filling_sampel_codes` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `filling_sampel_code` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `filling_sampel_event` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -568,7 +568,7 @@ INSERT INTO `filling_sampel_codes` (`id`, `filling_sampel_code`, `filling_sampel
 -- Struktur dari tabel `flowmeters`
 --
 
-CREATE TABLE `flowmeters` (
+CREATE TABLE IF NOT EXISTS `flowmeters` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_workcenter_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter workcenter',
   `flowmeter_unit_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter unit',
@@ -634,7 +634,7 @@ INSERT INTO `flowmeters` (`id`, `flowmeter_workcenter_id`, `flowmeter_unit_id`, 
 -- Struktur dari tabel `flowmeter_categories`
 --
 
-CREATE TABLE `flowmeter_categories` (
+CREATE TABLE IF NOT EXISTS `flowmeter_categories` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_category` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini kaya sejenis flow meternya air , listrik , gas',
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
@@ -661,7 +661,7 @@ INSERT INTO `flowmeter_categories` (`id`, `flowmeter_category`, `is_active`, `cr
 -- Struktur dari tabel `flowmeter_consumption_realisation_details`
 --
 
-CREATE TABLE `flowmeter_consumption_realisation_details` (
+CREATE TABLE IF NOT EXISTS `flowmeter_consumption_realisation_details` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -673,7 +673,7 @@ CREATE TABLE `flowmeter_consumption_realisation_details` (
 -- Struktur dari tabel `flowmeter_consumption_realisation_heads`
 --
 
-CREATE TABLE `flowmeter_consumption_realisation_heads` (
+CREATE TABLE IF NOT EXISTS `flowmeter_consumption_realisation_heads` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -685,7 +685,7 @@ CREATE TABLE `flowmeter_consumption_realisation_heads` (
 -- Struktur dari tabel `flowmeter_formulas`
 --
 
-CREATE TABLE `flowmeter_formulas` (
+CREATE TABLE IF NOT EXISTS `flowmeter_formulas` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `formula_code` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'ini untuk code formulanya',
   `flowmeter_formula` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'disini disimpan rumus untuk semuanya dalam bentuk json, apabila di isi kosong maka akan merefer ke perhitungan hari sebelumnya.',
@@ -713,7 +713,7 @@ INSERT INTO `flowmeter_formulas` (`id`, `formula_code`, `flowmeter_formula`, `is
 -- Struktur dari tabel `flowmeter_locations`
 --
 
-CREATE TABLE `flowmeter_locations` (
+CREATE TABLE IF NOT EXISTS `flowmeter_locations` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_category_id` bigint(20) NOT NULL,
   `flowmeter_location` char(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -742,7 +742,7 @@ INSERT INTO `flowmeter_locations` (`id`, `flowmeter_category_id`, `flowmeter_loc
 -- Struktur dari tabel `flowmeter_location_permissions`
 --
 
-CREATE TABLE `flowmeter_location_permissions` (
+CREATE TABLE IF NOT EXISTS `flowmeter_location_permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_location_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter location table',
   `user_id` bigint(20) NOT NULL COMMENT 'connected to user id table',
@@ -771,7 +771,7 @@ INSERT INTO `flowmeter_location_permissions` (`id`, `flowmeter_location_id`, `us
 -- Struktur dari tabel `flowmeter_units`
 --
 
-CREATE TABLE `flowmeter_units` (
+CREATE TABLE IF NOT EXISTS `flowmeter_units` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_unit` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini untuk satuan ',
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
@@ -796,7 +796,7 @@ INSERT INTO `flowmeter_units` (`id`, `flowmeter_unit`, `is_active`, `created_by`
 -- Struktur dari tabel `flowmeter_usages`
 --
 
-CREATE TABLE `flowmeter_usages` (
+CREATE TABLE IF NOT EXISTS `flowmeter_usages` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_workcenter_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter workcenter',
   `flowmeter_formula_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter formula untuk menentukan rumus yang dipakai',
@@ -859,7 +859,7 @@ INSERT INTO `flowmeter_usages` (`id`, `flowmeter_workcenter_id`, `flowmeter_form
 -- Struktur dari tabel `flowmeter_workcenters`
 --
 
-CREATE TABLE `flowmeter_workcenters` (
+CREATE TABLE IF NOT EXISTS `flowmeter_workcenters` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `flowmeter_category_id` bigint(20) NOT NULL COMMENT 'connected to flowmeter category table',
   `flowmeter_workcenter` char(30) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -888,7 +888,7 @@ INSERT INTO `flowmeter_workcenters` (`id`, `flowmeter_category_id`, `flowmeter_w
 -- Struktur dari tabel `icons`
 --
 
-CREATE TABLE `icons` (
+CREATE TABLE IF NOT EXISTS `icons` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `icons` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1693,7 +1693,7 @@ INSERT INTO `icons` (`id`, `icons`, `created_at`, `updated_at`) VALUES
 -- Struktur dari tabel `jenis_ppqs`
 --
 
-CREATE TABLE `jenis_ppqs` (
+CREATE TABLE IF NOT EXISTS `jenis_ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `jenis_ppq` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini digunakan di form ppq',
   `is_active` tinyint(1) NOT NULL,
@@ -1722,7 +1722,7 @@ INSERT INTO `jenis_ppqs` (`id`, `jenis_ppq`, `is_active`, `created_by`, `updated
 -- Struktur dari tabel `kategori_ppqs`
 --
 
-CREATE TABLE `kategori_ppqs` (
+CREATE TABLE IF NOT EXISTS `kategori_ppqs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `kategori_ppq` char(30) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'ini digunakan di form ppq',
   `jenis_ppq_id` bigint(20) NOT NULL COMMENT 'connected to jenis_ppq table',
@@ -1771,7 +1771,7 @@ INSERT INTO `kategori_ppqs` (`id`, `kategori_ppq`, `jenis_ppq_id`, `is_active`, 
 -- Struktur dari tabel `menus`
 --
 
-CREATE TABLE `menus` (
+CREATE TABLE IF NOT EXISTS `menus` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `parent_id` bigint(20) NOT NULL,
   `application_id` bigint(20) NOT NULL,
@@ -1854,7 +1854,7 @@ INSERT INTO `menus` (`id`, `parent_id`, `application_id`, `menu_name`, `menu_ico
 -- Struktur dari tabel `menu_permissions`
 --
 
-CREATE TABLE `menu_permissions` (
+CREATE TABLE IF NOT EXISTS `menu_permissions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) NOT NULL COMMENT 'connected to user table',
   `menu_id` bigint(20) NOT NULL COMMENT 'connected to menu table',
@@ -2294,130 +2294,7 @@ INSERT INTO `menu_permissions` (`id`, `user_id`, `menu_id`, `view`, `create`, `e
 -- Struktur dari tabel `migrations`
 --
 
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(53, '2019_08_19_000000_create_failed_jobs_table', 1),
-(54, '2020_01_21_072303_create_users_table', 1),
-(55, '2020_01_21_084922_create_employees_table', 1),
-(56, '2020_01_21_085716_create_departements_table', 1),
-(57, '2020_01_25_040937_create_menus_table', 1),
-(58, '2020_01_25_041743_create_applications_table', 1),
-(59, '2020_01_25_042346_create_application_permissions_table', 1),
-(60, '2020_01_25_042624_create_menu_permissions_table', 1),
-(61, '2020_01_26_152535_create_icons_table', 1),
-(62, '2020_01_30_073951_create_products_table', 1),
-(63, '2020_01_30_075805_create_product_types_table', 1),
-(64, '2020_01_30_075835_create_filling_machines_table', 1),
-(65, '2020_01_30_075903_create_brands_table', 1),
-(66, '2020_01_30_075915_create_companies_table', 1),
-(67, '2020_01_30_075926_create_subbrands_table', 1),
-(68, '2020_01_30_075955_create_filling_sampel_codes_table', 1),
-(69, '2020_01_30_080025_create_filling_machine_group_heads_table', 1),
-(70, '2020_01_30_080039_create_filling_machine_group_details_table', 1),
-(71, '2020_01_30_133742_create_wo_numbers_table', 1),
-(72, '2020_01_30_133905_create_plans_table', 1),
-(73, '2020_02_06_111904_create_rpd_filling_heads_table', 1),
-(74, '2020_02_06_112320_create_rpd_filling_detail_pis_table', 1),
-(75, '2020_02_06_112458_create_rpd_filling_detail_at_events_table', 1),
-(76, '2020_02_10_202551_create_cpp_heads_table', 1),
-(77, '2020_02_10_203004_create_cpp_details_table', 1),
-(78, '2020_02_10_203254_create_palets_table', 1),
-(79, '2020_02_10_203326_create_palet_ppqs_table', 1),
-(80, '2020_02_25_212042_create_ppqs_table', 1),
-(81, '2020_03_01_160554_create_distribution_lists_table', 1),
-(82, '2020_03_03_094606_create_analisa_kimias_table', 1),
-(83, '2020_03_14_220041_create_kategori_ppqs_table', 1),
-(84, '2020_03_14_222837_create_jenis_ppqs_table', 1),
-(85, '2020_03_14_233819_create_follow_up_ppqs_table', 1),
-(86, '2020_03_15_230705_create_corrective_actions_table', 1),
-(87, '2020_03_15_231022_create_preventive_actions_table', 1),
-(88, '2020_03_16_083712_create_rkjs_table', 1),
-(89, '2020_03_16_085530_create_follow_up_rkjs_table', 1),
-(90, '2020_04_08_093948_create_flowmeter_categories_table', 1),
-(91, '2020_04_08_101010_create_flowmeter_workcenters_table', 1),
-(92, '2020_04_08_101438_create_flowmeter_units_table', 1),
-(93, '2020_04_08_105534_create_flowmeters_table', 1),
-(94, '2020_04_27_103043_create_analisa_mikros_table', 1),
-(95, '2020_04_27_113757_create_analisa_mikro_details_table', 1),
-(96, '2020_04_29_093641_create_analisa_mikro_resampling_table', 1),
-(97, '2020_05_19_084531_create_flowmeter_locations_table', 1),
-(98, '2020_06_29_102023_create_energy_monitorings_table', 1),
-(99, '2020_06_29_102145_create_energy_usages_table', 1),
-(100, '2020_06_29_185550_create_psrs_table', 1),
-(101, '2020_07_18_120737_create_flowmeter_usages_table', 1),
-(102, '2020_07_18_124151_create_flowmeter_formulas_table', 1),
-(103, '2020_07_18_185846_create_flowmeter_consumption_realisation_heads_table', 1),
-(104, '2020_07_18_185907_create_flowmeter_consumption_realisation_details_table', 1),
-(157, '2019_08_19_000000_create_failed_jobs_table', 1),
-(158, '2020_01_21_072303_create_users_table', 1),
-(159, '2020_01_21_084922_create_employees_table', 1),
-(160, '2020_01_21_085716_create_departements_table', 1),
-(161, '2020_01_25_040937_create_menus_table', 1),
-(162, '2020_01_25_041743_create_applications_table', 1),
-(163, '2020_01_25_042346_create_application_permissions_table', 1),
-(164, '2020_01_25_042624_create_menu_permissions_table', 1),
-(165, '2020_01_26_152535_create_icons_table', 1),
-(166, '2020_01_30_073951_create_products_table', 1),
-(167, '2020_01_30_075805_create_product_types_table', 1),
-(168, '2020_01_30_075835_create_filling_machines_table', 1),
-(169, '2020_01_30_075903_create_brands_table', 1),
-(170, '2020_01_30_075915_create_companies_table', 1),
-(171, '2020_01_30_075926_create_subbrands_table', 1),
-(172, '2020_01_30_075955_create_filling_sampel_codes_table', 1),
-(173, '2020_01_30_080025_create_filling_machine_group_heads_table', 1),
-(174, '2020_01_30_080039_create_filling_machine_group_details_table', 1),
-(175, '2020_01_30_133742_create_wo_numbers_table', 1),
-(176, '2020_01_30_133905_create_plans_table', 1),
-(177, '2020_02_06_111904_create_rpd_filling_heads_table', 1),
-(178, '2020_02_06_112320_create_rpd_filling_detail_pis_table', 1),
-(179, '2020_02_06_112458_create_rpd_filling_detail_at_events_table', 1),
-(180, '2020_02_10_202551_create_cpp_heads_table', 1),
-(181, '2020_02_10_203004_create_cpp_details_table', 1),
-(182, '2020_02_10_203254_create_palets_table', 1),
-(183, '2020_02_10_203326_create_palet_ppqs_table', 1),
-(184, '2020_02_25_212042_create_ppqs_table', 1),
-(185, '2020_03_01_160554_create_distribution_lists_table', 1),
-(186, '2020_03_03_094606_create_analisa_kimias_table', 1),
-(187, '2020_03_14_220041_create_kategori_ppqs_table', 1),
-(188, '2020_03_14_222837_create_jenis_ppqs_table', 1),
-(189, '2020_03_14_233819_create_follow_up_ppqs_table', 1),
-(190, '2020_03_15_230705_create_corrective_actions_table', 1),
-(191, '2020_03_15_231022_create_preventive_actions_table', 1),
-(192, '2020_03_16_083712_create_rkjs_table', 1),
-(193, '2020_03_16_085530_create_follow_up_rkjs_table', 1),
-(194, '2020_04_08_093948_create_flowmeter_categories_table', 1),
-(195, '2020_04_08_101010_create_flowmeter_workcenters_table', 1),
-(196, '2020_04_08_101438_create_flowmeter_units_table', 1),
-(197, '2020_04_08_105534_create_flowmeters_table', 1),
-(198, '2020_04_27_103043_create_analisa_mikros_table', 1),
-(199, '2020_04_27_113757_create_analisa_mikro_details_table', 1),
-(200, '2020_04_29_093641_create_analisa_mikro_resampling_table', 1),
-(201, '2020_05_19_084531_create_flowmeter_locations_table', 1),
-(202, '2020_06_29_102023_create_energy_monitorings_table', 1),
-(203, '2020_06_29_102145_create_energy_usages_table', 1),
-(204, '2020_06_29_185550_create_psrs_table', 1),
-(205, '2020_07_18_120737_create_flowmeter_usages_table', 1),
-(206, '2020_07_18_124151_create_flowmeter_formulas_table', 1),
-(207, '2020_07_18_185846_create_flowmeter_consumption_realisation_heads_table', 1),
-(208, '2020_07_18_185907_create_flowmeter_consumption_realisation_details_table', 1),
-(209, '2020_07_20_110503_create_flowmeter_location_permissions_table', 1);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `plans`
---
-
-CREATE TABLE `plans` (
+CREATE TABLE IF NOT EXISTS `plans` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `company_id` bigint(20) NOT NULL COMMENT 'connected to companies table',
   `plan_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2449,7 +2326,7 @@ INSERT INTO `plans` (`id`, `company_id`, `plan_name`, `address`, `is_active`, `c
 -- Struktur dari tabel `products`
 --
 
-CREATE TABLE `products` (
+CREATE TABLE IF NOT EXISTS `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `subbrand_id` bigint(20) NOT NULL COMMENT 'connected to table subbrand',
   `product_type_id` bigint(20) NOT NULL COMMENT 'connected to product type table',
@@ -2524,7 +2401,7 @@ INSERT INTO `products` (`id`, `subbrand_id`, `product_type_id`, `filling_machine
 -- Struktur dari tabel `product_types`
 --
 
-CREATE TABLE `product_types` (
+CREATE TABLE IF NOT EXISTS `product_types` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `product_type` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `is_active` tinyint(1) NOT NULL COMMENT '0 = inactive ; 1 = active',
@@ -2550,7 +2427,7 @@ INSERT INTO `product_types` (`id`, `product_type`, `is_active`, `created_by`, `u
 -- Struktur dari tabel `subbrands`
 --
 
-CREATE TABLE `subbrands` (
+CREATE TABLE IF NOT EXISTS `subbrands` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `brand_id` bigint(20) NOT NULL COMMENT 'connect to brands table ',
   `subbrand_name` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -2581,7 +2458,7 @@ INSERT INTO `subbrands` (`id`, `brand_id`, `subbrand_name`, `is_active`, `create
 -- Struktur dari tabel `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `employee_id` bigint(20) NOT NULL COMMENT 'connected to employee table',
   `username` char(100) COLLATE utf8mb4_unicode_ci NOT NULL,

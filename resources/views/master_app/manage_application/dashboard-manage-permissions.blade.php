@@ -2,7 +2,7 @@
 @section('title')
     Kelola Hak Akses Aplikasi
 @endsection
-@section('menu-open-pengaturan-aplikasi') 
+@section('menu-open-general-setting') 
     active menu-open
 @endsection
 @section('active-master-app-application-permissions') 
@@ -12,10 +12,10 @@
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="card">
-                <div class="card-header ">
+                <div class="card-header bg-dark">
                     <h5>
                         Hak Akses Aplikasi 
-                        <div class="pull-right">
+                        <div class="float-right">
                             <button class="btn btn-outline-primary" onclick="document.location.href='kelola-hak-akses-aplikasi/tambah-akses'">Tambah Akses Aplikasi</button>
                         </div>
                     </h5>

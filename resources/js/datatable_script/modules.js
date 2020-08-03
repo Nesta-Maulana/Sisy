@@ -78,7 +78,14 @@ $('#manage-application-permission-table').DataTable( {
         } );
     }
 } );
+var manage_user = $('#manage-user-table').DataTable( {
+    orderCellsTop: true,
+    fixedHeader: true,
+    pageLength:7,
+    "scrollX": true,
+    "pagingType":"simple"
 
+} );
 
 var filling_machine_table = $('#filling-machine-table').DataTable({
     bLengthChange:false,

@@ -2,7 +2,7 @@
 @section('title')
     Kelola Menu
 @endsection
-@section('menu-open-pengaturan-aplikasi') 
+@section('menu-open-general-setting') 
     active menu-open
 @endsection
 @section('active-master-app-menu-permissions') 
@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-dark">
                 Hak Akses Menu
                 <div class="float-right {{ Session::get('tambah') }}">
                     <button class="btn btn-outline-primary" onclick="document.location.href='kelola-hak-akses-menu/tambah-akses'">Tambah Akses Menu</button>

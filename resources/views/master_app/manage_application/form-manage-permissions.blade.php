@@ -2,7 +2,7 @@
 @section('title')
     Kelola Hak Akses Aplikasi
 @endsection
-@section('menu-open-pengaturan-aplikasi') 
+@section('menu-open-general-setting') 
     active menu-open
 @endsection
 @section('active-master-app-application-permissions') 

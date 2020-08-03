@@ -2,7 +2,7 @@
 <?php $__env->startSection('title'); ?>
     Kelola Aplikasi
 <?php $__env->stopSection(); ?>
-<?php $__env->startSection('menu-open-pengaturan-aplikasi'); ?> 
+<?php $__env->startSection('menu-open-general-setting'); ?> 
     active menu-open
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('active-master-app-manage-applications'); ?> 
@@ -76,7 +76,6 @@
                                                         <th style="width:300px;">Deskripsi Aplikasi</th>
                                                         <th style="width:200px;">Link Aplikasi</th>
                                                         <th style="width:200px;">Status Aplikasi</th>
-                                                        <th style="width:200px;">#</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -85,7 +84,9 @@
                                                     ?>
                                                     <?php $__currentLoopData = $applications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $application): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                         <tr>
-                                                            <td><?php echo e($a); ?></td>
+                                                            <td>
+                                                                <button type="submit" class="btn btn-outline-primary form-control" onclick="editApplication('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($application->id)); ?>')"><i class="fa fa-edit"></i></button>
+                                                            </td>
                                                             <td> <?php echo e($application->application_name); ?> </td>
                                                             <td> <?php echo e($application->application_description); ?> </td>
                                                             <td> <?php echo e($application->application_link); ?> </td>
@@ -95,9 +96,6 @@
                                                                 <?php else: ?>
                                                                     Active
                                                                 <?php endif; ?> 
-                                                            </td>
-                                                            <td>
-                                                                <button type="submit" class="btn btn-outline-primary form-control" onclick="editApplication('<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($application->id)); ?>')"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
                                                             </td>
                                                         </tr>
                                                         <?php
