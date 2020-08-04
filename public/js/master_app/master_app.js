@@ -726,7 +726,7 @@
         });   
     }
 
-    function changePassword(fullname,email) 
+    function changePasswordUser(fullname,email) 
     {
         Swal.fire
         ({
@@ -736,11 +736,60 @@
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Kirim Notifikasi Ke Penyelia',
+            confirmButtonText: 'Ya, Reset Password',
             cancelButtonText: 'Cancel',
         }).then((result) => 
         {  
-            git p
+            if (result.value) 
+            {
+                $.ajax({
+                    headers: 
+                    {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url         : 'kelola-pengguna/change-password',
+                    method      : 'POST',
+                    dataType    : 'JSON',
+                    data        : 
+                    {
+                        fullname    : fullname,
+                        email       : email,
+                    },
+                    success      : function(data) 
+                    {
+                        if (data.success) 
+                        {
+                            swal({
+                                title: 'Proses Berhasil',
+                                text: data.message,
+                                type: "success"
+                            });    
+                        } 
+                        else 
+                        {
+                            swal({
+                                title: 'Proses Gagal',
+                                text: data.message,
+                                type: "error"
+                            });    
+                        }
+                    }
+                })
+            }
         })
+    }
+    function changeDataFillingMachineGroup(filling_machine_group_head_id) 
+    {
+        $.ajax({
+            url: 'kelola-kelompok-mesin/ambil-kelompok-mesin-filling/' + filling_machine_group_head_id,
+            method: 'GET',
+            dataType:'JSON',
+            success: function(data)
+            {  
+
+            }
+        }); 
+        $('#submit-group').hide();
+        $('#edit-group').show();
     }
 /*  */

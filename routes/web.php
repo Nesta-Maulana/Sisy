@@ -77,9 +77,8 @@ Route::group(['prefix' => 'master-apps','middleware'=>['auth','credential.check'
 	    Route::get('','MasterAppController@manageUser')->name('master_app.manage_user');
 		Route::get('edit-pengguna/{user_id}','MasterAppController@showUserForm');
 		Route::post('edit-pengguna/update','Master\MasterApp\UserController@updateUserData');
+		Route::post('change-password','Master\MasterApp\UserController@changePasswordUser');
 	});
-
-
 
 
 	Route::group(['prefix' => 'kelola-produk'], function () {
@@ -92,6 +91,13 @@ Route::group(['prefix' => 'master-apps','middleware'=>['auth','credential.check'
 		Route::get('', 'MasterAppController@manageFillingMachine')->name('master_app.master_data.manage_filling_machines');
 		Route::post('', 'Master\Rollie\FillingMachineController@manageFillingMachine');
 		Route::get('/edit-mesin-filling/{filling_machine_id}', 'Master\Rollie\FillingMachineController@editFillingMachine');
+	});
+
+	Route::group(['prefix' => 'kelola-kelompok-mesin'], function () 
+	{
+		Route::get('', 'MasterAppController@manageFillingMachineGroup')->name('master_app.master_data.manage_filling_machine_groups');	
+		Route::post('', 'Master\Rollie\FillingMachineGroupHeadController@manangeFillingMachineGroup');	
+		Route::get('get-filling-machine-group/{filling_machine_group_id}','Master\Rollie\FillingMachineGroupHeadController@getFillingMachineGroup');
 	});
 
 	Route::group(['prefix' => 'kelola-kategori-flowmeter'], function () {
@@ -348,6 +354,6 @@ Route::group(['prefix' => 'emon','middleware'=>['auth','credential.check']], fun
 	});
 
 	Route::group(['prefix' => 'report-penggunaan-air'], function () {
-		Route::get('', 'EmonController@showDailyUsageReportWater')->name('emon.energy_usage_report.water');
+		Route::get('', 'EmonController@showMonitoringHistory')->name('emon.energy_usage_report.water');
 	});
 });

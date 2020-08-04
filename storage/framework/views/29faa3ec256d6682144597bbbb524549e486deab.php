@@ -57,7 +57,7 @@ Terimakasih
 <br>
 Rollie's Crew
 <br>
-	<img src="<?php echo e(asset('images/logo/logo-rollie.png')); ?>" class="center">
+	<img src="<?php echo e(asset('images/logo/mail.png')); ?>" class="center">
 <br>
 <br>
 <hr>

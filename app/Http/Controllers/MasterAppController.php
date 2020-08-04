@@ -201,6 +201,20 @@ class MasterAppController extends ResourceController
 	}
 
 
+	public function manageFillingMachineGroup()
+	{
+		$cekAkses	 = $this->checkAksesLihat(\Request::getRequestUri(),'master_app.master_data.manage_filling_machine_groups');
+		if ($cekAkses['success']) 
+		{
+			$fillingMachineGroups 	= FillingMachineGroupHead::all();
+			$fillingMachines 		= FillingMachine::all();
+			return view('master_app.manage_filling_machine_group.dashboard',['menus'=>$this->menus,'fillingMachineGroups'=>$fillingMachineGroups,'fillingMachines'=>$fillingMachines]);
+		} 
+		else
+		{
+			return redirect()->back()->with('error',$cekAkses['message']);
+		}
+	}
 	/* Emon */
 	public function manageFlowmeterCategory()
 	{

@@ -109,6 +109,24 @@ class UserController extends ResourceController
         }
         
     }
+    public function changePasswordUser(Request $request)
+    {
+        $cekAkses   = $this->checkAksesUbah(\Request::getRequestUri(),'master_app.manage_user');
+        if ($cekAkses['success']) 
+        {
+            $employee                       = Employee::where('fullname', $request->fullname)->first();
+            $resetPassword                  = Hash::make('sentulappuser');
+            $employee->user->password       = $resetPassword;
+            $employee->user->save();
+            Mail::to($employee->email)->bcc('nesta.maulana@nutrifood.co.id')->send(new ChangePassword($employee->user,gethostbyaddr($_SERVER['REMOTE_ADDR']),'sentulappuser'));
+            return ['success'=>true,'message'=>'Password untuk '.$employee->fullname.' berhasil direset, password dikirimkan melalui email user.'];
+        } 
+        else 
+        {
+            return $cekAkses;
+        }
+        
+    }
     public function verifyAccount($user_id)
     {
         $user_id                        = $this->decrypt($user_id);

@@ -37,7 +37,7 @@
                                             <button class="btn btn-outline-primary" onclick="document.location.href='kelola-pengguna/edit-pengguna/<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($user->id)); ?>'">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <button class="btn btn-outline-warning">
+                                            <button class="btn btn-outline-warning" onclick="changePasswordUser('<?php echo e($user->employee->fullname); ?>','<?php echo e($user->employee->email); ?>')">
                                                 <i class="fas fa-magic"></i>&nbsp;<i class="fas fa-key"></i>
                                             </button>
                                         </td>

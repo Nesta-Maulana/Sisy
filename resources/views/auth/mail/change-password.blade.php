@@ -55,9 +55,9 @@
 <br>
 Terimakasih
 <br>
-Rollie's Crew
+Sisy's Crew
 <br>
-	<img src="{{ asset('images/logo/logo-rollie.png') }}" class="center">
+	<img src="{{ asset('images/logo/mail.png') }}" class="center">
 <br>
 <br>
 <hr>
