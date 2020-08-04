@@ -54,7 +54,7 @@ class FillingMachineGroupHeadController extends ResourceController
             $fillingMachineGroupHead    = FillingMachineGroupHead::find($this->decrypt($filling_machine_head_group_id));
             foreach ($fillingMachineGroupHead->fillingMachineGroupDetail as $fillingMachineGroupDetail) 
             {
-                
+                $fillingMachine     = $fillingMachineGroupDetail->fi
             }
         } 
         else 
