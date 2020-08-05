@@ -38,14 +38,15 @@
                                                         <th style="width: 30px">
                                                             <i class="fas fa-print"></i>
                                                         </th>
-                                                        <th style="width: 150px">Tanggal Produksi</th>
+                                                        <th style="width: 120px">Nomor PSR</th>
+                                                        <th style="width: 250px">Nama Produk</th>
                                                         <th style="width: 120px">Nomor Wo</th>
+                                                        <th style="width: 120px">Jumlah Sampel</th>
+                                                        <th style="width: 120px">Note</th>
+                                                        <th style="width: 150px">Tanggal Produksi</th>
                                                         <th style="width: 120px">Kode Batch 1</th>
                                                         <th style="width: 120px">Kode Batch 2</th>
                                                         <th style="width: 120px">Kode Produk</th>
-                                                        <th style="width: 250px">Nama Produk</th>
-                                                        <th style="width: 120px">Jumlah Sampel</th>
-                                                        <th style="width: 120px">Note</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -118,8 +119,12 @@
                                                                     </td>
                                                                 <?php endif; ?>
                                                             <?php endif; ?>
-                                                            <td><?php echo e($psr->woNumber->production_realisation_date); ?></td>
+                                                            <td><?php echo e($psr->psr_number); ?></td>
+                                                            <td><?php echo e($psr->woNumber->product->product_name); ?></td>
                                                             <td><?php echo e($psr->woNumber->wo_number); ?></td>
+                                                            <td id="qty_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($psr->id)); ?>"><?php echo e($psr->psr_qty); ?></td>
+                                                            <td id="note_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($psr->id)); ?>"><?php echo e($psr->note); ?></td>
+                                                            <td><?php echo e($psr->woNumber->production_realisation_date); ?></td>
                                                             <?php if(count($psr->woNumber->cppDetails) == 1): ?>
                                                                 <?php if($psr->woNumber->cppDetails[0]->fillingMachine->filling_machine_code == 'A3CF B' || $psr->woNumber->cppDetails[0]->fillingMachine->filling_machine_code == 'TPA A'): ?>
                                                                     <td><?php echo e($psr->woNumber->cppDetails[0]->lot_number); ?></td>
@@ -135,9 +140,6 @@
                                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                             <?php endif; ?>
                                                             <td><?php echo e($psr->woNumber->product->oracle_code); ?></td>
-                                                            <td><?php echo e($psr->woNumber->product->product_name); ?></td>
-                                                            <td id="qty_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($psr->id)); ?>"><?php echo e($psr->psr_qty); ?></td>
-                                                            <td id="note_<?php echo e(app('App\Http\Controllers\ResourceController')->encrypt($psr->id)); ?>"><?php echo e($psr->note); ?></td>
                                                         </tr>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </tbody>

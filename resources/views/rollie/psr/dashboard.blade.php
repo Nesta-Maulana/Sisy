@@ -38,14 +38,15 @@
                                                         <th style="width: 30px">
                                                             <i class="fas fa-print"></i>
                                                         </th>
-                                                        <th style="width: 150px">Tanggal Produksi</th>
+                                                        <th style="width: 120px">Nomor PSR</th>
+                                                        <th style="width: 250px">Nama Produk</th>
                                                         <th style="width: 120px">Nomor Wo</th>
+                                                        <th style="width: 120px">Jumlah Sampel</th>
+                                                        <th style="width: 120px">Note</th>
+                                                        <th style="width: 150px">Tanggal Produksi</th>
                                                         <th style="width: 120px">Kode Batch 1</th>
                                                         <th style="width: 120px">Kode Batch 2</th>
                                                         <th style="width: 120px">Kode Produk</th>
-                                                        <th style="width: 250px">Nama Produk</th>
-                                                        <th style="width: 120px">Jumlah Sampel</th>
-                                                        <th style="width: 120px">Note</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -118,8 +119,12 @@
                                                                     </td>
                                                                 @endif
                                                             @endif
-                                                            <td>{{ $psr->woNumber->production_realisation_date }}</td>
+                                                            <td>{{ $psr->psr_number}}</td>
+                                                            <td>{{ $psr->woNumber->product->product_name }}</td>
                                                             <td>{{ $psr->woNumber->wo_number }}</td>
+                                                            <td id="qty_{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}">{{ $psr->psr_qty }}</td>
+                                                            <td id="note_{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}">{{ $psr->note }}</td>
+                                                            <td>{{ $psr->woNumber->production_realisation_date }}</td>
                                                             @if (count($psr->woNumber->cppDetails) == 1)
                                                                 @if ($psr->woNumber->cppDetails[0]->fillingMachine->filling_machine_code == 'A3CF B' || $psr->woNumber->cppDetails[0]->fillingMachine->filling_machine_code == 'TPA A')
                                                                     <td>{{ $psr->woNumber->cppDetails[0]->lot_number }}</td>
@@ -135,9 +140,6 @@
                                                                 @endforeach
                                                             @endif
                                                             <td>{{ $psr->woNumber->product->oracle_code }}</td>
-                                                            <td>{{ $psr->woNumber->product->product_name }}</td>
-                                                            <td id="qty_{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}">{{ $psr->psr_qty }}</td>
-                                                            <td id="note_{{ app('App\Http\Controllers\ResourceController')->encrypt($psr->id) }}">{{ $psr->note }}</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

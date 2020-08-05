@@ -979,7 +979,7 @@ class RPDFillingController extends ResourceController
         $tanggal_awal       = date('Y-m-d',strtotime($tanggal_produksi[0]));
         $tanggal_akhir      = date('Y-m-d',strtotime($tanggal_produksi[1]));
 
-        $woNumbers          = WoNumber::whereBetween('production_realisation_date',[$tanggal_awal,$tanggal_akhir])->whereIn('wo_status',['4','5'])->groupBy('product_id')->get();
+        $woNumbers          = WoNumber::whereBetween('production_realisation_date',[$tanggal_awal,$tanggal_akhir])->whereIn('wo_status',['4','5'])->/* groupBy('product_id')-> */get();
         foreach ($woNumbers as $woNumber) 
         {
             $product                = $this->encryptId($woNumber->product);
@@ -1009,7 +1009,7 @@ class RPDFillingController extends ResourceController
             $tanggal_awal       = date('Y-m-d',strtotime($tanggal_produksi[0]));
             $tanggal_akhir      = date('Y-m-d',strtotime($tanggal_produksi[1]));
 
-            $woNumbers          = WoNumber::whereBetween('production_realisation_date',[$tanggal_awal,$tanggal_akhir])->whereIn('wo_status',['4','5'])->where('product_id',$product_id)->groupBy('product_id')->get();
+            $woNumbers          = WoNumber::whereBetween('production_realisation_date',[$tanggal_awal,$tanggal_akhir])->whereIn('wo_status',['4','5'])->where('product_id',$product_id)->get();
             foreach ($woNumbers as $woNumber) 
             {
                 $product                = $this->encryptId($woNumber->product);
@@ -1048,7 +1048,7 @@ class RPDFillingController extends ResourceController
         
         return $return;
     }
-    public function exportReportExcel($production_date,$product_id,$wo_number_id)
+    public function exportReportExcel($production_date,$product_id,$wo_number_id="")
     {
         $production_date            = explode(' s.d ',$production_date);
         $production_date_start      = date('Y-m-d',strtotime($production_date[0]));
@@ -1063,16 +1063,24 @@ class RPDFillingController extends ResourceController
         {
             $wo_number_id = null;
         }
-        $woNumbers                  = WoNumber::whereBetween('production_realisation_date',[$production_date_start,$production_date_end])->whereIn('wo_status',['4','5'])->get();
+        $woNumbers                  = WoNumber::whereBetween('production_realisation_date',[$production_date_start,$production_date_end])->get();
+        $woNumbers                  = $woNumbers->whereIn('wo_status',['4','5']);
+
         if (!is_null($product_id)) 
         {
+            foreach ($product_id as $key => $value) {
+                $product_id[$key] = $this->decrypt($value);
+            }
             $woNumbers      = $woNumbers->whereIn('product_id',$product_id);
+            
         }
         if (!is_null($wo_number_id)) 
         {
-            $woNumbers      = $woNumbers->whereIn('wo_nu$wo_number_id',$wo_number_id);
+            foreach ($wo_number_id as $key => $value) {
+                $wo_number_id[$key] = $this->decrypt($value);
+            }
+            $woNumbers      = $woNumbers->whereIn('id',$wo_number_id);
         }
-        
         return Excel::download(new ReportRpdFilling($woNumbers), 'Report Rpd Filling '.$production_date_start.' - '.$production_date_end.'.xlsx');
     }
 }
