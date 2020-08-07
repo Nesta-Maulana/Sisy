@@ -110,22 +110,46 @@
                                                                     <td style="text-align: center;">
                                                                         {{ $analisaMikroDetail->suhu_preinkubasi }}&deg;
                                                                     </td>
-                                                                    
+                                                                    @php
+                                                                        if(is_null($analisaMikroDetail->tpc))
+                                                                        {
+                                                                            $tpc    = 0;
+                                                                        }
+                                                                        else {
+                                                                            $tpc    = $analisaMikroDetail->tpc;
+                                                                        }
+                                                                        
+                                                                        if(is_null($analisaMikroDetail->yeast))
+                                                                        {
+                                                                            $yeast    = 0;
+                                                                        }
+                                                                        else {
+                                                                            $yeast    = $analisaMikroDetail->yeast;
+                                                                        }
+                                                                        
+                                                                        if(is_null($analisaMikroDetail->mold))
+                                                                        {
+                                                                            $mold    = 0;
+                                                                        }
+                                                                        else {
+                                                                            $mold    = $analisaMikroDetail->mold;
+                                                                        }
+                                                                    @endphp
                                                                     <td>
                                                                         <input @if (Session::get('ubah') == 'hidden')
                                                                             readonly 
-                                                                        @endif type="text" tabindex="{{ $tabindex+1 }}" class="form-control" value="{{ $analisaMikroDetail->tpc }}" onkeypress="return event.charCode >= 46 && event.charCode <= 57 && event.charCode !== 47" maxlength="4" name ="{{ app('App\Http\Controllers\ResourceController')->encrypt($analisaMikroDetail->id) }}[tpc]">
+                                                                        @endif type="text" tabindex="{{ $tabindex+1 }}" class="form-control" value="{{ $tpc }}" onkeypress="return event.charCode >= 46 && event.charCode <= 57 && event.charCode !== 47" maxlength="4" name ="{{ app('App\Http\Controllers\ResourceController')->encrypt($analisaMikroDetail->id) }}[tpc]">
                                                                     </td>
                                                                     @if ($analisaMikroDetail->analisaMikroHead->cppHead->product->oracle_code == '7300861')
                                                                         <td>
                                                                             <input @if (Session::get('ubah') == 'hidden')
                                                                                 readonly 
-                                                                            @endif type="text" tabindex="{{ $tabindex+1 }}" class="form-control" value="{{ $analisaMikroDetail->yeast }}" onkeypress="return event.charCode >= 46 && event.charCode <= 57 && event.charCode !== 47" maxlength="4" name ="{{ app('App\Http\Controllers\ResourceController')->encrypt($analisaMikroDetail->id) }}[yeast]">
+                                                                            @endif type="text" tabindex="{{ $tabindex+1 }}" class="form-control" value="{{ $yeast }}" onkeypress="return event.charCode >= 46 && event.charCode <= 57 && event.charCode !== 47" maxlength="4" name ="{{ app('App\Http\Controllers\ResourceController')->encrypt($analisaMikroDetail->id) }}[yeast]">
                                                                         </td>
                                                                         <td>
                                                                             <input @if (Session::get('ubah') == 'hidden')
                                                                                 readonly 
-                                                                            @endif type="text" tabindex="{{ $tabindex+1 }}" class="form-control" value="{{ $analisaMikroDetail->mold }}" onkeypress="return event.charCode >= 46 && event.charCode <= 57 && event.charCode !== 47" name ="{{ app('App\Http\Controllers\ResourceController')->encrypt($analisaMikroDetail->id) }}[mold]" maxlength="4">
+                                                                            @endif type="text" tabindex="{{ $tabindex+1 }}" class="form-control" value="{{ $mold }}" onkeypress="return event.charCode >= 46 && event.charCode <= 57 && event.charCode !== 47" name ="{{ app('App\Http\Controllers\ResourceController')->encrypt($analisaMikroDetail->id) }}[mold]" maxlength="4">
                                                                         </td>
                                                                     @endif
                                                                 </tr>
