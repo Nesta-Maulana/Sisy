@@ -27,6 +27,6 @@
         "animate.css": "^4.1.0",
         "file-saver": "^2.0.2",
         "laravel-mix-brotli": "^1.0.0",
-        "xlsx": "^0.16.3"
+        "xlsx": "^0.17.0"
     }
 }
